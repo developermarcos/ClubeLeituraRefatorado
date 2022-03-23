@@ -8,6 +8,9 @@
  *  
  *  -Para sair, usuário deve digitar "s"
  */
+using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using System;
 
 namespace ClubeLeitura.ConsoleApp
@@ -17,14 +20,23 @@ namespace ClubeLeitura.ConsoleApp
         static void Main(string[] args)
         {
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
-            
-            TelaCadastroCaixa telaCadastroCaixa = new TelaCadastroCaixa();
-            telaCadastroCaixa.caixas = new Caixa[10];
-            telaCadastroCaixa.notificador = new Notificador();
 
-            TelaCadastroAmigo telaCadastroPessoa = new TelaCadastroAmigo();
-            telaCadastroPessoa.amigos = new Amigo[10];
-            telaCadastroPessoa.notificador = new Notificador();
+            TelaCadastroCaixa telaCadastroCaixa = new TelaCadastroCaixa();
+            RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
+            repositorioCaixa.caixas = new Caixa[10];
+            telaCadastroCaixa.repositorioCaixa = repositorioCaixa;
+
+            ViewAmigo viewAmigo = new ViewAmigo();
+            RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
+            repositorioAmigo.amigos = new Amigo[10];
+            viewAmigo.repositorioAmigo = repositorioAmigo;
+
+            
+
+            Notificador notificador = new Notificador();
+            telaCadastroCaixa.notificador = notificador;
+            viewAmigo.notificador = notificador;
+
 
             while (true)
             {                
@@ -48,29 +60,37 @@ namespace ClubeLeitura.ConsoleApp
                     }
                     else if (opcao == "4")
                     {
-                        telaCadastroCaixa.VisualizarCaixas("Tela");
+                        bool temCaixaCadastrada = telaCadastroCaixa.VisualizarCaixas("Tela");
+                        if (temCaixaCadastrada == false)
+                        {
+                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", "Atencao");
+                        }
                         Console.ReadLine(); 
                     }
                 }
                 else if (opcaoMenuPrincipal == "3")
                 {
-                    string opcao = telaCadastroPessoa.MostrarOpcoes();
+                    string opcao = viewAmigo.MostrarOpcoes();
 
                     if (opcao == "1")
                     {
-                        telaCadastroPessoa.InserirNovaCaixa();
+                        viewAmigo.InserirNovoAmigo();
                     }
                     else if (opcao == "2")
                     {
-                        telaCadastroPessoa.EditarCaixa();
+                        viewAmigo.EditarAmigo();
                     }
                     else if (opcao == "3")
                     {
-                        telaCadastroPessoa.ExcluirCaixa();
+                        viewAmigo.ExcluirAmigo();
                     }
                     else if (opcao == "4")
                     {
-                        telaCadastroPessoa.VisualizarCaixas("Tela");
+                        bool temAmigoCadastrado = viewAmigo.VisualizarAmigos("Tela");
+                        if (temAmigoCadastrado == false)
+                        {
+                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", "Atencao");
+                        }
                         Console.ReadLine();
                     }
                 }

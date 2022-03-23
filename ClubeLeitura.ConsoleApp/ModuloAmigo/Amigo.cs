@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ClubeLeitura.ConsoleApp
+﻿namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    public class Amigo
+    internal class Amigo
     {
         public int numero;
         public string nome;

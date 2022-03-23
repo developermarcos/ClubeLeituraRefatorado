@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClubeLeitura.ConsoleApp
+namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class TelaMenuPrincipal
     {
