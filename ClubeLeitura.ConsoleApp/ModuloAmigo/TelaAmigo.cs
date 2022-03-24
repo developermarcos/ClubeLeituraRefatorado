@@ -3,7 +3,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    internal class ViewAmigo
+    internal class TelaAmigo
     {
         public int numeroAmigo; //controlar o número de amigos cadastrados
         public Notificador notificador; //reponsável pelas mensagens pro usuário

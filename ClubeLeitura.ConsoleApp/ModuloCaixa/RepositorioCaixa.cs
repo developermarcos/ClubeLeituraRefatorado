@@ -113,5 +113,29 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             return numeroCaixas;
         }
+
+        public Caixa ObterCaixa(int numeroCaixa)
+        {
+            Caixa caixa = null;
+
+            for (int i = 0; i < caixas.Length; i++)
+            {
+                if(caixas[i] != null && caixas[i].numero == numeroCaixa)
+                {
+                    caixa = caixas[i];
+                    break;
+                }
+            }
+
+            return caixa;
+        }
+
+        public void PopularCaixa(string cor, string etiqueta)
+        {
+            Caixa caixaPopularArray = new Caixa();
+            caixaPopularArray.cor = cor;
+            caixaPopularArray.etiqueta = etiqueta;
+            Inserir(caixaPopularArray);
+        }
     }
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class TelaCadastroCaixa
+    public class TelaCaixa
     {
         public int numeroCaixa; //controlar o número da caixas cadastradas
         public Notificador notificador; //reponsável pelas mensagens pro usuário

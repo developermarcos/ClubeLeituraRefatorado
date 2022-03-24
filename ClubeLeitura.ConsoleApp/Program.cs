@@ -11,6 +11,7 @@
 using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloPessoa;
+using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
 namespace ClubeLeitura.ConsoleApp
@@ -21,21 +22,37 @@ namespace ClubeLeitura.ConsoleApp
         {
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
 
-            TelaCadastroCaixa telaCadastroCaixa = new TelaCadastroCaixa();
+            TelaCaixa telaCaixa = new TelaCaixa();
             RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
             repositorioCaixa.caixas = new Caixa[10];
-            telaCadastroCaixa.repositorioCaixa = repositorioCaixa;
+            telaCaixa.repositorioCaixa = repositorioCaixa;
 
-            ViewAmigo viewAmigo = new ViewAmigo();
+            TelaAmigo telaAmigo = new TelaAmigo();
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
             repositorioAmigo.amigos = new Amigo[10];
-            viewAmigo.repositorioAmigo = repositorioAmigo;
+            telaAmigo.repositorioAmigo = repositorioAmigo;
 
-            
+            TelaRevista telaRevista = new TelaRevista();
+            RepositorioRevista repositorioRevista = new RepositorioRevista();
+            repositorioRevista.revistas = new Revista[10];
+            telaRevista.repositorioRevista = repositorioRevista;
+            telaRevista.telaCaixa = telaCaixa;
+            telaRevista.repositorioCaixa = repositorioCaixa;
+
+            #region Popular arrays
+            telaCaixa.repositorioCaixa.PopularCaixa("preta", "123abc");
+            telaCaixa.repositorioCaixa.PopularCaixa("branca", "ddd007");
+
+            Caixa caixa1 = telaRevista.repositorioCaixa.ObterCaixa(1);
+            Caixa caixa2 = telaRevista.repositorioCaixa.ObterCaixa(2);
+            telaRevista.repositorioRevista.PopularRevistas("teste 1", "123abc", "2019", caixa1);
+            telaRevista.repositorioRevista.PopularRevistas("teste 2", "456cba", "2021", caixa2);
+            #endregion
 
             Notificador notificador = new Notificador();
-            telaCadastroCaixa.notificador = notificador;
-            viewAmigo.notificador = notificador;
+            telaCaixa.notificador = notificador;
+            telaAmigo.notificador = notificador;
+            telaRevista.notificador = notificador;
 
 
             while (true)
@@ -44,23 +61,23 @@ namespace ClubeLeitura.ConsoleApp
 
                 if (opcaoMenuPrincipal == "1")
                 {
-                    string opcao = telaCadastroCaixa.MostrarOpcoes();
+                    string opcao = telaCaixa.MostrarOpcoes();
 
                     if (opcao == "1")
                     {
-                        telaCadastroCaixa.InserirNovaCaixa();
+                        telaCaixa.InserirNovaCaixa();
                     }
                     else if (opcao == "2")
                     {
-                        telaCadastroCaixa.EditarCaixa();
+                        telaCaixa.EditarCaixa();
                     }
                     else if (opcao == "3")
                     {
-                        telaCadastroCaixa.ExcluirCaixa();
+                        telaCaixa.ExcluirCaixa();
                     }
                     else if (opcao == "4")
                     {
-                        bool temCaixaCadastrada = telaCadastroCaixa.VisualizarCaixas("Tela");
+                        bool temCaixaCadastrada = telaCaixa.VisualizarCaixas("Tela");
                         if (temCaixaCadastrada == false)
                         {
                             notificador.ApresentarMensagem("Nenhuma caixa cadastrada", "Atencao");
@@ -68,25 +85,51 @@ namespace ClubeLeitura.ConsoleApp
                         Console.ReadLine(); 
                     }
                 }
-                else if (opcaoMenuPrincipal == "3")
+                else if (opcaoMenuPrincipal == "2")
                 {
-                    string opcao = viewAmigo.MostrarOpcoes();
+                    string opcao = telaRevista.MostrarOpcoes();
 
                     if (opcao == "1")
                     {
-                        viewAmigo.InserirNovoAmigo();
+                        telaRevista.InserirNovaRevista();
                     }
                     else if (opcao == "2")
                     {
-                        viewAmigo.EditarAmigo();
+                        telaRevista.EditarRevista();
                     }
                     else if (opcao == "3")
                     {
-                        viewAmigo.ExcluirAmigo();
+                        telaRevista.ExcluirRevista();
                     }
                     else if (opcao == "4")
                     {
-                        bool temAmigoCadastrado = viewAmigo.VisualizarAmigos("Tela");
+                        bool temRevistaCadastrada = telaRevista.VisualizarRevistas("Tela");
+                        if (temRevistaCadastrada == false)
+                        {
+                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", "Atencao");
+                        }
+                        Console.ReadLine();
+                    }
+                }
+                else if (opcaoMenuPrincipal == "3")
+                {
+                    string opcao = telaAmigo.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaAmigo.InserirNovoAmigo();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaAmigo.EditarAmigo();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaAmigo.ExcluirAmigo();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temAmigoCadastrado = telaAmigo.VisualizarAmigos("Tela");
                         if (temAmigoCadastrado == false)
                         {
                             notificador.ApresentarMensagem("Nenhum amigo cadastrado", "Atencao");
