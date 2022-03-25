@@ -36,7 +36,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Inserir(novoAmigo);
 
-            notificador.ApresentarMensagem("Amigo inserido com sucesso!", "Sucesso");
+            notificador.ApresentarMensagem("Amigo inserido com sucesso!", StatusValicao.Sucesso);
         }
 
         public void EditarAmigo()
@@ -47,7 +47,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             if (temCaixasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhum amigo cadastrado para poder editar", "Atencao");
+                notificador.ApresentarMensagem("Nenhum amigo cadastrado para poder editar", StatusValicao.Atencao);
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Editar(numeroCaixa, amigoAtualizado);
 
-            notificador.ApresentarMensagem("Amigo editado com sucesso", "Sucesso");
+            notificador.ApresentarMensagem("Amigo editado com sucesso", StatusValicao.Sucesso);
         }
 
         public int ObterNumeroAmigo()
@@ -73,7 +73,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
-                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", "Atencao");
+                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValicao.Atencao);
 
             } while (numeroAmigoEncontrado == false);
 
@@ -89,7 +89,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             if (temCaixasCadastradas == false)
             {
                 notificador.ApresentarMensagem(
-                    "Nenhum amigo cadastrado para poder excluir", "Atencao");
+                    "Nenhum amigo cadastrado para poder excluir", StatusValicao.Atencao);
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Excluir(numeroAmigo);
 
-            notificador.ApresentarMensagem("Amigo excluído com sucesso", "Sucesso");
+            notificador.ApresentarMensagem("Amigo excluído com sucesso", StatusValicao.Sucesso);
         }
 
         public bool VisualizarAmigos(string tipo)
@@ -140,7 +140,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 nomeJaUtilizado = repositorioAmigo.nomeJaCadastrado(nome);
 
                 if (nomeJaUtilizado)
-                    notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", "Erro");
+                    notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", StatusValicao.Erro);
                 else
                     amigo.nome = nome;
 

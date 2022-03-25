@@ -12,6 +12,7 @@ using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
+using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
 using System;
 
 namespace ClubeLeitura.ConsoleApp
@@ -39,6 +40,11 @@ namespace ClubeLeitura.ConsoleApp
             telaRevista.telaCaixa = telaCaixa;
             telaRevista.repositorioCaixa = repositorioCaixa;
 
+
+            TelaEmprestimo TelaEmprestimo = new TelaEmprestimo();
+            RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo();
+            RepositorioEmprestimo.emprestimos = new Emprestimo[10];
+            
             #region Popular arrays
             telaCaixa.repositorioCaixa.PopularCaixa("preta", "123abc");
             telaCaixa.repositorioCaixa.PopularCaixa("branca", "ddd007");
@@ -80,7 +86,7 @@ namespace ClubeLeitura.ConsoleApp
                         bool temCaixaCadastrada = telaCaixa.VisualizarCaixas("Tela");
                         if (temCaixaCadastrada == false)
                         {
-                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", "Atencao");
+                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", StatusValicao.Atencao);
                         }
                         Console.ReadLine(); 
                     }
@@ -106,7 +112,7 @@ namespace ClubeLeitura.ConsoleApp
                         bool temRevistaCadastrada = telaRevista.VisualizarRevistas("Tela");
                         if (temRevistaCadastrada == false)
                         {
-                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", "Atencao");
+                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", StatusValicao.Atencao);
                         }
                         Console.ReadLine();
                     }
@@ -132,7 +138,33 @@ namespace ClubeLeitura.ConsoleApp
                         bool temAmigoCadastrado = telaAmigo.VisualizarAmigos("Tela");
                         if (temAmigoCadastrado == false)
                         {
-                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", "Atencao");
+                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValicao.Atencao);
+                        }
+                        Console.ReadLine();
+                    }
+                }
+                else if (opcaoMenuPrincipal == "4")
+                {
+                    string opcao = telaAmigo.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaAmigo.InserirNovoAmigo();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaAmigo.EditarAmigo();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaAmigo.ExcluirAmigo();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temAmigoCadastrado = telaAmigo.VisualizarAmigos("Tela");
+                        if (temAmigoCadastrado == false)
+                        {
+                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValicao.Atencao);
                         }
                         Console.ReadLine();
                     }
