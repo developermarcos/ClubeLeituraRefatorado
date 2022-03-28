@@ -106,6 +106,22 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return amigosInseridos;
         }
 
+        internal Amigo ObterAmigo(int idAmigo)
+        {
+            Amigo amigo = null;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if(amigos[i] != null && amigos[i].numero == idAmigo)
+                {
+                    amigo = amigos[i];
+                    break;
+                }
+            }
+
+            return amigo;
+        }
+
         public int ObterQtdAmigos()
         {
             int numeroAmigos = 0;
@@ -118,5 +134,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             return numeroAmigos;
         }
+        public void PopularAmigos(string nome, string responsavel, string telefone, string endereco)
+        {
+            Amigo amigo= new Amigo();
+            amigo.nome = nome;
+            amigo.responsavel = responsavel;
+            amigo.telefone = telefone;
+            amigo.endereco = endereco;
+            Inserir(amigo);
+        }
+
     }
 }

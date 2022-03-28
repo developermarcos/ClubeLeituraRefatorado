@@ -1,6 +1,6 @@
 ﻿namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public enum StatusValicao
+    public enum StatusValidacao
     {
         Sucesso, Atencao, Erro
     }

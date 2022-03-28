@@ -6,9 +6,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 {
     internal class Emprestimo
     {
-        public Amigo amigos;
+        public int numero;
+        public Amigo amigo;
         public Revista revista;
-        public DateTime emprestimo;
-        public DateTime devolucao;
+        public DateTime emprestimoData;
     }
 }

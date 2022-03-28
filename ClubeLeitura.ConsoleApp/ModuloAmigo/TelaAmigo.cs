@@ -36,7 +36,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Inserir(novoAmigo);
 
-            notificador.ApresentarMensagem("Amigo inserido com sucesso!", StatusValicao.Sucesso);
+            notificador.ApresentarMensagem("Amigo inserido com sucesso!", StatusValidacao.Sucesso);
         }
 
         public void EditarAmigo()
@@ -47,7 +47,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             if (temCaixasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhum amigo cadastrado para poder editar", StatusValicao.Atencao);
+                notificador.ApresentarMensagem("Nenhum amigo cadastrado para poder editar", StatusValidacao.Atencao);
                 return;
             }
 
@@ -57,27 +57,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Editar(numeroCaixa, amigoAtualizado);
 
-            notificador.ApresentarMensagem("Amigo editado com sucesso", StatusValicao.Sucesso);
-        }
-
-        public int ObterNumeroAmigo()
-        {
-            int numeroAmigo;
-            bool numeroAmigoEncontrado;
-
-            do
-            {
-                Console.Write("Digite o número do amigo que deseja editar: ");
-                numeroAmigo = Convert.ToInt32(Console.ReadLine());
-
-                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
-
-                if (numeroAmigoEncontrado == false)
-                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValicao.Atencao);
-
-            } while (numeroAmigoEncontrado == false);
-
-            return numeroAmigo;
+            notificador.ApresentarMensagem("Amigo editado com sucesso", StatusValidacao.Sucesso);
         }
 
         public void ExcluirAmigo()
@@ -89,7 +69,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             if (temCaixasCadastradas == false)
             {
                 notificador.ApresentarMensagem(
-                    "Nenhum amigo cadastrado para poder excluir", StatusValicao.Atencao);
+                    "Nenhum amigo cadastrado para poder excluir", StatusValidacao.Atencao);
                 return;
             }
 
@@ -97,7 +77,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Excluir(numeroAmigo);
 
-            notificador.ApresentarMensagem("Amigo excluído com sucesso", StatusValicao.Sucesso);
+            notificador.ApresentarMensagem("Amigo excluído com sucesso", StatusValidacao.Sucesso);
         }
 
         public bool VisualizarAmigos(string tipo)
@@ -125,7 +105,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             return true;
         }
-
+        
         public Amigo ObterAmigo()
         {
             Amigo amigo = new Amigo();
@@ -140,7 +120,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 nomeJaUtilizado = repositorioAmigo.nomeJaCadastrado(nome);
 
                 if (nomeJaUtilizado)
-                    notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", StatusValicao.Erro);
+                    notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", StatusValidacao.Erro);
                 else
                     amigo.nome = nome;
 
@@ -160,6 +140,26 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             amigo.endereco = endereco;
 
             return amigo;
+        }
+
+        public int ObterNumeroAmigo()
+        {
+            int numeroAmigo;
+            bool numeroAmigoEncontrado;
+
+            do
+            {
+                Console.Write("Digite o número do amigo: ");
+                numeroAmigo = Convert.ToInt32(Console.ReadLine());
+
+                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
+
+                if (numeroAmigoEncontrado == false)
+                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValidacao.Atencao);
+
+            } while (numeroAmigoEncontrado == false);
+
+            return numeroAmigo;
         }
 
         public void MostrarTitulo(string titulo)

@@ -41,7 +41,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (!existeCaixasCadastradas)
             {
-                notificador.ApresentarMensagem("Não existe caixas cadastradas!", StatusValicao.Atencao);
+                notificador.ApresentarMensagem("Não existe caixas cadastradas!", StatusValidacao.Atencao);
                 return;
             }
             Caixa caixa = ObterCaixa();
@@ -50,7 +50,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             repositorioRevista.Inserir(novaRevista);
 
-            notificador.ApresentarMensagem("Revista inserida com sucesso!", StatusValicao.Sucesso);
+            notificador.ApresentarMensagem("Revista inserida com sucesso!", StatusValidacao.Sucesso);
         }
 
         public void EditarRevista()
@@ -61,7 +61,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (temRevistasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder editar", StatusValicao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder editar", StatusValidacao.Atencao);
                 return;
             }
 
@@ -71,7 +71,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (!existeCaixasCadastradas)
             {
-                notificador.ApresentarMensagem("Não existe caixas cadastradas!", StatusValicao.Atencao);
+                notificador.ApresentarMensagem("Não existe caixas cadastradas!", StatusValidacao.Atencao);
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             repositorioRevista.Editar(numeroRevista, revistaAtualizada);
 
-            notificador.ApresentarMensagem("Caixa editada com sucesso", StatusValicao.Sucesso);
+            notificador.ApresentarMensagem("Caixa editada com sucesso", StatusValidacao.Sucesso);
         }
 
         public void ExcluirRevista()
@@ -91,7 +91,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (temRevistasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder excluir", StatusValicao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder excluir", StatusValidacao.Atencao);
                 return;
             }
 
@@ -99,7 +99,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             repositorioRevista.Excluir(numeroRevista);
 
-            notificador.ApresentarMensagem("Revista excluída com sucesso", StatusValicao.Sucesso);
+            notificador.ApresentarMensagem("Revista excluída com sucesso", StatusValidacao.Sucesso);
         }
 
         public int ObterNumeroRevista()
@@ -109,15 +109,16 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             do
             {
-                Console.Write("Digite o número da revista que deseja editar: ");
+                Console.Write("Digite o número da revista: ");
                 numeroRevista = Convert.ToInt32(Console.ReadLine());
 
                 numeroRevistaEncontrado = repositorioRevista.VerificarNumeroRevistaExiste(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
-                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", StatusValicao.Atencao);
+                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", StatusValidacao.Atencao);
 
             } while (numeroRevistaEncontrado == false);
+
             return numeroRevista;
         }
 
@@ -135,7 +136,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 if (caixaExiste)
                     caixa = repositorioCaixa.ObterCaixa(numeroCaixa);
                 else
-                    notificador.ApresentarMensagem("Caixa não encontrada, informe novamente", StatusValicao.Erro);
+                    notificador.ApresentarMensagem("Caixa não encontrada, informe novamente", StatusValidacao.Erro);
 
             } while (!caixaExiste);
 

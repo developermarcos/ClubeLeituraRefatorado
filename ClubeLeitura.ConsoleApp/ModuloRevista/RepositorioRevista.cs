@@ -107,5 +107,20 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             revista.caixa = caixa;
             Inserir(revista);
         }
+
+        public Revista ObterRevistaPorNumero(int id)
+        {
+            Revista revista = null;
+
+            for (int i = 0; i < revistas.Length; i++)
+            {
+                if(revistas[i] != null && revistas[i].numero == id)
+                {
+                    revista = revistas[i];
+                    break;
+                }
+            }
+            return revista;
+        }
     }
 }

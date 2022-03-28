@@ -44,8 +44,17 @@ namespace ClubeLeitura.ConsoleApp
             TelaEmprestimo TelaEmprestimo = new TelaEmprestimo();
             RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo();
             RepositorioEmprestimo.emprestimos = new Emprestimo[10];
-            
+            TelaEmprestimo.repositorioEmprestimos = RepositorioEmprestimo;
+
+            TelaEmprestimo.repositorioAmigo = repositorioAmigo;
+            TelaEmprestimo.repositorioRevista = repositorioRevista;
+            TelaEmprestimo.telaAmigo = telaAmigo;
+            TelaEmprestimo.telaRevista = telaRevista;
+
             #region Popular arrays
+            telaAmigo.repositorioAmigo.PopularAmigos("homem", "mae", "132456", "rua 1");
+            telaAmigo.repositorioAmigo.PopularAmigos("mulher", "mae", "007007", "rua 2");
+
             telaCaixa.repositorioCaixa.PopularCaixa("preta", "123abc");
             telaCaixa.repositorioCaixa.PopularCaixa("branca", "ddd007");
 
@@ -59,6 +68,7 @@ namespace ClubeLeitura.ConsoleApp
             telaCaixa.notificador = notificador;
             telaAmigo.notificador = notificador;
             telaRevista.notificador = notificador;
+            TelaEmprestimo.notificador = notificador;
 
 
             while (true)
@@ -86,7 +96,7 @@ namespace ClubeLeitura.ConsoleApp
                         bool temCaixaCadastrada = telaCaixa.VisualizarCaixas("Tela");
                         if (temCaixaCadastrada == false)
                         {
-                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", StatusValicao.Atencao);
+                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", StatusValidacao.Atencao);
                         }
                         Console.ReadLine(); 
                     }
@@ -112,7 +122,7 @@ namespace ClubeLeitura.ConsoleApp
                         bool temRevistaCadastrada = telaRevista.VisualizarRevistas("Tela");
                         if (temRevistaCadastrada == false)
                         {
-                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", StatusValicao.Atencao);
+                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", StatusValidacao.Atencao);
                         }
                         Console.ReadLine();
                     }
@@ -138,33 +148,33 @@ namespace ClubeLeitura.ConsoleApp
                         bool temAmigoCadastrado = telaAmigo.VisualizarAmigos("Tela");
                         if (temAmigoCadastrado == false)
                         {
-                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValicao.Atencao);
+                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValidacao.Atencao);
                         }
                         Console.ReadLine();
                     }
                 }
                 else if (opcaoMenuPrincipal == "4")
                 {
-                    string opcao = telaAmigo.MostrarOpcoes();
+                    string opcao = TelaEmprestimo.MostrarOpcoes();
 
                     if (opcao == "1")
                     {
-                        telaAmigo.InserirNovoAmigo();
+                        TelaEmprestimo.InserirNovoEmprestimo();
                     }
                     else if (opcao == "2")
                     {
-                        telaAmigo.EditarAmigo();
+                        TelaEmprestimo.EditarEmprestimo();
                     }
                     else if (opcao == "3")
                     {
-                        telaAmigo.ExcluirAmigo();
+                        TelaEmprestimo.ExcluirEmprestimo();
                     }
                     else if (opcao == "4")
                     {
-                        bool temAmigoCadastrado = telaAmigo.VisualizarAmigos("Tela");
-                        if (temAmigoCadastrado == false)
+                        bool temEmprestimoCadastrado = TelaEmprestimo.VisualizarEmprestimos("Tela");
+                        if (temEmprestimoCadastrado == false)
                         {
-                            notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValicao.Atencao);
+                            notificador.ApresentarMensagem("Nenhum emprestimo cadastrado", StatusValidacao.Atencao);
                         }
                         Console.ReadLine();
                     }
