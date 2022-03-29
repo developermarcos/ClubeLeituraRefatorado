@@ -194,7 +194,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
                 Console.WriteLine("Número: " + e.numero);
                 Console.WriteLine("Data empréstimo: " + e.emprestimoData);
-                Console.WriteLine("Amigo: {0} | telefone: {1}", e.amigo.nome, e.amigo.telefone);
+                Console.WriteLine("Amigo: {0} | telefone: {1}", e.amigo.Nome, e.amigo.Telefone);
                 Console.WriteLine("Revista edição: {0} | tipo coleção: {1}", e.revista.numeroEdicao, e.revista.tipoColecao);
                 
                 Console.WriteLine();

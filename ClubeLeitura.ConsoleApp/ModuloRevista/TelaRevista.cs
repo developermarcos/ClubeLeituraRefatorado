@@ -182,8 +182,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.WriteLine("Tipo da coleção: " + r.tipoColecao);
                 Console.WriteLine("Ano: " + r.ano);
                 Console.WriteLine("Edição: " + r.numeroEdicao);
-                Console.WriteLine("Caixa Etiqueta: " + r.caixa.etiqueta);
-                Console.WriteLine("Caixa Cor: " + r.caixa.cor);
+                Console.WriteLine("Caixa Etiqueta: " + r.caixa.Etiqueta);
+                Console.WriteLine("Caixa Cor: " + r.caixa.Cor);
                 
 
                 Console.WriteLine();

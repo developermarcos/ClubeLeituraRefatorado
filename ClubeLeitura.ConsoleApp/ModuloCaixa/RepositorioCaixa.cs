@@ -5,11 +5,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
     public class RepositorioCaixa
     {
         public Caixa[] caixas;
-        public int numeroCaixa;
+        public static int numeroCaixa;
 
         public void Inserir(Caixa caixa)
         {
-            caixa.numero = ++numeroCaixa;
+            caixa.Numero = ObterNumeroCaixa();
 
             int posicaoVazia = ObterPosicaoVazia();
             caixas[posicaoVazia] = caixa;
@@ -19,9 +19,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         {
             for (int i = 0; i < caixas.Length; i++)
             {
-                if (caixas[i] != null && caixas[i].numero == numeroSelecioando)
+                if (caixas[i] != null && caixas[i].Numero == numeroSelecioando)
                 {
-                    caixa.numero = numeroSelecioando;
+                    caixa.Numero = numeroSelecioando;
                     caixas[i] = caixa;
 
                     break;
@@ -33,7 +33,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         {
             for (int i = 0; i < caixas.Length; i++)
             {
-                if (caixas[i] != null && caixas[i].numero == numeroSelecionado)
+                if (caixas[i] != null && caixas[i].Numero == numeroSelecionado)
                 {
                     caixas[i] = null;
                     break;
@@ -46,7 +46,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             bool etiquetaJaUtilizada = false;
             for (int i = 0; i < caixas.Length; i++)
             {
-                if (caixas[i] != null && caixas[i].etiqueta == etiquetaInformada)
+                if (caixas[i] != null && caixas[i].Etiqueta == etiquetaInformada)
                 {
                     etiquetaJaUtilizada = true;
                     break;
@@ -62,7 +62,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             for (int i = 0; i < caixas.Length; i++)
             {
-                if (caixas[i] != null && caixas[i].numero == numeroCaixa)
+                if (caixas[i] != null && caixas[i].Numero == numeroCaixa)
                 {
                     numeroCaixaEncontrado = true;
                     break;
@@ -120,7 +120,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             for (int i = 0; i < caixas.Length; i++)
             {
-                if(caixas[i] != null && caixas[i].numero == numeroCaixa)
+                if(caixas[i] != null && caixas[i].Numero == numeroCaixa)
                 {
                     caixa = caixas[i];
                     break;
@@ -132,10 +132,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
         public void PopularCaixa(string cor, string etiqueta)
         {
-            Caixa caixaPopularArray = new Caixa();
-            caixaPopularArray.cor = cor;
-            caixaPopularArray.etiqueta = etiqueta;
+            Caixa caixaPopularArray = new Caixa(cor, etiqueta);
             Inserir(caixaPopularArray);
+        }
+
+        public int ObterNumeroCaixa()
+        {
+            return ++numeroCaixa;
         }
     }
 }

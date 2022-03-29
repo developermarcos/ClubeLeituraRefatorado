@@ -94,11 +94,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             {
                 Amigo a = amigos[i];
 
-                Console.WriteLine("ID: " + a.numero);
-                Console.WriteLine("Nome: " + a.nome);
-                Console.WriteLine("Responsavel: " + a.responsavel);
-                Console.WriteLine("Telefone: " + a.telefone);
-                Console.WriteLine("Endereço: " + a.endereco);
+                Console.WriteLine("ID: " + a.Numero);
+                Console.WriteLine("Nome: " + a.Nome);
+                Console.WriteLine("Responsavel: " + a.Responsavel);
+                Console.WriteLine("Telefone: " + a.Telefone);
+                Console.WriteLine("Endereço: " + a.Endereco);
 
                 Console.WriteLine();
             }
@@ -108,21 +108,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         
         public Amigo ObterAmigo()
         {
-            Amigo amigo = new Amigo();
+            string nome;
             bool nomeJaUtilizado;
             do
             {
                 nomeJaUtilizado = false;
 
                 Console.Write("Digite o nome: ");
-                string nome = Console.ReadLine();
+                nome = Console.ReadLine();
 
                 nomeJaUtilizado = repositorioAmigo.nomeJaCadastrado(nome);
 
                 if (nomeJaUtilizado)
                     notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", StatusValidacao.Erro);
-                else
-                    amigo.nome = nome;
 
             } while (nomeJaUtilizado);
 
@@ -135,10 +133,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             Console.Write("Digite o endereço: ");
             string endereco = Console.ReadLine();
 
-            amigo.responsavel = responsavel;
-            amigo.telefone = telefone;
-            amigo.endereco = endereco;
-
+            Amigo amigo = new Amigo(nome, responsavel, telefone, endereco);
+            
             return amigo;
         }
 

@@ -114,9 +114,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             {              
                 Caixa c = caixas[i];
 
-                Console.WriteLine("Número: " + c.numero);
-                Console.WriteLine("Cor: " + c.cor);
-                Console.WriteLine("Etiqueta: " + c.etiqueta);
+                Console.WriteLine("Número: " + c.Numero);
+                Console.WriteLine("Cor: " + c.Cor);
+                Console.WriteLine("Etiqueta: " + c.Etiqueta);
 
                 Console.WriteLine();
             }
@@ -148,10 +148,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             } while (etiquetaJaUtilizada);
 
-            Caixa caixa = new Caixa();
-
-            caixa.etiqueta = etiqueta;
-            caixa.cor = cor;
+            Caixa caixa = new Caixa(cor, etiqueta);
 
             return caixa;
         }

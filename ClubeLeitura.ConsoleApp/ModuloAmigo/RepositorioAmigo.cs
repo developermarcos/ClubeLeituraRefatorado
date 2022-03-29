@@ -9,13 +9,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
     internal class RepositorioAmigo
     {
         public Amigo[] amigos;
-        public int numeroAmigo;
+        private static int numeroAmigo;
 
         public void Inserir(Amigo amigo)
         {
-            amigo.numero = ++numeroAmigo;
-
             int posicaoVazia = ObterPosicaoVazia();
+            amigo.Numero = ObterNumeroAmigo();
             amigos[posicaoVazia] = amigo;
         }
 
@@ -23,9 +22,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         {
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].numero == numeroSelecioando)
+                if (amigos[i] != null && amigos[i].Numero == numeroSelecioando)
                 {
-                    amigo.numero = numeroSelecioando;
+                    amigo.Numero = numeroSelecioando;
                     amigos[i] = amigo;
 
                     break;
@@ -37,7 +36,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         {
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].numero == numeroSelecionado)
+                if (amigos[i] != null && amigos[i].Numero == numeroSelecionado)
                 {
                     amigos[i] = null;
                     break;
@@ -51,7 +50,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].nome == nomeInformado)
+                if (amigos[i] != null && amigos[i].Nome == nomeInformado)
                 {
                     nomejaUtilizado = true;
                     break;
@@ -67,7 +66,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].numero == numeroAmigo)
+                if (amigos[i] != null && amigos[i].Numero == numeroAmigo)
                 {
                     numeroAmigoEncontrado = true;
                     break;
@@ -106,13 +105,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return amigosInseridos;
         }
 
-        internal Amigo ObterAmigo(int idAmigo)
+        public Amigo ObterAmigo(int idAmigo)
         {
             Amigo amigo = null;
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                if(amigos[i] != null && amigos[i].numero == idAmigo)
+                if(amigos[i] != null && amigos[i].Numero == idAmigo)
                 {
                     amigo = amigos[i];
                     break;
@@ -134,15 +133,16 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             return numeroAmigos;
         }
+
         public void PopularAmigos(string nome, string responsavel, string telefone, string endereco)
         {
-            Amigo amigo= new Amigo();
-            amigo.nome = nome;
-            amigo.responsavel = responsavel;
-            amigo.telefone = telefone;
-            amigo.endereco = endereco;
+            Amigo amigo= new Amigo(nome, responsavel, telefone, endereco);
             Inserir(amigo);
         }
 
+        public int ObterNumeroAmigo()
+        {
+            return ++numeroAmigo;
+        }
     }
 }
