@@ -154,12 +154,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.Write("Digite o ano: ");
             string ano = Console.ReadLine();
 
-            Revista revista = new Revista();
-
-            revista.tipoColecao = tipoColecao;
-            revista.numeroEdicao = numeroEdicao;
-            revista.ano = ano;
-            revista.caixa = caixa;
+            Revista revista = new Revista(tipoColecao, numeroEdicao, ano, caixa);
 
             return revista;
         }
@@ -178,12 +173,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             {
                 Revista r = revistas[i];
 
-                Console.WriteLine("Número: " + r.numero);
-                Console.WriteLine("Tipo da coleção: " + r.tipoColecao);
-                Console.WriteLine("Ano: " + r.ano);
-                Console.WriteLine("Edição: " + r.numeroEdicao);
-                Console.WriteLine("Caixa Etiqueta: " + r.caixa.Etiqueta);
-                Console.WriteLine("Caixa Cor: " + r.caixa.Cor);
+                Console.WriteLine("Número: " + r.Numero);
+                Console.WriteLine("Tipo da coleção: " + r.TipoColecao);
+                Console.WriteLine("Ano: " + r.Ano);
+                Console.WriteLine("Edição: " + r.NumeroEdicao);
+                Console.WriteLine("Caixa Etiqueta: " + r.Caixa.Etiqueta);
+                Console.WriteLine("Caixa Cor: " + r.Caixa.Cor);
                 
 
                 Console.WriteLine();

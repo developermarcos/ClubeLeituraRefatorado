@@ -81,7 +81,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
         public Emprestimo ObterEmprestimo(Amigo amigoEmprestimo, Revista revistaEmprestimo)
         {
-            Emprestimo emprestimo = new Emprestimo();
+            Amigo amigo;
+            Revista revista;
+            DateTime emprestimoData;
 
             while (true)
             {
@@ -90,15 +92,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
                 bool conversaoRealizada = DateTime.TryParse(dataEmprestimo, out DateTime dataCadastro);
                 if (dataEmprestimo.Length == 10 && conversaoRealizada == true)
                 {
-                    emprestimo.amigo = amigoEmprestimo;
-                    emprestimo.revista = revistaEmprestimo;
-                    emprestimo.emprestimoData = dataCadastro;
+                    amigo = amigoEmprestimo;
+                    revista = revistaEmprestimo;
+                    emprestimoData = dataCadastro;
                     break;
                 }
                 else
                     notificador.ApresentarMensagem("Data não foi informada no padrão solicitado", StatusValidacao.Atencao);
             }
-
+            Emprestimo emprestimo = new Emprestimo(amigoEmprestimo, revistaEmprestimo, emprestimoData);
             return emprestimo;
         }
 
@@ -192,10 +194,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             {
                 Emprestimo e = emprestimos[i];
 
-                Console.WriteLine("Número: " + e.numero);
-                Console.WriteLine("Data empréstimo: " + e.emprestimoData);
-                Console.WriteLine("Amigo: {0} | telefone: {1}", e.amigo.Nome, e.amigo.Telefone);
-                Console.WriteLine("Revista edição: {0} | tipo coleção: {1}", e.revista.numeroEdicao, e.revista.tipoColecao);
+                Console.WriteLine("Número: " + e.Numero);
+                Console.WriteLine("Data empréstimo: " + e.EmprestimoData);
+                Console.WriteLine("Amigo: {0} | telefone: {1}", e.Amigo.Nome, e.Amigo.Telefone);
+                Console.WriteLine("Revista edição: {0} | tipo coleção: {1}", e.Revista.NumeroEdicao, e.Revista.TipoColecao);
                 
                 Console.WriteLine();
             }

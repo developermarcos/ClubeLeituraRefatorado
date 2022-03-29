@@ -7,11 +7,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
     internal class RepositorioEmprestimo
     {
         public Emprestimo[] emprestimos;
-        public int numeroEmprestimo;
+        public static int numeroEmprestimo;
 
         public void Inserir(Emprestimo emprestimoCadastro)
         {
-            emprestimoCadastro.numero = ++numeroEmprestimo;
+            emprestimoCadastro.Numero = ++numeroEmprestimo;
 
             int posicaoVazia = ObterPosicaoVazia();
 
@@ -22,9 +22,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
         {
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                if (emprestimos[i] != null && emprestimos[i].numero == numeroSelecioando)
+                if (emprestimos[i] != null && emprestimos[i].Numero == numeroSelecioando)
                 {
-                    emprestimo.numero = numeroSelecioando;
+                    emprestimo.Numero = numeroSelecioando;
                     emprestimos[i] = emprestimo;
 
                     break;
@@ -36,7 +36,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
         {
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                if (emprestimos[i] != null && emprestimos[i].numero == numeroSelecionado)
+                if (emprestimos[i] != null && emprestimos[i].Numero == numeroSelecionado)
                 {
                     emprestimos[i] = null;
                     break;
@@ -92,7 +92,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                if (emprestimos[i] != null && emprestimos[i].numero == numeroEmprestimo)
+                if (emprestimos[i] != null && emprestimos[i].Numero == numeroEmprestimo)
                 {
                     numeroEmprestimoEncontrado = true;
                     break;

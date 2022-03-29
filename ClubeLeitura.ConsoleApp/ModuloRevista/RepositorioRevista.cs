@@ -5,10 +5,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
     public class RepositorioRevista
     {
         public Revista[] revistas;
-        public int numeroRevista;
+        public static int numeroRevista;
         public void Inserir(Revista revista)
         {
-            revista.numero = ++numeroRevista;
+            revista.Numero = ++numeroRevista;
 
             int posicaoVazia = ObterPosicaoVazia();
             revistas[posicaoVazia] = revista;
@@ -18,9 +18,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             for (int i = 0; i < revistas.Length; i++)
             {
-                if (revistas[i] != null && revistas[i].numero == numeroSelecioando)
+                if (revistas[i] != null && revistas[i].Numero == numeroSelecioando)
                 {
-                    revista.numero = numeroSelecioando;
+                    revista.Numero = numeroSelecioando;
                     revistas[i] = revista;
 
                     break;
@@ -32,7 +32,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             for (int i = 0; i < revistas.Length; i++)
             {
-                if (revistas[i] != null && revistas[i].numero == numeroSelecionado)
+                if (revistas[i] != null && revistas[i].Numero == numeroSelecionado)
                 {
                     revistas[i] = null;
                     break;
@@ -88,7 +88,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             for (int i = 0; i < revistas.Length; i++)
             {
-                if (revistas[i] != null && revistas[i].numero == numeroRevista)
+                if (revistas[i] != null && revistas[i].Numero == numeroRevista)
                 {
                     numeroRevistaEncontrado = true;
                     break;
@@ -100,11 +100,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
         public void PopularRevistas(string tipoColecao, string numeroEdicao, string ano, Caixa caixa)
         {
-            Revista revista = new Revista();
-            revista.tipoColecao = tipoColecao;
-            revista.numeroEdicao = numeroEdicao;
-            revista.ano = ano;
-            revista.caixa = caixa;
+            Revista revista = new Revista(tipoColecao, numeroEdicao, ano, caixa);
             Inserir(revista);
         }
 
@@ -114,7 +110,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             for (int i = 0; i < revistas.Length; i++)
             {
-                if(revistas[i] != null && revistas[i].numero == id)
+                if(revistas[i] != null && revistas[i].Numero == id)
                 {
                     revista = revistas[i];
                     break;
