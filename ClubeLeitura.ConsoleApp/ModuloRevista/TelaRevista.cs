@@ -11,7 +11,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         
         public TelaCaixa telaCaixa;
         public RepositorioCaixa repositorioCaixa;
+        private Revista[] revistas;
 
+        public TelaRevista(RepositorioRevista repositorioRevista, TelaCaixa telaCaixa, Notificador notificador)
+        {
+            this.repositorioRevista=repositorioRevista;
+            this.telaCaixa=telaCaixa;
+            this.notificador=notificador;
+        }
 
         public string MostrarOpcoes()
         {
@@ -172,6 +179,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             for (int i = 0; i < revistas.Length; i++)
             {
                 Revista r = revistas[i];
+
+                Console.WriteLine();
 
                 Console.WriteLine("Número: " + r.Numero);
                 Console.WriteLine("Tipo da coleção: " + r.TipoColecao);

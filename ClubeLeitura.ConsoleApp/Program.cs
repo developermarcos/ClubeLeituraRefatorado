@@ -14,6 +14,8 @@ using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
 using System;
+using ClubeLeitura.ConsoleApp.ModuloCategoriaRevista;
+using ClubeLeitura.ConsoleApp.ModeloReserva;
 
 namespace ClubeLeitura.ConsoleApp
 {
@@ -23,59 +25,45 @@ namespace ClubeLeitura.ConsoleApp
         {
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
 
-            TelaCaixa telaCaixa = new TelaCaixa();
-            RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
-            repositorioCaixa.caixas = new Caixa[10];
-            telaCaixa.repositorioCaixa = repositorioCaixa;
+            Notificador notificador = new Notificador();
 
-            TelaAmigo telaAmigo = new TelaAmigo();
-            RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
-            repositorioAmigo.amigos = new Amigo[10];
-            telaAmigo.repositorioAmigo = repositorioAmigo;
+            RepositorioCaixa repositorioCaixa = new RepositorioCaixa(new Caixa[10]);
+            TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa, notificador);
 
-            TelaRevista telaRevista = new TelaRevista();
-            RepositorioRevista repositorioRevista = new RepositorioRevista();
-            repositorioRevista.revistas = new Revista[10];
-            telaRevista.repositorioRevista = repositorioRevista;
-            telaRevista.telaCaixa = telaCaixa;
-            telaRevista.repositorioCaixa = repositorioCaixa;
+            RepositorioAmigo repositorioAmigo = new RepositorioAmigo(new Amigo[10]);
+            TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo, notificador);
 
+            RepositorioRevista repositorioRevista = new RepositorioRevista(new Revista[10]);
+            TelaRevista telaRevista = new TelaRevista(repositorioRevista, telaCaixa, notificador);
 
-            TelaEmprestimo TelaEmprestimo = new TelaEmprestimo();
-            RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo();
-            RepositorioEmprestimo.emprestimos = new Emprestimo[10];
-            TelaEmprestimo.repositorioEmprestimos = RepositorioEmprestimo;
+            RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo(new Emprestimo[10]);
+            TelaEmprestimo telaEmprestimo = new TelaEmprestimo(RepositorioEmprestimo, telaAmigo, telaRevista, notificador);
+            
+            RepositorioCategoriaRevista repositorioCategoriaRevista = new RepositorioCategoriaRevista(new CategoriaRevista[10]);
+            TelaCategoriaRevista telaCategoriaRevista = new TelaCategoriaRevista(telaRevista, repositorioCategoriaRevista, notificador);
 
-            TelaEmprestimo.repositorioAmigo = repositorioAmigo;
-            TelaEmprestimo.repositorioRevista = repositorioRevista;
-            TelaEmprestimo.telaAmigo = telaAmigo;
-            TelaEmprestimo.telaRevista = telaRevista;
+            RepositorioReserva repositorioReserva = new RepositorioReserva(new Reserva[10]);
+            TelaReserva telaReserva = new TelaReserva(repositorioReserva, telaAmigo, telaRevista, telaEmprestimo, notificador);
 
             #region Popular arrays
-            telaAmigo.repositorioAmigo.PopularAmigos("homem", "mae", "132456", "rua 1");
-            telaAmigo.repositorioAmigo.PopularAmigos("mulher", "mae", "007007", "rua 2");
+            repositorioAmigo.PopularAmigos("homem", "mae", "132456", "rua 1");
+            repositorioAmigo.PopularAmigos("mulher", "mae", "007007", "rua 2");
 
-            telaCaixa.repositorioCaixa.PopularCaixa("preta", "123abc");
-            telaCaixa.repositorioCaixa.PopularCaixa("branca", "ddd007");
+            repositorioCaixa.PopularCaixa("preta", "123abc");
+            repositorioCaixa.PopularCaixa("branca", "ddd007");
 
-            Caixa caixa1 = telaRevista.repositorioCaixa.ObterCaixa(1);
-            Caixa caixa2 = telaRevista.repositorioCaixa.ObterCaixa(2);
+            Caixa caixa1 = repositorioCaixa.ObterCaixa(1);
+            Caixa caixa2 = repositorioCaixa.ObterCaixa(2);
             telaRevista.repositorioRevista.PopularRevistas("teste 1", "123abc", "2019", caixa1);
             telaRevista.repositorioRevista.PopularRevistas("teste 2", "456cba", "2021", caixa2);
             #endregion
-
-            Notificador notificador = new Notificador();
-            telaCaixa.notificador = notificador;
-            telaAmigo.notificador = notificador;
-            telaRevista.notificador = notificador;
-            TelaEmprestimo.notificador = notificador;
 
 
             while (true)
             {                
                 string opcaoMenuPrincipal = menuPrincipal.MostrarOpcoes();
 
-                if (opcaoMenuPrincipal == "1")
+                if (opcaoMenuPrincipal == "1") // Caixas
                 {
                     string opcao = telaCaixa.MostrarOpcoes();
 
@@ -98,10 +86,9 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma caixa cadastrada", StatusValidacao.Atencao);
                         }
-                        Console.ReadLine(); 
                     }
-                }
-                else if (opcaoMenuPrincipal == "2")
+                } // amigos
+                else if (opcaoMenuPrincipal == "2") // Revistas
                 {
                     string opcao = telaRevista.MostrarOpcoes();
 
@@ -124,9 +111,8 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma revista cadastrada", StatusValidacao.Atencao);
                         }
-                        Console.ReadLine();
                     }
-                }
+                } // Revistas
                 else if (opcaoMenuPrincipal == "3")
                 {
                     string opcao = telaAmigo.MostrarOpcoes();
@@ -150,35 +136,83 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValidacao.Atencao);
                         }
-                        Console.ReadLine();
                     }
-                }
+                } // Caixas
                 else if (opcaoMenuPrincipal == "4")
                 {
-                    string opcao = TelaEmprestimo.MostrarOpcoes();
+                    string opcao = telaEmprestimo.MostrarOpcoes();
 
                     if (opcao == "1")
                     {
-                        TelaEmprestimo.InserirNovoEmprestimo();
+                        telaEmprestimo.InserirNovoEmprestimo();
                     }
                     else if (opcao == "2")
                     {
-                        TelaEmprestimo.EditarEmprestimo();
+                        telaEmprestimo.EditarEmprestimo();
                     }
                     else if (opcao == "3")
                     {
-                        TelaEmprestimo.ExcluirEmprestimo();
+                        telaEmprestimo.ExcluirEmprestimo();
                     }
                     else if (opcao == "4")
                     {
-                        bool temEmprestimoCadastrado = TelaEmprestimo.VisualizarEmprestimos("Tela");
+                        bool temEmprestimoCadastrado = telaEmprestimo.VisualizarEmprestimos("Tela");
                         if (temEmprestimoCadastrado == false)
                         {
                             notificador.ApresentarMensagem("Nenhum emprestimo cadastrado", StatusValidacao.Atencao);
                         }
-                        Console.ReadLine();
                     }
-                }
+                } // Emprestimos
+                else if (opcaoMenuPrincipal == "5") // Categoria revistas
+                {
+                    string opcao = telaCategoriaRevista.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaCategoriaRevista.InserirNovaCategoria();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaCategoriaRevista.EditarCategoria();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaCategoriaRevista.ExcluirCategoria();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temCategoriaRevistaCadastrada = telaCategoriaRevista.VisualizarCategorias("Tela");
+                        if (temCategoriaRevistaCadastrada == false)
+                        {
+                            notificador.ApresentarMensagem("Nenhuma categoria cadastrada", StatusValidacao.Atencao);
+                        }
+                    }
+                } // Categorias revistas
+                else if (opcaoMenuPrincipal == "6") // Reservas
+                {
+                    string opcao = telaReserva.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaReserva.InserirNovaReserva();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaReserva.EditarReserva();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaReserva.ExcluirReserva();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temReservaCadastrada = telaReserva.VisualizarReservas("Tela");
+                        if (temReservaCadastrada == false)
+                        {
+                            notificador.ApresentarMensagem("Nenhuma reserva cadastrada", StatusValidacao.Atencao);
+                        }
+                    }
+                } // Categorias revistas
             }
         }       
     }

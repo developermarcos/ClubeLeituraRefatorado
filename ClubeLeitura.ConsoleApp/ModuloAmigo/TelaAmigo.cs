@@ -3,11 +3,19 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    internal class TelaAmigo
+    public class TelaAmigo
     {
         public int numeroAmigo; //controlar o número de amigos cadastrados
         public Notificador notificador; //reponsável pelas mensagens pro usuário
         public RepositorioAmigo repositorioAmigo;
+        private Amigo[] amigos;
+
+        public TelaAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador)
+        {
+            this.repositorioAmigo=repositorioAmigo;
+            this.notificador=notificador;
+        }
+
         public string MostrarOpcoes()
         {
             Console.Clear();
@@ -93,6 +101,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             for (int i = 0; i < amigos.Length; i++)
             {
                 Amigo a = amigos[i];
+
+                Console.WriteLine();
 
                 Console.WriteLine("ID: " + a.Numero);
                 Console.WriteLine("Nome: " + a.Nome);

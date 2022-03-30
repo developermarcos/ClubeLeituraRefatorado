@@ -18,6 +18,8 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             Console.WriteLine("Digite 2 para Cadastrar Revistinhas");
             Console.WriteLine("Digite 3 para Cadastrar Amiguinhos");
             Console.WriteLine("Digite 4 para Gerenciar Empréstimos");
+            Console.WriteLine("Digite 5 para Gerenciar Categorias");
+            Console.WriteLine("Digite 6 para Gerenciar Reservas");
 
             Console.WriteLine("Digite s para sair");
 

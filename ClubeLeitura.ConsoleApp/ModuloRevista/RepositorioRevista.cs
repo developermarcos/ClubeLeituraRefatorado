@@ -6,6 +6,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
     {
         public Revista[] revistas;
         public static int numeroRevista;
+
+        public RepositorioRevista(Revista[] revistas)
+        {
+            this.revistas=revistas;
+        }
+
         public void Inserir(Revista revista)
         {
             revista.Numero = ++numeroRevista;

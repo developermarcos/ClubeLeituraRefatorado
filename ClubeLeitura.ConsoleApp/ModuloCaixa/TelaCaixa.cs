@@ -8,7 +8,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
     {
         public int numeroCaixa; //controlar o número da caixas cadastradas
         public Notificador notificador; //reponsável pelas mensagens pro usuário
-        public RepositorioCaixa repositorioCaixa; 
+        public RepositorioCaixa repositorioCaixa;
+        private Caixa[] caixas;
+
+        public TelaCaixa(RepositorioCaixa repositorioCaixa, Notificador notificador)
+        {
+            this.repositorioCaixa=repositorioCaixa;
+            this.notificador=notificador;
+        }
+
         public string MostrarOpcoes()
         {
             Console.Clear();

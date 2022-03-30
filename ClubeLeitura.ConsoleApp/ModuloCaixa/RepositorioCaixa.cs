@@ -7,6 +7,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         public Caixa[] caixas;
         public static int numeroCaixa;
 
+        public RepositorioCaixa(Caixa[] caixas)
+        {
+            this.caixas=caixas;
+        }
+
         public void Inserir(Caixa caixa)
         {
             caixa.Numero = ObterNumeroCaixa();

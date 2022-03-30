@@ -4,7 +4,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 {
-    internal class Emprestimo
+    public class Emprestimo
     {
         private int _numero;
         private Amigo _amigo;

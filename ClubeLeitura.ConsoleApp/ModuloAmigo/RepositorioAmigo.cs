@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    internal class RepositorioAmigo
+    public class RepositorioAmigo
     {
         public Amigo[] amigos;
         private static int numeroAmigo;
+
+        public RepositorioAmigo(Amigo[] amigos)
+        {
+            this.amigos=amigos;
+        }
 
         public void Inserir(Amigo amigo)
         {
@@ -76,7 +81,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return numeroAmigoEncontrado;
         }
 
-        public int ObterPosicaoVazia()
+        private int ObterPosicaoVazia()
         {
             for (int i = 0; i < amigos.Length; i++)
             {
@@ -121,7 +126,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return amigo;
         }
 
-        public int ObterQtdAmigos()
+        private int ObterQtdAmigos()
         {
             int numeroAmigos = 0;
 
@@ -140,7 +145,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             Inserir(amigo);
         }
 
-        public int ObterNumeroAmigo()
+        private int ObterNumeroAmigo()
         {
             return ++numeroAmigo;
         }

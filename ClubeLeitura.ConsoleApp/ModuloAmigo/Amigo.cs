@@ -1,6 +1,6 @@
 ﻿namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    internal class Amigo
+    public class Amigo
     {
         private int _numero;
         private string _nome;

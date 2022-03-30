@@ -4,10 +4,15 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 {
-    internal class RepositorioEmprestimo
+    public class RepositorioEmprestimo
     {
         public Emprestimo[] emprestimos;
         public static int numeroEmprestimo;
+
+        public RepositorioEmprestimo(Emprestimo[] emprestimos)
+        {
+            this.emprestimos=emprestimos;
+        }
 
         public void Inserir(Emprestimo emprestimoCadastro)
         {
@@ -100,6 +105,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             }
 
             return numeroEmprestimoEncontrado;
+        }
+
+        public bool ExisteEmprestimoCadastrado()
+        {
+            for (int i = 0; i < emprestimos.Length; i++)
+            {
+                if (emprestimos[i] != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
