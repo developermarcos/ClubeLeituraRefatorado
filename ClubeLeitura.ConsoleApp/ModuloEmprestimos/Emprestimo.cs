@@ -1,12 +1,12 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloPessoa;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 {
-    public class Emprestimo
+    public class Emprestimo : EntidadeBase
     {
-        public int numero;
         public readonly Amigo amigo;
         public readonly Revista revista;
         public readonly DateTime emprestimoData;
@@ -35,6 +35,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             string status = this.devolucao == false ? "Emprestado" : "Devolvido";
             string mensagem = $"Numero: {this.numero} | Data empréstimo: {this.emprestimoData.ToString("dd/MM/yyyy")} | Data devolução: {this.DataDevolucao.ToString("dd/MM/yyyy")} | Status: {status}";
             return mensagem;
+        }
+
+        public override void Validar()
+        {
+
         }
     }
 }

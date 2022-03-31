@@ -1,16 +1,12 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
-using ClubeLeitura.ConsoleApp.ModuloPessoa;
+using ClubeLeitura.ConsoleApp.Compartilhado;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ClubeLeitura.ConsoleApp.ModuloMulta
 {
-    public class Multa
+    public class Multa : EntidadeBase
     {
-        public int numero;
         public readonly decimal valor;
         public readonly Emprestimo emprestimo;
         private readonly decimal valorBaseMulta = 1.50m;
@@ -26,6 +22,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloMulta
             string status = this.fechada == true ? "Fechada" : "Aberta";
             string mensagem = $"Numero: {this.numero} | Valor: {this.valor} | Numero emprestimo: {this.emprestimo.numero} | Amigo: {this.emprestimo.amigo.nome} | Status: {status}";
             return mensagem;
+        }
+        public override void Validar()
+        {
+            
         }
 
         #region métodos privados

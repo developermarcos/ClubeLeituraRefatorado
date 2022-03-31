@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    public class RepositorioAmigo
+    public class RepositorioAmigo : IRepositoryBase<Amigo>
     {
         public Amigo[] amigos;
-        private static int numeroAmigo;
+        private static int numero;
 
         public RepositorioAmigo(Amigo[] amigos)
         {
@@ -19,7 +14,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         public void Inserir(Amigo amigo)
         {
             int posicaoVazia = ObterPosicaoVazia();
-            amigo.numero = ObterNumeroAmigo();
+            amigo.numero = ObterNumeroRegistro();
             amigos[posicaoVazia] = amigo;
         }
 
@@ -37,6 +32,24 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             }
         }
 
+        public Amigo[] ObterTodosRegistros()
+        {
+            int quantidadeAmigos = ObterQuantidadeRegistros();
+
+            Amigo[] amigosInseridos = new Amigo[quantidadeAmigos];
+            int j = 0;
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null)
+                {
+                    amigosInseridos[j] = amigos[i];
+                    j++;
+                }
+            }
+
+            return amigosInseridos;
+        }
+
         public void Excluir(int numeroSelecionado)
         {
             for (int i = 0; i < amigos.Length; i++)
@@ -49,6 +62,73 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             }
         }
 
+        public Amigo ObterRegistro(int idAmigo)
+        {
+            Amigo amigo = null;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null && amigos[i].numero == idAmigo)
+                {
+                    amigo = amigos[i];
+                    break;
+                }
+            }
+
+            return amigo;
+        }
+
+        public bool ExisteNumeroRegistro(int numeroAmigo)
+        {
+            bool numeroAmigoEncontrado = false;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null && amigos[i].numero == numeroAmigo)
+                {
+                    numeroAmigoEncontrado = true;
+                    break;
+                }
+            }
+
+            return numeroAmigoEncontrado;
+        }
+
+        public int ObterPosicaoVazia()
+        {
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        public int ObterQuantidadeRegistros()
+        {
+            int numeroAmigos = 0;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null)
+                    numeroAmigos++;
+            }
+
+            return numeroAmigos;
+        }
+
+        public int ObterNumeroRegistro()
+        {
+            return ++numero;
+        }
+
+        public void Popular(Amigo amigo)
+        {
+            Inserir(amigo);
+        }
+
+        #region metodos próprios
         public bool nomeJaCadastrado(string nomeInformado)
         {
             bool nomejaUtilizado = false;
@@ -65,89 +145,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return nomejaUtilizado;
         }
 
-        public bool VerificarNumeroAmigoExiste(int numeroAmigo)
-        {
-            bool numeroAmigoEncontrado = false;
-
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] != null && amigos[i].numero == numeroAmigo)
-                {
-                    numeroAmigoEncontrado = true;
-                    break;
-                }
-            }
-
-            return numeroAmigoEncontrado;
-        }
-
-        private int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        public Amigo[] SelecionarTodos()
-        {
-            int quantidadeAmigos = ObterQtdAmigos();
-
-            Amigo[] amigosInseridos = new Amigo[quantidadeAmigos];
-            int j = 0;
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] != null)
-                {
-                    amigosInseridos[j] = amigos[i];
-                    j++;
-                }
-            }
-
-            return amigosInseridos;
-        }
-
-        public Amigo ObterAmigo(int idAmigo)
-        {
-            Amigo amigo = null;
-
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if(amigos[i] != null && amigos[i].numero == idAmigo)
-                {
-                    amigo = amigos[i];
-                    break;
-                }
-            }
-
-            return amigo;
-        }
-
-        private int ObterQtdAmigos()
-        {
-            int numeroAmigos = 0;
-
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] != null)
-                    numeroAmigos++;
-            }
-
-            return numeroAmigos;
-        }
-
-        public void PopularAmigos(string nome, string responsavel, string telefone, string endereco)
-        {
-            Amigo amigo= new Amigo(nome, responsavel, telefone, endereco);
-            Inserir(amigo);
-        }
-
-        private int ObterNumeroAmigo()
-        {
-            return ++numeroAmigo;
-        }
+        #endregion
     }
 }

@@ -59,7 +59,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             int idAmigo = telaAmigo.ObterNumeroAmigo();
 
-            Amigo amigoReserva = telaAmigo.repositorioAmigo.ObterAmigo(idAmigo);
+            Amigo amigoReserva = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
 
             
             bool existeRevistasCadastradas = telaRevista.VisualizarRevistas("Pesquisando");
@@ -104,7 +104,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             int idRevista = telaRevista.ObterNumeroRevista();
             
             
-            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterAmigo(idAmigo);
+            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
             Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRevistaPorNumero(idRevista);
             Reserva emprestimoCadastro = ObterReserva(amigoEmprestimo, revistaEmprestimo);
 
@@ -137,10 +137,10 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de reservas");
 
-            if (!repositorioReserva.ExisteReservaCadastrada())
+            if (repositorioReserva.ObterQuantidadeRegistros() == 0)
                 return false;
 
-            Reserva[] reservas = repositorioReserva.SelecionarTodos();
+            Reserva[] reservas = repositorioReserva.ObterTodosRegistros();
 
             if (reservas.Length == 0)
                 return false;
@@ -176,7 +176,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             Console.WriteLine("Informe a reserva que deseja criar um empréstimo");
             int numeroReserva = ObterNumeroReserva();
 
-            Reserva reserva = repositorioReserva.SelecionaReserva(numeroReserva);
+            Reserva reserva = repositorioReserva.ObterRegistro(numeroReserva);
 
             telaEmprestimo.EmprestimoApartirReserva(reserva);
 
@@ -230,7 +230,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 Console.Write("Digite o número da reserva: ");
                 numeroReserva = Convert.ToInt32(Console.ReadLine());
 
-                numeroReservaEncontrada = repositorioReserva.VerificarNumeroReservaExiste(numeroReserva);
+                numeroReservaEncontrada = repositorioReserva.ExisteNumeroRegistro(numeroReserva);
 
                 if (numeroReservaEncontrada == false)
                     notificador.ApresentarMensagem("Número da reserva não encontrada, digite novamente", StatusValidacao.Atencao);

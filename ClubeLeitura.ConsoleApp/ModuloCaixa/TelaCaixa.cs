@@ -79,7 +79,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
                 Console.Write("Digite o número da caixa que deseja editar: ");
                 numeroCaixa = Convert.ToInt32(Console.ReadLine());
 
-                numeroCaixaEncontrado = repositorioCaixa.VerificarNumeroCaixaExiste(numeroCaixa);
+                numeroCaixaEncontrado = repositorioCaixa.ExisteNumeroRegistro(numeroCaixa);
 
                 if (numeroCaixaEncontrado == false)
                     notificador.ApresentarMensagem("Número de caixa não encontrado, digite novamente", StatusValidacao.Atencao);
@@ -113,7 +113,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Caixas");
 
-            Caixa[] caixas = repositorioCaixa.SelecionarTodos();
+            Caixa[] caixas = (Caixa[])repositorioCaixa.ObterTodosRegistros();
 
             if (caixas.Length == 0)
                 return false;

@@ -169,10 +169,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             {
                 Console.Write("Informe a caixa para armazenar a revista: ");
                 int numeroCaixa = Convert.ToInt32(Console.ReadLine());
-                caixaExiste = telaCaixa.repositorioCaixa.VerificarNumeroCaixaExiste(numeroCaixa);
+                caixaExiste = telaCaixa.repositorioCaixa.ExisteNumeroRegistro(numeroCaixa);
                 caixa = null;
                 if (caixaExiste)
-                    caixa = telaCaixa.repositorioCaixa.ObterCaixa(numeroCaixa);
+                    caixa = telaCaixa.repositorioCaixa.ObterRegistro(numeroCaixa);
                 else
                     notificador.ApresentarMensagem("Caixa não encontrada, informe novamente", StatusValidacao.Atencao);
 

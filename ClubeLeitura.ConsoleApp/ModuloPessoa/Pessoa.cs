@@ -1,8 +1,9 @@
-﻿namespace ClubeLeitura.ConsoleApp.ModuloPessoa
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+
+namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    public class Pessoa
+    public class Pessoa : EntidadeBase
     {
-        public int numero;
         public string nome;
         public string telefone;
         public string endereco;
@@ -11,6 +12,10 @@
         {
             string mensagem = $"Numero: {this.numero} | Nome {this.nome} | Telefone {this.telefone} | Endereco {this.endereco}";
             return mensagem;
+        }
+        public override void Validar()
+        {
+
         }
     }
 }

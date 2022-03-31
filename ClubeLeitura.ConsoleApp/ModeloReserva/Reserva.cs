@@ -1,10 +1,11 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloPessoa;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModeloReserva
 {
-    public class Reserva
+    public class Reserva : EntidadeBase
     {
         public int numero;
         public readonly DateTime dataReserva;
@@ -26,6 +27,11 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
         {
             string mensagem = $"Numero : {this.numero} | Data reserva: {this.dataReserva.ToString("dd/MM/yyyy")} | Data expira: {this.DateExpira.ToString("dd/MM/yyyy")}";
             return mensagem;
+        }
+
+        public override void Validar()
+        {
+            
         }
 
         #region métodos privados

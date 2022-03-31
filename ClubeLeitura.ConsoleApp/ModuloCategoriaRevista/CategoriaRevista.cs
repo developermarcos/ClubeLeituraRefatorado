@@ -1,15 +1,8 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloRevista;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 {
-    public class CategoriaRevista
+    public class CategoriaRevista : EntidadeBase
     {
-        public int numero;
         public readonly string nome;
         public readonly int quantidadeDiasParaEmprestimo;
 
@@ -23,6 +16,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
         {
             string mensagem = $"Numero: {this.numero} | Nome: {this.nome} | Dias para empréstimo: {this.quantidadeDiasParaEmprestimo}";
             return mensagem;
+        }
+        public override void Validar()
+        {
+            
         }
     }
 }

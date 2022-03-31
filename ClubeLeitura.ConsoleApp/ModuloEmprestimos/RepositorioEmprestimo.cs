@@ -147,5 +147,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
                 }
             }
         }
+
+        public void Popular() { }
     }
 }

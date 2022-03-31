@@ -118,7 +118,7 @@
             return categoria;
         }
 
-        public void PopularCategoria(string nome, int quantidade)
+        public void Popular(string nome, int quantidade)
         {
             CategoriaRevista categoria = new CategoriaRevista(nome, quantidade);
             Inserir(categoria);

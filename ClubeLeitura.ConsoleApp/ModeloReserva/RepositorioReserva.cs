@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeLeitura.ConsoleApp.ModeloReserva
 {
-    public class RepositorioReserva
+    public class RepositorioReserva : IRepositoryBase<Reserva>
     {
         public Reserva[] reservas;
         private static int numeroReserva;
@@ -18,7 +14,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
         public void Inserir(Reserva reservaCadastro)
         {
-            reservaCadastro.numero = ++numeroReserva;
+            reservaCadastro.numero = ObterNumeroRegistro();
 
             int posicaoVazia = ObterPosicaoVazia();
 
@@ -38,32 +34,9 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             }
         }
 
-        public void Excluir(int numeroSelecionado)
+        public Reserva[] ObterTodosRegistros()
         {
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                if (reservas[i] != null && reservas[i].numero == numeroSelecionado)
-                {
-                    reservas[i] = null;
-                    break;
-                }
-            }
-        }
-
-        public int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                if (reservas[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        public Reserva[] SelecionarTodos()
-        {
-            int quantidadeReservas = ObterQtdReservas();
+            int quantidadeReservas = ObterQuantidadeRegistros();
 
             Reserva[] reservasInseridos = new Reserva[quantidadeReservas];
             int j = 0;
@@ -79,9 +52,21 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             return reservasInseridos;
         }
 
-        public Reserva SelecionaReserva(int numero)
+        public void Excluir(int numeroSelecionado)
         {
-            
+            for (int i = 0; i < reservas.Length; i++)
+            {
+                if (reservas[i] != null && reservas[i].numero == numeroSelecionado)
+                {
+                    reservas[i] = null;
+                    break;
+                }
+            }
+        }
+
+        public Reserva ObterRegistro(int numero)
+        {
+
             Reserva reservasInseridos = null;
 
             for (int i = 0; i < reservas.Length; i++)
@@ -93,20 +78,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             return reservasInseridos = null;
         }
 
-        public int ObterQtdReservas()
-        {
-            int numeroReservas = 0;
-
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                if (reservas[i] != null)
-                    numeroReservas++;
-            }
-
-            return numeroReservas;
-        }
-
-        public bool VerificarNumeroReservaExiste(int numeroReserva)
+        public bool ExisteNumeroRegistro(int numeroReserva)
         {
             bool numeroReservaEncontrada = false;
 
@@ -122,16 +94,38 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             return numeroReservaEncontrada;
         }
 
-        public bool ExisteReservaCadastrada()
+        public int ObterPosicaoVazia()
         {
             for (int i = 0; i < reservas.Length; i++)
             {
-                if (reservas[i] != null)
-                {
-                    return true;
-                }
+                if (reservas[i] == null)
+                    return i;
             }
-            return false;
+
+            return -1;
         }
+
+        public int ObterQuantidadeRegistros()
+        {
+            int numeroReservas = 0;
+
+            for (int i = 0; i < reservas.Length; i++)
+            {
+                if (reservas[i] != null)
+                    numeroReservas++;
+            }
+
+            return numeroReservas;
+        }
+
+        public void Popular(Reserva reserva) { }
+
+        #region método internos
+        public int ObterNumeroRegistro()
+        {
+            return ++numeroReserva;
+        }
+
+        #endregion
     }
 }

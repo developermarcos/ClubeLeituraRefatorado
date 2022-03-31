@@ -64,13 +64,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             int idAmigo = telaAmigo.ObterNumeroAmigo();
 
-            if (repositorioMulta.ExisteMultaAmigo(idAmigo))
+            if (repositorioMulta.ExisteNumeroRegistro(idAmigo))
             {
                 notificador.ApresentarMensagem("Não é possível realizar um novo empréstimo, pois o amigo possui multa em aberto.", StatusValidacao.Atencao);
                 return;
             }
 
-            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterAmigo(idAmigo);
+            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
 
             bool existeRevistasCadastradas = telaRevista.VisualizarRevistas("Pesquisando");
 
@@ -108,7 +108,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             int idAmigo = telaAmigo.ObterNumeroAmigo();
 
-            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterAmigo(idAmigo);
+            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
 
             bool existeRevistasCadastradas = telaRevista.VisualizarRevistas("Pesquisando");
 

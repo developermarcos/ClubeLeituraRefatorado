@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloPessoa;
+using ClubeLeitura.ConsoleApp.Compartilhado;
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
     public class Amigo : Pessoa

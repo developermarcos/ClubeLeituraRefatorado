@@ -1,8 +1,9 @@
-﻿namespace ClubeLeitura.ConsoleApp.ModuloCaixa
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+
+namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class Caixa
+    public class Caixa : EntidadeBase
     {
-        public int numero;
         public readonly string cor;
         public readonly string etiqueta;
 
@@ -18,5 +19,9 @@
             return mensagem;
         }
 
+        public override void Validar()
+        {
+            
+        }
     }
 }

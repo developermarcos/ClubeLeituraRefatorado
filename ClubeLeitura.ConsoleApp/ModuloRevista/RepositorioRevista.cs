@@ -105,7 +105,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return numeroRevistaEncontrado;
         }
 
-        public void PopularRevistas(string tipoColecao, string numeroEdicao, string ano, Caixa caixa, CategoriaRevista categoria)
+        public void Popular(string tipoColecao, string numeroEdicao, string ano, Caixa caixa, CategoriaRevista categoria)
         {
             Revista revista = new Revista(tipoColecao, numeroEdicao, ano, caixa, categoria);
             Inserir(revista);

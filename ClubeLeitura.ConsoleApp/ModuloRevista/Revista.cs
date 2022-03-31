@@ -1,11 +1,11 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloCategoriaRevista;
+using ClubeLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    public class Revista
+    public class Revista : EntidadeBase
     {
-        public int numero;
         public readonly string tipoColecao;
         public readonly string numeroEdicao;
         public readonly string ano;
@@ -25,6 +25,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             string mensagem = $"Numero: {this.numero} | Tipo coleção: {this.tipoColecao} | Numero edição: {this.numeroEdicao} | Ano: {this.ano}";
             return mensagem;
+        }
+        public override void Validar()
+        {
+            
         }
     }
 }

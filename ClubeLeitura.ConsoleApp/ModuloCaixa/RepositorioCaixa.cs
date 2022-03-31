@@ -1,12 +1,12 @@
-﻿using System;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class RepositorioCaixa
+    public class RepositorioCaixa : IRepositoryBase<Caixa>
     {
         public Caixa[] caixas;
-        public static int numeroCaixa;
-
+        public static int numero;
         public RepositorioCaixa(Caixa[] caixas)
         {
             this.caixas=caixas;
@@ -14,9 +14,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
         public void Inserir(Caixa caixa)
         {
-            caixa.numero = ObterNumeroCaixa();
+            
+            caixa.numero = ObterNumeroRegistro();
 
             int posicaoVazia = ObterPosicaoVazia();
+            
             caixas[posicaoVazia] = caixa;
         }
 
@@ -46,22 +48,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             }
         }
 
-        public bool EtiquetaJaUtilizada(string etiquetaInformada)
-        {
-            bool etiquetaJaUtilizada = false;
-            for (int i = 0; i < caixas.Length; i++)
-            {
-                if (caixas[i] != null && caixas[i].etiqueta == etiquetaInformada)
-                {
-                    etiquetaJaUtilizada = true;
-                    break;
-                }
-            }
-
-            return etiquetaJaUtilizada;
-        }
-
-        public bool VerificarNumeroCaixaExiste(int numeroCaixa)
+        public bool ExisteNumeroRegistro(int numeroCaixa)
         {
             bool numeroCaixaEncontrado = false;
 
@@ -88,25 +75,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return -1;
         }
 
-        public Caixa[] SelecionarTodos()
-        {
-            int quantidadeCaixas = ObterQtdCaixas();
-
-            Caixa[] caixasInseridas = new Caixa[quantidadeCaixas];
-            int j = 0;
-            for (int i = 0; i < caixas.Length; i++)
-            {
-                if (caixas[i] != null)
-                {
-                    caixasInseridas[j] = caixas[i];
-                    j++;
-                }            
-            }
-
-            return caixasInseridas;
-        }
-
-        public int ObterQtdCaixas()
+        public int ObterQuantidadeRegistros()
         {
             int numeroCaixas = 0;
 
@@ -119,13 +88,31 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return numeroCaixas;
         }
 
-        public Caixa ObterCaixa(int numeroCaixa)
+        public Caixa[] ObterTodosRegistros()
+        {
+            int quantidadeCaixas = ObterQuantidadeRegistros();
+
+            Caixa[] caixasInseridas = new Caixa[quantidadeCaixas];
+            int j = 0;
+            for (int i = 0; i < caixas.Length; i++)
+            {
+                if (caixas[i] != null)
+                {
+                    caixasInseridas[j] = caixas[i];
+                    j++;
+                }
+            }
+
+            return caixasInseridas;
+        }
+
+        public Caixa ObterRegistro(int numeroCaixa)
         {
             Caixa caixa = null;
 
             for (int i = 0; i < caixas.Length; i++)
             {
-                if(caixas[i] != null && caixas[i].numero == numeroCaixa)
+                if (caixas[i] != null && caixas[i].numero == numeroCaixa)
                 {
                     caixa = caixas[i];
                     break;
@@ -135,15 +122,34 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return caixa;
         }
 
-        public void PopularCaixa(string cor, string etiqueta)
+        #region métodos própios
+
+        public void Popular(Caixa caixa)
         {
-            Caixa caixaPopularArray = new Caixa(cor, etiqueta);
-            Inserir(caixaPopularArray);
+            Inserir(caixa);
         }
 
-        public int ObterNumeroCaixa()
+        public bool EtiquetaJaUtilizada(string etiquetaInformada)
         {
-            return ++numeroCaixa;
+            bool etiquetaJaUtilizada = false;
+            for (int i = 0; i < caixas.Length; i++)
+            {
+                if (caixas[i] != null && caixas[i].etiqueta == etiquetaInformada)
+                {
+                    etiquetaJaUtilizada = true;
+                    break;
+                }
+            }
+
+            return etiquetaJaUtilizada;
         }
+
+        #endregion
+
+        #region métodos privados
+
+        public int ObterNumeroRegistro() => ++numero;
+
+        #endregion
     }
 }

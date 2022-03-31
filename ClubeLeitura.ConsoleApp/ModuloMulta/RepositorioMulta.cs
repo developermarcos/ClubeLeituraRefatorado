@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeLeitura.ConsoleApp.ModuloMulta
 {
-    public class RepositorioMulta
+    public class RepositorioMulta : IRepositoryBase<Multa>
     {
-        public int numero;
+        public static int numero;
         Multa[] multas;
         
         public RepositorioMulta(Multa[] multas)
@@ -18,25 +14,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloMulta
 
         public void Inserir(Multa multa)
         {
-            multa.numero = ++numero;
+            multa.numero = ObterNumeroRegistro();
             int posicaoVazia = ObterPosicaoVazia();
             multas[posicaoVazia] = multa;
         }
 
-        private int ObterPosicaoVazia()
+        public Multa[] ObterTodosRegistros()
         {
-            for (int i = 0; i < multas.Length; i++)
-            {
-                if(multas[i] == null)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-        public Multa[] SelecionarTodos()
-        {
-            int quantidadeMultas = ObterQtdMultas();
+            int quantidadeMultas = ObterQuantidadeRegistros();
 
             Multa[] multasInseridas = new Multa[quantidadeMultas];
             int j = 0;
@@ -52,31 +37,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloMulta
             return multasInseridas;
         }
 
-        private int ObterQtdMultas()
-        {
-            int quantidadeMultas = 0;
-
-            for (int i = 0; i < multas.Length; i++)
-            {
-                if(multas[i] != null)
-                    quantidadeMultas++;
-            }
-
-            return quantidadeMultas;
-        }
-
-        public bool MultaCadastrada(int numero)
-        {
-            for (int i = 0; i < multas.Length; i++)
-            {
-                if (multas[i].numero == numero)
-                    return true;
-            }
-
-            return false;
-        }
-
-        public Multa SelecionaMulta(int numero)
+        public Multa ObterRegistro(int numero)
         {
             Multa multa = null;
 
@@ -89,6 +50,47 @@ namespace ClubeLeitura.ConsoleApp.ModuloMulta
             return multa;
         }
 
+        public bool ExisteNumeroRegistro(int numero)
+        {
+            for (int i = 0; i < multas.Length; i++)
+            {
+                if (multas[i] != null && multas[i].numero == numero)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int ObterPosicaoVazia()
+        {
+            for (int i = 0; i < multas.Length; i++)
+            {
+                if(multas[i] == null)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int ObterQuantidadeRegistros()
+        {
+            int quantidadeMultas = 0;
+
+            for (int i = 0; i < multas.Length; i++)
+            {
+                if(multas[i] != null)
+                    quantidadeMultas++;
+            }
+
+            return quantidadeMultas;
+        }
+
+        public void Popular(Multa multa) { }
+
+        
+        #region métodos próprios
         public void BaixarMulta(int numero)
         {
             for (int i = 0; i < multas.Length; i++)
@@ -100,17 +102,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloMulta
                 }
             }
         }
+        #endregion
 
-        public bool ExisteMultaAmigo(int numero)
+        #region métodos não utilizados
+        public void Editar(int numero, Multa item){}
+        
+        public void Excluir(int numero){}
+
+        public int ObterNumeroRegistro()
         {
-            for (int i = 0; i < multas.Length; i++)
-            {
-                if (multas[i] != null && multas[i].numero == numero)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ++numero;
         }
+        #endregion
     }
 }

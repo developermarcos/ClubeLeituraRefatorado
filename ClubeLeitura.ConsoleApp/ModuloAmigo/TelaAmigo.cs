@@ -99,7 +99,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Amigos");
 
-            Amigo[] amigos = repositorioAmigo.SelecionarTodos();
+            Amigo[] amigos = repositorioAmigo.ObterTodosRegistros();
 
             if (amigos.Length == 0)
                 return false;
@@ -160,7 +160,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 Console.Write("Digite o número do amigo: ");
                 numeroAmigo = Convert.ToInt32(Console.ReadLine());
 
-                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
+                numeroAmigoEncontrado = repositorioAmigo.ExisteNumeroRegistro(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
                     notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValidacao.Atencao);
@@ -212,7 +212,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 Console.Write("Digite o numero da multa para baixar: ");
                 numero = Convert.ToInt32(Console.ReadLine());
 
-                multaEncontrada = repositorioMulta.MultaCadastrada(numero);
+                multaEncontrada = repositorioMulta.ExisteNumeroRegistro(numero);
 
                 if (!multaEncontrada)
                     notificador.ApresentarMensagem("Numero da multa não encontrado, informe novamente.", StatusValidacao.Erro);
@@ -221,7 +221,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                     return numero;
                 }
                     
-
             } while (!multaEncontrada);
             
             return numero;

@@ -53,21 +53,25 @@ namespace ClubeLeitura.ConsoleApp
             telaEmprestimo.repositorioMulta = repositorioMulta;
 
             #region Popular arrays
-            repositorioAmigo.PopularAmigos("homem", "mae", "132456", "rua 1");
-            repositorioAmigo.PopularAmigos("mulher", "mae", "007007", "rua 2");
+            Amigo amigo1 = new Amigo("homem", "mae", "132456", "rua 1");
+            Amigo amigo2 = new Amigo("mulher", "mae", "007007", "rua 2");
+            repositorioAmigo.Popular(amigo1);
+            repositorioAmigo.Popular(amigo2);
 
-            repositorioCaixa.PopularCaixa("preta", "123abc");
-            repositorioCaixa.PopularCaixa("branca", "ddd007");
+            Caixa c1 = new Caixa("preta", "123abc");
+            Caixa c2 = new Caixa("branca", "ddd007");
+            repositorioCaixa.Popular(c1);
+            repositorioCaixa.Popular(c2);
 
-            repositorioCategoriaRevista.PopularCategoria("Categoria 1", 2);
-            repositorioCategoriaRevista.PopularCategoria("Categoria 2", 3);
+            repositorioCategoriaRevista.Popular("Categoria 1", 2);
+            repositorioCategoriaRevista.Popular("Categoria 2", 3);
 
-            Caixa caixa1 = repositorioCaixa.ObterCaixa(1);
-            Caixa caixa2 = repositorioCaixa.ObterCaixa(2);
+            Caixa caixa1 = repositorioCaixa.ObterRegistro(1);
+            Caixa caixa2 = repositorioCaixa.ObterRegistro(2);
             CategoriaRevista cat1 = repositorioCategoriaRevista.ObterCategoria(1);
             CategoriaRevista cat2 = repositorioCategoriaRevista.ObterCategoria(2);
-            telaRevista.repositorioRevista.PopularRevistas("teste 1", "123abc", "2019", caixa1, cat1);
-            telaRevista.repositorioRevista.PopularRevistas("teste 2", "456cba", "2021", caixa2, cat2);
+            telaRevista.repositorioRevista.Popular("teste 1", "123abc", "2019", c1, cat1);
+            telaRevista.repositorioRevista.Popular("teste 2", "456cba", "2021", c2, cat2);
             #endregion
 
 
