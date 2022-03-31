@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloCategoriaRevista;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
@@ -104,9 +105,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return numeroRevistaEncontrado;
         }
 
-        public void PopularRevistas(string tipoColecao, string numeroEdicao, string ano, Caixa caixa)
+        public void PopularRevistas(string tipoColecao, string numeroEdicao, string ano, Caixa caixa, CategoriaRevista categoria)
         {
-            Revista revista = new Revista(tipoColecao, numeroEdicao, ano, caixa);
+            Revista revista = new Revista(tipoColecao, numeroEdicao, ano, caixa, categoria);
             Inserir(revista);
         }
 

@@ -1,7 +1,4 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloRevista;
-using System;
-
-namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
+﻿namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 {
     public class RepositorioCategoriaRevista
     {
@@ -119,6 +116,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             }
 
             return categoria;
+        }
+
+        public void PopularCategoria(string nome, int quantidade)
+        {
+            CategoriaRevista categoria = new CategoriaRevista(nome, quantidade);
+            Inserir(categoria);
         }
     }
 }

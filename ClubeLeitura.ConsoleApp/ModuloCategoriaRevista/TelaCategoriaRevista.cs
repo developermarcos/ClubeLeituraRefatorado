@@ -11,9 +11,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
         public Notificador notificador;
         private CategoriaRevista[] categoriaRevistas;
 
-        public TelaCategoriaRevista(TelaRevista telaRevista, RepositorioCategoriaRevista repositorioCategoriaRevista, Notificador notificador)
+        public TelaCategoriaRevista(RepositorioCategoriaRevista repositorioCategoriaRevista, Notificador notificador)
         {
-            this.telaRevista=telaRevista;
             this.repositorioCategoriaRevista=repositorioCategoriaRevista;
             this.notificador=notificador;
         }
@@ -22,9 +21,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
         {
             MostrarTitulo("Inserindo nova Revista");
 
-            Revista[] revistas = ObterRevistas();
-
-            CategoriaRevista categoria = ObterCategoria(revistas);
+            CategoriaRevista categoria = ObterCategoria();
 
             repositorioCategoriaRevista.Inserir(categoria);
 
@@ -45,9 +42,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             int numeroCategoria = ObterNumeroCategoria();
 
-            Revista[] revistas = ObterRevistas();
-
-            CategoriaRevista categoria = ObterCategoria(revistas);
+            CategoriaRevista categoria = ObterCategoria();
 
             repositorioCategoriaRevista.Editar(categoria, numeroCategoria);
 
@@ -87,15 +82,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             {
                 CategoriaRevista cat = categorias[i];
 
-                Console.WriteLine("Número: " + cat.Numero);
-                Console.WriteLine("Nome: " + cat.Nome);
-                Console.WriteLine("Quantidade de dias para empréstimo: " + cat.QuantidadeDiasParaEmprestimo);
-
-                for (int j = 0; j < cat.Revistas.Length; j++)
-                {
-                    Revista revista = cat.Revistas[j];
-                    Console.WriteLine("Revista tipo: {0} | Numero Edição: {1} | Ano {2}", revista.TipoColecao, revista.NumeroEdicao, revista.Ano);
-                }
+                Console.WriteLine(cat.ToString());
                 
                 Console.WriteLine();
             }
@@ -123,8 +110,28 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             return opcao;
         }
 
+        public int ObterNumeroCategoria()
+        {
+            int numeroCategoria;
+            bool numeroCategoriaEncontrada;
+
+            do
+            {
+                Console.Write("Digite o número da categoria: ");
+                numeroCategoria = Convert.ToInt32(Console.ReadLine());
+
+                numeroCategoriaEncontrada = repositorioCategoriaRevista.VerificarNumeroCategoriaExiste(numeroCategoria);
+
+                if (numeroCategoriaEncontrada == false)
+                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
+
+            } while (numeroCategoriaEncontrada == false);
+
+            return numeroCategoria;
+        }
 
         #region métodos privados
+
         private void MostrarTitulo(string titulo)
         {
             Console.Clear();
@@ -171,7 +178,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             return revistas;
         }
 
-        private CategoriaRevista ObterCategoria(Revista[] revistas)
+        private CategoriaRevista ObterCategoria()
         {
             Console.Write("Digite o nome: ");
             string nome = Console.ReadLine();
@@ -179,30 +186,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             Console.Write("Digite a quantidade de dias para empréstimo: ");
             int diasParaDevolver = Convert.ToInt32(Console.ReadLine());
 
-            CategoriaRevista categoria = new CategoriaRevista(nome, diasParaDevolver, revistas);
+            CategoriaRevista categoria = new CategoriaRevista(nome, diasParaDevolver);
             return categoria;
         }
 
-        private int ObterNumeroCategoria()
-        {
-            int numeroCategoria;
-            bool numeroCategoriaEncontrada;
-
-            do
-            {
-                Console.Write("Digite o número da categoria: ");
-                numeroCategoria = Convert.ToInt32(Console.ReadLine());
-
-                numeroCategoriaEncontrada = repositorioCategoriaRevista.VerificarNumeroCategoriaExiste(numeroCategoria);
-
-                if (numeroCategoriaEncontrada == false)
-                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
-
-            } while (numeroCategoriaEncontrada == false);
-
-            return numeroCategoria;
-        }
-
+        
         #endregion
     }
 }

@@ -34,5 +34,11 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             DateTime dataCalculada = data.AddDays(2);
             return dataCalculada;
         }
+
+        public override string ToString()
+        {
+            string mensagem = $"Numero : {this.Numero} | Data reserva: {this.DataReserva.ToString("dd/MM/yyyy")} | Data expira: {this.DateExpira.ToString("dd/MM/yyyy")}";
+            return mensagem;
+        }
     }
 }

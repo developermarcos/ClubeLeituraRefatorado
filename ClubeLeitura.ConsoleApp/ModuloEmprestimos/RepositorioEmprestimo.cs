@@ -16,7 +16,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
         public void Inserir(Emprestimo emprestimoCadastro)
         {
-            emprestimoCadastro.Numero = ++numeroEmprestimo;
+            emprestimoCadastro.numero = ++numeroEmprestimo;
 
             int posicaoVazia = ObterPosicaoVazia();
 
@@ -27,9 +27,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
         {
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                if (emprestimos[i] != null && emprestimos[i].Numero == numeroSelecioando)
+                if (emprestimos[i] != null && emprestimos[i].numero == numeroSelecioando)
                 {
-                    emprestimo.Numero = numeroSelecioando;
+                    emprestimo.numero = numeroSelecioando;
                     emprestimos[i] = emprestimo;
 
                     break;
@@ -41,7 +41,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
         {
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                if (emprestimos[i] != null && emprestimos[i].Numero == numeroSelecionado)
+                if (emprestimos[i] != null && emprestimos[i].numero == numeroSelecionado)
                 {
                     emprestimos[i] = null;
                     break;
@@ -78,6 +78,22 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             return emprestimosInseridos;
         }
 
+        public Emprestimo SelecionarEmprestimo(int numero)
+        {
+            Emprestimo emprestimo = null;
+
+            for (int i = 0; i < emprestimos.Length; i++)
+            {
+                if (emprestimos[i] != null && emprestimos[i].numero == numero)
+                {
+                    Emprestimo emprestimosInseridos = emprestimos[i];
+                    return emprestimosInseridos;
+                }
+            }
+            
+            return emprestimo;
+        }
+
         public int ObterQtdEmprestimos()
         {
             int numeroEmprestimos = 0;
@@ -97,7 +113,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                if (emprestimos[i] != null && emprestimos[i].Numero == numeroEmprestimo)
+                if (emprestimos[i] != null && emprestimos[i].numero == numeroEmprestimo)
                 {
                     numeroEmprestimoEncontrado = true;
                     break;
@@ -119,5 +135,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             return false;
         }
 
+        public void Devolucao(Emprestimo emprestimoDevolucao)
+        {
+            emprestimoDevolucao.devolucao = true;
+            for (int i = 0; i < emprestimos.Length; i++)
+            {
+                if(emprestimos[i].numero == emprestimoDevolucao.numero)
+                {
+                    emprestimos[i].numero = emprestimoDevolucao.numero;
+                    break;
+                }
+            }
+        }
     }
 }

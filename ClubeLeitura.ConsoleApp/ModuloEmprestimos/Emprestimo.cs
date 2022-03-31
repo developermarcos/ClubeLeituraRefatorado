@@ -6,23 +6,35 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 {
     public class Emprestimo
     {
-        private int _numero;
-        private Amigo _amigo;
-        private Revista _revista;
-        private DateTime _emprestimoData;
-
+        public int numero;
+        public readonly Amigo amigo;
+        public readonly Revista revista;
+        public readonly DateTime emprestimoData;
+        private DateTime _dataDevolucao;
+        public bool devolucao;
         public Emprestimo(Amigo amigo, Revista revista, DateTime data)
         {
-            this._amigo = amigo;
-            this._revista = revista;
-            this._emprestimoData = data;
+            this.amigo = amigo;
+            this.revista = revista;
+            this.emprestimoData = data;
+            this.DataDevolucao = data;
+            this.devolucao = false;
         }
-        public int Numero { get { return _numero; } set { _numero = value; } }
+        
+        public DateTime DataDevolucao { 
+            get { return _dataDevolucao;} 
+            private set 
+            {
+                int diasParaEmprestimo = this.revista.Categoria.QuantidadeDiasParaEmprestimo + 1;
+                this._dataDevolucao = value.AddDays(diasParaEmprestimo);
+            } 
+        }
 
-        public Amigo Amigo { get { return _amigo; } }
-
-        public Revista Revista { get { return _revista;  } }
-
-        public DateTime EmprestimoData { get { return _emprestimoData; } }
+        public override string ToString()
+        {
+            string status = this.devolucao == false ? "Emprestado" : "Devolvido";
+            string mensagem = $"Numero: {this.numero} | Data empréstimo: {this.emprestimoData.ToString("dd/MM/yyyy")} | Data devolução: {this.DataDevolucao.ToString("dd/MM/yyyy")} | Status: {status}";
+            return mensagem;
+        }
     }
 }

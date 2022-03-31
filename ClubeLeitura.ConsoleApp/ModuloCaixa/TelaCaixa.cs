@@ -122,17 +122,16 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             {              
                 Caixa c = caixas[i];
 
-                Console.WriteLine("Número: " + c.Numero);
-                Console.WriteLine("Cor: " + c.Cor);
-                Console.WriteLine("Etiqueta: " + c.Etiqueta);
-
+                Console.WriteLine(c.ToString());
+                
                 Console.WriteLine();
             }
 
             return true;
         }
-        
-        public Caixa ObterCaixa()
+
+        #region métodos privados
+        private Caixa ObterCaixa()
         {
             Console.Write("Digite a cor: ");
             string cor = Console.ReadLine();
@@ -161,7 +160,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return caixa;
         }
 
-        public void MostrarTitulo(string titulo)
+        private void MostrarTitulo(string titulo)
         {
             Console.Clear();
 
@@ -169,6 +168,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             Console.WriteLine();
         }
-
+        #endregion
     }
 }

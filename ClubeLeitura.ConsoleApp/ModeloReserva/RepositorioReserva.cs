@@ -79,6 +79,20 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             return reservasInseridos;
         }
 
+        public Reserva SelecionaReserva(int numero)
+        {
+            
+            Reserva reservasInseridos = null;
+
+            for (int i = 0; i < reservas.Length; i++)
+            {
+                if (reservas[i].Numero == numero)
+                    return reservas[i];
+            }
+
+            return reservasInseridos = null;
+        }
+
         public int ObterQtdReservas()
         {
             int numeroReservas = 0;

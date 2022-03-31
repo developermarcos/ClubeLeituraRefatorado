@@ -16,6 +16,12 @@
         public string Cor { get { return this._cor; } }
 
         public string Etiqueta { get { return this._etiqueta; } }
-        
+
+        public override string ToString()
+        {
+            string mensagem = $"Numero: {this.Numero} | Cor: {this.Cor} | Etiqueta: {this.Etiqueta}";
+            return mensagem;
+        }
+
     }
 }

@@ -12,13 +12,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
         private int _numero;
         private string _nome;
         private int _quantidadeDiasParaEmprestimo;
-        private Revista[] _revistas;
 
-        public CategoriaRevista(string nome, int quantidade, Revista[] revistas)
+        public CategoriaRevista(string nome, int quantidade)
         {
             this._nome = nome;
             this._quantidadeDiasParaEmprestimo = quantidade;
-            this._revistas = revistas;
         }
 
         public int Numero { get { return this._numero; } set { this._numero = value; } }
@@ -27,6 +25,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
         public int QuantidadeDiasParaEmprestimo { get { return _quantidadeDiasParaEmprestimo; } }
 
-        public Revista[] Revistas { get { return _revistas; } }
+        public override string ToString()
+        {
+            string mensagem = $"Numero: {this.Numero} | Nome: {this.Nome} | Dias para empréstimo: {this.QuantidadeDiasParaEmprestimo}";
+            return mensagem;
+        }
     }
 }

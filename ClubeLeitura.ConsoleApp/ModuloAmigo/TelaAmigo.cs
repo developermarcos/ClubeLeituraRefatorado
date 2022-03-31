@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloMulta;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
@@ -9,18 +10,22 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         public Notificador notificador; //reponsável pelas mensagens pro usuário
         public RepositorioAmigo repositorioAmigo;
         private Amigo[] amigos;
+        public TelaMulta telaMulta;
+        public RepositorioMulta repositorioMulta;
 
         public TelaAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador)
         {
             this.repositorioAmigo=repositorioAmigo;
             this.notificador=notificador;
+            this.telaMulta = null;
+            this.repositorioMulta = null;
         }
 
         public string MostrarOpcoes()
         {
             Console.Clear();
 
-            Console.WriteLine("Cadastro de Caixas");
+            Console.WriteLine("Cadastro de Amigos");
 
             Console.WriteLine();
 
@@ -28,6 +33,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             Console.WriteLine("Digite 2 para Editar");
             Console.WriteLine("Digite 3 para Excluir");
             Console.WriteLine("Digite 4 para Visualizar");
+            Console.WriteLine("Digite 5 para Multas");
 
             Console.WriteLine("Digite s para sair");
 
@@ -104,11 +110,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
                 Console.WriteLine();
 
-                Console.WriteLine("ID: " + a.Numero);
-                Console.WriteLine("Nome: " + a.Nome);
-                Console.WriteLine("Responsavel: " + a.Responsavel);
-                Console.WriteLine("Telefone: " + a.Telefone);
-                Console.WriteLine("Endereço: " + a.Endereco);
+                Console.WriteLine(a.ToString());
 
                 Console.WriteLine();
             }
@@ -175,6 +177,54 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             Console.WriteLine(titulo);
 
             Console.WriteLine();
+        }
+
+        public void BaixarMulta()
+        {
+            MostrarTitulo("Baixar multa");
+            if(telaMulta == null)
+            {
+                notificador.ApresentarMensagem("Nenhuma multa cadastrada para poder editar", StatusValidacao.Atencao);
+                return;
+            }
+
+            bool temMultasCadastras = telaMulta.VisualizarMultas("Pesquisando");
+
+            if (temMultasCadastras == false)
+            {
+                notificador.ApresentarMensagem("Nenhuma multa cadastrada para poder editar", StatusValidacao.Atencao);
+                return;
+            }
+
+            int numeroBaixa = obterNumeroMulta();
+
+            repositorioMulta.BaixarMulta(numeroBaixa);
+            
+            notificador.ApresentarMensagem("Multa baixada com sucesso!", StatusValidacao.Sucesso);
+        }
+
+        private int obterNumeroMulta()
+        {
+            int numero = default;
+            bool multaEncontrada;
+            do
+            {
+                Console.Write("Digite o numero da multa para baixar: ");
+                numero = Convert.ToInt32(Console.ReadLine());
+
+                multaEncontrada = repositorioMulta.MultaCadastrada(numero);
+
+                if (!multaEncontrada)
+                    notificador.ApresentarMensagem("Numero da multa não encontrado, informe novamente.", StatusValidacao.Erro);
+                else
+                {
+                    return numero;
+                }
+                    
+
+            } while (!multaEncontrada);
+            
+            return numero;
         }
     }
 }

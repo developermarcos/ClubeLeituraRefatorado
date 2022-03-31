@@ -44,5 +44,11 @@
         {
             get { return this._endereco; }
         }
+
+        public override string ToString()
+        {
+            string mensagem = $"Numero: {this.Numero} | Nome {this.Nome} | Responsavel {this.Responsavel} | Telefone {this.Telefone} | Endereco {this.Endereco}";
+            return mensagem;
+        }
     }
 }

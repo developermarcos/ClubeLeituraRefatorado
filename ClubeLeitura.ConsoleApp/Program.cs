@@ -16,6 +16,7 @@ using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
 using System;
 using ClubeLeitura.ConsoleApp.ModuloCategoriaRevista;
 using ClubeLeitura.ConsoleApp.ModeloReserva;
+using ClubeLeitura.ConsoleApp.ModuloMulta;
 
 namespace ClubeLeitura.ConsoleApp
 {
@@ -33,17 +34,23 @@ namespace ClubeLeitura.ConsoleApp
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo(new Amigo[10]);
             TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo, notificador);
 
+            RepositorioCategoriaRevista repositorioCategoriaRevista = new RepositorioCategoriaRevista(new CategoriaRevista[10]);
+            TelaCategoriaRevista telaCategoriaRevista = new TelaCategoriaRevista(repositorioCategoriaRevista, notificador);
+
             RepositorioRevista repositorioRevista = new RepositorioRevista(new Revista[10]);
-            TelaRevista telaRevista = new TelaRevista(repositorioRevista, telaCaixa, notificador);
+            TelaRevista telaRevista = new TelaRevista(repositorioRevista, telaCaixa, telaCategoriaRevista, notificador);
 
             RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo(new Emprestimo[10]);
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo(RepositorioEmprestimo, telaAmigo, telaRevista, notificador);
             
-            RepositorioCategoriaRevista repositorioCategoriaRevista = new RepositorioCategoriaRevista(new CategoriaRevista[10]);
-            TelaCategoriaRevista telaCategoriaRevista = new TelaCategoriaRevista(telaRevista, repositorioCategoriaRevista, notificador);
-
             RepositorioReserva repositorioReserva = new RepositorioReserva(new Reserva[10]);
             TelaReserva telaReserva = new TelaReserva(repositorioReserva, telaAmigo, telaRevista, telaEmprestimo, notificador);
+
+            RepositorioMulta repositorioMulta = new RepositorioMulta(new Multa[10]);
+            TelaMulta telaMulta = new TelaMulta(repositorioMulta, telaAmigo);
+            telaAmigo.telaMulta = telaMulta;
+            telaAmigo.repositorioMulta = repositorioMulta;
+            telaEmprestimo.repositorioMulta = repositorioMulta;
 
             #region Popular arrays
             repositorioAmigo.PopularAmigos("homem", "mae", "132456", "rua 1");
@@ -52,10 +59,15 @@ namespace ClubeLeitura.ConsoleApp
             repositorioCaixa.PopularCaixa("preta", "123abc");
             repositorioCaixa.PopularCaixa("branca", "ddd007");
 
+            repositorioCategoriaRevista.PopularCategoria("Categoria 1", 2);
+            repositorioCategoriaRevista.PopularCategoria("Categoria 2", 3);
+
             Caixa caixa1 = repositorioCaixa.ObterCaixa(1);
             Caixa caixa2 = repositorioCaixa.ObterCaixa(2);
-            telaRevista.repositorioRevista.PopularRevistas("teste 1", "123abc", "2019", caixa1);
-            telaRevista.repositorioRevista.PopularRevistas("teste 2", "456cba", "2021", caixa2);
+            CategoriaRevista cat1 = repositorioCategoriaRevista.ObterCategoria(1);
+            CategoriaRevista cat2 = repositorioCategoriaRevista.ObterCategoria(2);
+            telaRevista.repositorioRevista.PopularRevistas("teste 1", "123abc", "2019", caixa1, cat1);
+            telaRevista.repositorioRevista.PopularRevistas("teste 2", "456cba", "2021", caixa2, cat2);
             #endregion
 
 
@@ -63,7 +75,7 @@ namespace ClubeLeitura.ConsoleApp
             {                
                 string opcaoMenuPrincipal = menuPrincipal.MostrarOpcoes();
 
-                if (opcaoMenuPrincipal == "1") // Caixas
+                if (opcaoMenuPrincipal == "1")
                 {
                     string opcao = telaCaixa.MostrarOpcoes();
 
@@ -86,6 +98,7 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma caixa cadastrada", StatusValidacao.Atencao);
                         }
+                        Console.ReadLine();
                     }
                 } // amigos
                 else if (opcaoMenuPrincipal == "2") // Revistas
@@ -111,6 +124,7 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma revista cadastrada", StatusValidacao.Atencao);
                         }
+                        Console.ReadLine();
                     }
                 } // Revistas
                 else if (opcaoMenuPrincipal == "3")
@@ -136,8 +150,13 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValidacao.Atencao);
                         }
+                        Console.ReadLine();
                     }
-                } // Caixas
+                    else if (opcao == "5")
+                    {
+                        telaAmigo.BaixarMulta();
+                    }
+                } // Amigos
                 else if (opcaoMenuPrincipal == "4")
                 {
                     string opcao = telaEmprestimo.MostrarOpcoes();
@@ -161,6 +180,11 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhum emprestimo cadastrado", StatusValidacao.Atencao);
                         }
+                        Console.ReadLine();
+                    }
+                    else if (opcao == "5")
+                    {
+                        telaEmprestimo.DevolucaoEmprestimo();
                     }
                 } // Emprestimos
                 else if (opcaoMenuPrincipal == "5") // Categoria revistas
@@ -186,6 +210,7 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma categoria cadastrada", StatusValidacao.Atencao);
                         }
+                        Console.ReadLine();
                     }
                 } // Categorias revistas
                 else if (opcaoMenuPrincipal == "6") // Reservas
@@ -211,6 +236,11 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma reserva cadastrada", StatusValidacao.Atencao);
                         }
+                        Console.ReadLine();
+                    }
+                    else if (opcao == "5")
+                    {
+                        telaReserva.EmprestimoApartirReserva();
                     }
                 } // Categorias revistas
             }

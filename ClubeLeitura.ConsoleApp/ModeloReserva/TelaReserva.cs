@@ -36,7 +36,8 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             Console.WriteLine("Digite 2 para Editar");
             Console.WriteLine("Digite 3 para Excluir");
             Console.WriteLine("Digite 4 para Visualizar");
-            
+            Console.WriteLine("Digite 5 para Emprestimo");
+
             Console.WriteLine("Digite s para sair");
 
             string opcao = Console.ReadLine();
@@ -150,18 +151,38 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 
                 Console.WriteLine();
 
-                Console.WriteLine("Número: " + r.Numero);
-                Console.WriteLine("Data reserva: " + r.DataReserva);
-                Console.WriteLine("Data expira: " + r.DateExpira);
-                Console.WriteLine("Amigo: " + r.Amigo.Nome);
-                Console.WriteLine("Responsal: " + r.Amigo.Responsavel);
-                Console.WriteLine("telefone: " + r.Amigo.Telefone);
-               
+                Console.WriteLine(r.ToString());
+                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", r.Amigo.Nome, r.Amigo.Responsavel, r.Amigo.Telefone);
+                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}", r.Revista.NumeroEdicao, r.Revista.TipoColecao);
+
 
                 Console.WriteLine();
             }
 
             return true;
+        }
+
+        public void EmprestimoApartirReserva()
+        {
+            MostrarTitulo("Inserindo novo empréstimo");
+            
+            bool temeEmprestimosCadastrados = VisualizarReservas("Pesquisando");
+            if (temeEmprestimosCadastrados == false)
+            {
+                notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder editar", StatusValidacao.Atencao);
+                return;
+            }
+
+            Console.WriteLine("Informe a reserva que deseja criar um empréstimo");
+            int numeroReserva = ObterNumeroReserva();
+
+            Reserva reserva = repositorioReserva.SelecionaReserva(numeroReserva);
+
+            telaEmprestimo.EmprestimoApartirReserva(reserva);
+
+            repositorioReserva.Excluir(numeroReserva);
+
+            notificador.ApresentarMensagem("Empréstimo realizado com sucesso", StatusValidacao.Sucesso);
         }
 
         #region métodos privados
@@ -206,7 +227,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             do
             {
-                Console.Write("Digite o número da reserva que deseja editar: ");
+                Console.Write("Digite o número da reserva: ");
                 numeroReserva = Convert.ToInt32(Console.ReadLine());
 
                 numeroReservaEncontrada = repositorioReserva.VerificarNumeroReservaExiste(numeroReserva);
