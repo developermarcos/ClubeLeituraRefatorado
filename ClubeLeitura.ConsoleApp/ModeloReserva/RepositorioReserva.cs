@@ -18,7 +18,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
         public void Inserir(Reserva reservaCadastro)
         {
-            reservaCadastro.Numero = ++numeroReserva;
+            reservaCadastro.numero = ++numeroReserva;
 
             int posicaoVazia = ObterPosicaoVazia();
 
@@ -29,9 +29,9 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
         {
             for (int i = 0; i < reservas.Length; i++)
             {
-                if (reservas[i] != null && reservas[i].Numero == numeroSelecioando)
+                if (reservas[i] != null && reservas[i].numero == numeroSelecioando)
                 {
-                    reserva.Numero = numeroSelecioando;
+                    reserva.numero = numeroSelecioando;
                     reservas[i] = reserva;
                     break;
                 }
@@ -42,7 +42,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
         {
             for (int i = 0; i < reservas.Length; i++)
             {
-                if (reservas[i] != null && reservas[i].Numero == numeroSelecionado)
+                if (reservas[i] != null && reservas[i].numero == numeroSelecionado)
                 {
                     reservas[i] = null;
                     break;
@@ -86,7 +86,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             for (int i = 0; i < reservas.Length; i++)
             {
-                if (reservas[i].Numero == numero)
+                if (reservas[i].numero == numero)
                     return reservas[i];
             }
 
@@ -112,7 +112,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             for (int i = 0; i < reservas.Length; i++)
             {
-                if (reservas[i] != null && reservas[i].Numero == numeroReserva)
+                if (reservas[i] != null && reservas[i].numero == numeroReserva)
                 {
                     numeroReservaEncontrada = true;
                     break;

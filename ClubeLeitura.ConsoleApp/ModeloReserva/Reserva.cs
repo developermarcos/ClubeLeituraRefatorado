@@ -6,39 +6,35 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 {
     public class Reserva
     {
-        int _numero;
-        DateTime _dataReserva;
-        DateTime _dataExpira;
-        Amigo _amigo;
-        Revista _revista;
+        public int numero;
+        public readonly DateTime dataReserva;
+        private DateTime _dataExpira;
+        public readonly Amigo amigo;
+        public readonly Revista revista;
 
         public Reserva(Amigo amigo, Revista revista, DateTime dataReserva)
         {
-            this._amigo = amigo;
-            this._revista = revista;
-            this._dataReserva = dataReserva;
+            this.amigo = amigo;
+            this.revista = revista;
+            this.dataReserva = dataReserva;
             this._dataExpira = CalculaDataExpira(dataReserva);
         }
-        public int Numero { get { return _numero; } set { _numero = value; } }
-
-        public Amigo Amigo { get { return _amigo; } }
-
-        public Revista Revista { get { return _revista; } }
-
-        public DateTime DataReserva { get { return _dataReserva; } }
-
+        
         public DateTime DateExpira { get { return _dataExpira; } }
         
+        public override string ToString()
+        {
+            string mensagem = $"Numero : {this.numero} | Data reserva: {this.dataReserva.ToString("dd/MM/yyyy")} | Data expira: {this.DateExpira.ToString("dd/MM/yyyy")}";
+            return mensagem;
+        }
+
+        #region métodos privados
         private DateTime CalculaDataExpira(DateTime data)
         {
             DateTime dataCalculada = data.AddDays(2);
             return dataCalculada;
         }
 
-        public override string ToString()
-        {
-            string mensagem = $"Numero : {this.Numero} | Data reserva: {this.DataReserva.ToString("dd/MM/yyyy")} | Data expira: {this.DateExpira.ToString("dd/MM/yyyy")}";
-            return mensagem;
-        }
+        #endregion
     }
 }

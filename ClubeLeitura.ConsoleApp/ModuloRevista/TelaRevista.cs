@@ -214,7 +214,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.WriteLine();
 
                 Console.WriteLine(r.ToString());
-                Console.WriteLine("Categoria: {0}", r.Categoria.Nome);
+                Console.WriteLine("Categoria: {0}", r.categoria.nome);
                 
                 Console.WriteLine();
             }

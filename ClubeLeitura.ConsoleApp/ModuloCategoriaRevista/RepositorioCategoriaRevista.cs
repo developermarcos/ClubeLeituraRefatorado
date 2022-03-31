@@ -12,7 +12,7 @@
 
         public void Inserir(CategoriaRevista categoria)
         {
-            categoria.Numero = ++numero;
+            categoria.numero = ++numero;
 
             int posicaoVazio = ObterPosicaoVazia();
 
@@ -66,7 +66,7 @@
 
             for (int i = 0; i < categorias.Length; i++)
             {
-                if (categorias[i] != null && categorias[i].Numero == numeroCategoria)
+                if (categorias[i] != null && categorias[i].numero == numeroCategoria)
                 {
                     numeroCategoriaEncontrada = true;
                     break;
@@ -80,9 +80,9 @@
         {
             for (int i = 0; i < categorias.Length; i++)
             {
-                if (categorias[i] != null && categorias[i].Numero == numeroSelecionado)
+                if (categorias[i] != null && categorias[i].numero == numeroSelecionado)
                 {
-                    categoria.Numero = numeroSelecionado;
+                    categoria.numero = numeroSelecionado;
                     categorias[i] = categoria;
 
                     break;
@@ -94,7 +94,7 @@
         {
             for (int i = 0; i < categorias.Length; i++)
             {
-                if (categorias[i] != null && categorias[i].Numero == categoriaExcluir)
+                if (categorias[i] != null && categorias[i].numero == categoriaExcluir)
                 {
                     categorias[i] = null;
                     break;
@@ -108,7 +108,7 @@
 
             for (int i = 0; i < categorias.Length; i++)
             {
-                if (categorias[i] != null && categorias[i].Numero == idCategoria)
+                if (categorias[i] != null && categorias[i].numero == idCategoria)
                 {
                     categoria = categorias[i];
                     break;

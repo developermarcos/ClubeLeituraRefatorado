@@ -152,8 +152,8 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 Console.WriteLine();
 
                 Console.WriteLine(r.ToString());
-                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", r.Amigo.Nome, r.Amigo.Responsavel, r.Amigo.Telefone);
-                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}", r.Revista.NumeroEdicao, r.Revista.TipoColecao);
+                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", r.amigo.nome, r.amigo.responsavel, r.amigo.telefone);
+                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}", r.revista.numeroEdicao, r.revista.tipoColecao);
 
 
                 Console.WriteLine();

@@ -166,8 +166,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
                 Emprestimo e = emprestimos[i];
 
                 Console.WriteLine(e.ToString());
-                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", e.amigo.Nome, e.amigo.Responsavel, e.amigo.Telefone);
-                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}",e.revista.NumeroEdicao, e.revista.TipoColecao);
+                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", e.amigo.nome, e.amigo.responsavel, e.amigo.telefone);
+                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}",e.revista.numeroEdicao, e.revista.tipoColecao);
 
                 Console.WriteLine();
             }
@@ -242,7 +242,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
         public void EmprestimoApartirReserva(Reserva reserva)
         {
-            Emprestimo novoEmprestimo = new Emprestimo(reserva.Amigo, reserva.Revista, DateTime.Now);
+            Emprestimo novoEmprestimo = new Emprestimo(reserva.amigo, reserva.revista, DateTime.Now);
             repositorioEmprestimo.Inserir(novoEmprestimo);
         }
 

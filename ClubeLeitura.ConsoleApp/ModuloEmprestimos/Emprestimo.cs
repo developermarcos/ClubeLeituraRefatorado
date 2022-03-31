@@ -25,7 +25,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             get { return _dataDevolucao;} 
             private set 
             {
-                int diasParaEmprestimo = this.revista.Categoria.QuantidadeDiasParaEmprestimo + 1;
+                int diasParaEmprestimo = this.revista.categoria.quantidadeDiasParaEmprestimo + 1;
                 this._dataDevolucao = value.AddDays(diasParaEmprestimo);
             } 
         }

@@ -19,7 +19,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         public void Inserir(Amigo amigo)
         {
             int posicaoVazia = ObterPosicaoVazia();
-            amigo.Numero = ObterNumeroAmigo();
+            amigo.numero = ObterNumeroAmigo();
             amigos[posicaoVazia] = amigo;
         }
 
@@ -27,9 +27,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         {
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].Numero == numeroSelecioando)
+                if (amigos[i] != null && amigos[i].numero == numeroSelecioando)
                 {
-                    amigo.Numero = numeroSelecioando;
+                    amigo.numero = numeroSelecioando;
                     amigos[i] = amigo;
 
                     break;
@@ -41,7 +41,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
         {
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].Numero == numeroSelecionado)
+                if (amigos[i] != null && amigos[i].numero == numeroSelecionado)
                 {
                     amigos[i] = null;
                     break;
@@ -55,7 +55,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].Nome == nomeInformado)
+                if (amigos[i] != null && amigos[i].nome == nomeInformado)
                 {
                     nomejaUtilizado = true;
                     break;
@@ -71,7 +71,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                if (amigos[i] != null && amigos[i].Numero == numeroAmigo)
+                if (amigos[i] != null && amigos[i].numero == numeroAmigo)
                 {
                     numeroAmigoEncontrado = true;
                     break;
@@ -116,7 +116,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                if(amigos[i] != null && amigos[i].Numero == idAmigo)
+                if(amigos[i] != null && amigos[i].numero == idAmigo)
                 {
                     amigo = amigos[i];
                     break;

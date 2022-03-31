@@ -15,7 +15,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
         public void Inserir(Revista revista)
         {
-            revista.Numero = ++numeroRevista;
+            revista.numero = ++numeroRevista;
 
             int posicaoVazia = ObterPosicaoVazia();
             revistas[posicaoVazia] = revista;
@@ -25,9 +25,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             for (int i = 0; i < revistas.Length; i++)
             {
-                if (revistas[i] != null && revistas[i].Numero == numeroSelecioando)
+                if (revistas[i] != null && revistas[i].numero == numeroSelecioando)
                 {
-                    revista.Numero = numeroSelecioando;
+                    revista.numero = numeroSelecioando;
                     revistas[i] = revista;
 
                     break;
@@ -39,7 +39,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             for (int i = 0; i < revistas.Length; i++)
             {
-                if (revistas[i] != null && revistas[i].Numero == numeroSelecionado)
+                if (revistas[i] != null && revistas[i].numero == numeroSelecionado)
                 {
                     revistas[i] = null;
                     break;
@@ -95,7 +95,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             for (int i = 0; i < revistas.Length; i++)
             {
-                if (revistas[i] != null && revistas[i].Numero == numeroRevista)
+                if (revistas[i] != null && revistas[i].numero == numeroRevista)
                 {
                     numeroRevistaEncontrado = true;
                     break;
@@ -117,7 +117,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             for (int i = 0; i < revistas.Length; i++)
             {
-                if(revistas[i] != null && revistas[i].Numero == id)
+                if(revistas[i] != null && revistas[i].numero == id)
                 {
                     revista = revistas[i];
                     break;

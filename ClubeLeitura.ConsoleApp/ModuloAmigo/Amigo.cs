@@ -1,53 +1,30 @@
-﻿namespace ClubeLeitura.ConsoleApp.ModuloPessoa
+﻿using ClubeLeitura.ConsoleApp.ModuloPessoa;
+namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    public class Amigo
+    public class Amigo : Pessoa
     {
-        private int _numero;
-        private string _nome;
-        private string _responsavel;
-        private string _telefone;
-        private string _endereco;
+        public readonly string responsavel;
 
         public Amigo(string nome, string responsavel, string telefone, string endereco)
         {
-            this._nome = nome;
-            this._responsavel = responsavel;
-            this._telefone = telefone;
-            this._endereco = endereco;
+            this.nome = nome;
+            this.responsavel = responsavel;
+            this.telefone = telefone;
+            this.endereco = endereco;
         }
         public Amigo(int numero, string nome, string responsavel, string telefone, string endereco)
         {
-            this._numero = numero;
-            this._nome = nome;
-            this._responsavel = responsavel;
-            this._telefone = telefone;
-            this._endereco = endereco;
+            this.numero = numero;
+            this.nome = nome;
+            this.responsavel = responsavel;
+            this.telefone = telefone;
+            this.endereco = endereco;
         }
-        public int Numero
-        {
-            get { return this._numero; }
-            set { this._numero = value; }
-        }
-        public string Nome
-        {
-            get { return this._nome; }
-        }
-        public string Responsavel
-        {
-            get { return this._responsavel; }
-        }
-        public string Telefone
-        {
-            get { return this._telefone; }
-        }
-        public string Endereco
-        {
-            get { return this._endereco; }
-        }
-
+        
         public override string ToString()
         {
-            string mensagem = $"Numero: {this.Numero} | Nome {this.Nome} | Responsavel {this.Responsavel} | Telefone {this.Telefone} | Endereco {this.Endereco}";
+            string mensagem = base.ToString();
+            mensagem += $" | Responsavel {this.responsavel}";
             return mensagem;
         }
     }
