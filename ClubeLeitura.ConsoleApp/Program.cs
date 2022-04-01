@@ -24,6 +24,7 @@ namespace ClubeLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
+
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
 
             Notificador notificador = new Notificador();
@@ -42,7 +43,7 @@ namespace ClubeLeitura.ConsoleApp
 
             RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo(new Emprestimo[10]);
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo(RepositorioEmprestimo, telaAmigo, telaRevista, notificador);
-            
+
             RepositorioReserva repositorioReserva = new RepositorioReserva(new Reserva[10]);
             TelaReserva telaReserva = new TelaReserva(repositorioReserva, telaAmigo, telaRevista, telaEmprestimo, notificador);
 
@@ -76,7 +77,7 @@ namespace ClubeLeitura.ConsoleApp
 
 
             while (true)
-            {                
+            {
                 string opcaoMenuPrincipal = menuPrincipal.MostrarOpcoes();
 
                 if (opcaoMenuPrincipal == "1")
