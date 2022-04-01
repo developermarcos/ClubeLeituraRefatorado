@@ -4,20 +4,30 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
     public class RepositorioBase<T> where T : EntidadeBase
     {
         public static int numero;
-        public T[] item;
+        public T[] itens;
 
         public RepositorioBase(int quantidade)
         {
-            this.item = new T[quantidade];
+            this.itens = new T[quantidade];
         }
         public void Inserir(T item) 
         {
             int posicaoVazia = ObterPosicaoVazia();
             item.numero = ObterNumeroRegistro();
-            this.item[posicaoVazia] = item;
+            this.itens[posicaoVazia] = item;
         }
 
-        //public abstract void Editar() { }
+        public void Editar(int numero, T item) 
+        {
+            for (int i = 0; i < this.itens.Length; i++)
+            {
+                if(this.itens[i] != null && this.itens[i].numero == numero)
+                {
+                    this.itens[i] = item;
+                    break;
+                }
+            }
+        }
 
         public T[] ObterTodosRegistros()
         {
@@ -25,31 +35,41 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
             int j = 0;
 
-            for(int i = 0; i < this.item.Length; i++)
+            for(int i = 0; i < this.itens.Length; i++)
             {
-                if(this.item[i] != null)
+                if(this.itens[i] != null)
                 {
-                    item[j] = this.item[i];
+                    item[j] = this.itens[i];
                     j++;
                 }
             }
             return item;
         }
 
-        //public void Excluir();
+        public void Excluir(int numero)
+        {
+            for (int i = 0; i < this.itens.Length; i++)
+            {
+                if (this.itens[i] != null && this.itens[i].numero == numero)
+                {
+                    this.itens[i] = null;
+                    break;
+                }
+            }
+        }
 
         public T ObterRegistro(int numero)
         {
-            return this.item[numero];
+            return this.itens[numero];
         }
 
         protected bool ExisteNumeroRegistro(int numero)
         {
             bool existeRegistro = false;
 
-            for (int i = 0; i < this.item.Length; i++)
+            for (int i = 0; i < this.itens.Length; i++)
             {
-                if (this.item[i].numero == numero)
+                if (this.itens[i].numero == numero)
                     existeRegistro = true;
             }
 
@@ -58,9 +78,9 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public int ObterPosicaoVazia()
         {
-            for (int i = 0; i < this.item.Length; i++)
+            for (int i = 0; i < this.itens.Length; i++)
             {
-                if (this.item[i] == null)
+                if (this.itens[i] == null)
                     return i;
             }
             return -1;
@@ -70,9 +90,9 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
         {
             int quantidadeRegistros = 0;
 
-            for (int i = 0; i < this.item.Length; i++)
+            for (int i = 0; i < this.itens.Length; i++)
             {
-                if (this.item[i] == null)
+                if (this.itens[i] == null)
                     quantidadeRegistros++;
             }
 
