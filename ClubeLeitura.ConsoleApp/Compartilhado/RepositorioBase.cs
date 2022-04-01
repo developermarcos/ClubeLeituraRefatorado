@@ -19,6 +19,8 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public void Editar(int numero, T item) 
         {
+            item.numero = numero;
+
             for (int i = 0; i < this.itens.Length; i++)
             {
                 if(this.itens[i] != null && this.itens[i].numero == numero)
@@ -43,6 +45,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
                     j++;
                 }
             }
+
             return item;
         }
 
@@ -63,13 +66,13 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return this.itens[numero];
         }
 
-        protected bool ExisteNumeroRegistro(int numero)
+        public bool ExisteNumeroRegistro(int numero)
         {
             bool existeRegistro = false;
 
             for (int i = 0; i < this.itens.Length; i++)
             {
-                if (this.itens[i].numero == numero)
+                if (this.itens[i] != null && this.itens[i].numero == numero)
                     existeRegistro = true;
             }
 
@@ -92,14 +95,14 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
             for (int i = 0; i < this.itens.Length; i++)
             {
-                if (this.itens[i] == null)
+                if (this.itens[i] != null)
                     quantidadeRegistros++;
             }
 
             return quantidadeRegistros;
         }
 
-        public int ObterNumeroRegistro()
+        protected int ObterNumeroRegistro()
         {
             return ++numero;
         }

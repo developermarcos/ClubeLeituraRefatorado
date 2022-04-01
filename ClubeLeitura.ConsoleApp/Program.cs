@@ -29,7 +29,7 @@ namespace ClubeLeitura.ConsoleApp
 
             Notificador notificador = new Notificador();
 
-            RepositorioCaixa repositorioCaixa = new RepositorioCaixa(new Caixa[10]);
+            RepositorioCaixa repositorioCaixa = new RepositorioCaixa(10);
             TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa, notificador);
 
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo(new Amigo[10]);
