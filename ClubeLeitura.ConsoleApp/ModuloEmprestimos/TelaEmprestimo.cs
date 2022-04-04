@@ -82,7 +82,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             int idRevista = telaRevista.ObterNumeroRevista();
 
-            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRevistaPorNumero(idRevista);
+            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRegistro(idRevista);
 
             Emprestimo emprestimoCadastro = ObterEmprestimo(amigoEmprestimo, revistaEmprestimo);
 
@@ -120,7 +120,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             int idRevista = telaRevista.ObterNumeroRevista();
 
-            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRevistaPorNumero(idRevista);
+            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRegistro(idRevista);
 
             Emprestimo emprestimoCadastro = ObterEmprestimo(amigoEmprestimo, revistaEmprestimo);
 
@@ -156,7 +156,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
             if (!repositorioEmprestimo.ExisteEmprestimoCadastrado())
                 return false;
 
-            Emprestimo[] emprestimos = repositorioEmprestimo.SelecionarTodos();
+            Emprestimo[] emprestimos = repositorioEmprestimo.ObterTodosRegistros();
 
             if (emprestimos.Length == 0)
                 return false;
@@ -189,7 +189,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
 
             int numeroEmprestimo = ObterNumeroEmprestimo();
 
-            Emprestimo emprestimoDevolucao = repositorioEmprestimo.SelecionarEmprestimo(numeroEmprestimo);
+            Emprestimo emprestimoDevolucao = repositorioEmprestimo.ObterRegistro(numeroEmprestimo);
 
             if(emprestimoDevolucao.DataDevolucao < DateTime.Now)
             {
@@ -256,7 +256,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
                 Console.Write("Digite o número do empréstimo que deseja editar: ");
                 numeroEmprestimo = Convert.ToInt32(Console.ReadLine());
 
-                numeroEmprestimoEncontrado = repositorioEmprestimo.VerificarNumeroEmprestimoExiste(numeroEmprestimo);
+                numeroEmprestimoEncontrado = repositorioEmprestimo.ExisteNumeroRegistro(numeroEmprestimo);
 
                 if (numeroEmprestimoEncontrado == false)
                     notificador.ApresentarMensagem("Número do empréstimo não encontrado, digite novamente", StatusValidacao.Atencao);

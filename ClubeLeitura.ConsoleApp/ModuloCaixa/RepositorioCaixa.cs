@@ -10,7 +10,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             
         }
 
-
         #region métodos própios
 
         public void Popular(Caixa caixa)
@@ -21,9 +20,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         public bool EtiquetaJaUtilizada(string etiquetaInformada)
         {
             bool etiquetaJaUtilizada = false;
-            for (int i = 0; i < itens.Length; i++)
+            for (int i = 0; i < registros.Length; i++)
             {
-                if (itens[i] != null && itens[i].etiqueta == etiquetaInformada)
+                if (registros[i] != null && registros[i].etiqueta == etiquetaInformada)
                 {
                     etiquetaJaUtilizada = true;
                     break;

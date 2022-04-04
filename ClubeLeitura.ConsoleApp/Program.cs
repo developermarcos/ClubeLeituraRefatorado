@@ -24,30 +24,30 @@ namespace ClubeLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
-
+            int tamanhoArrays = 5;
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
 
             Notificador notificador = new Notificador();
 
-            RepositorioCaixa repositorioCaixa = new RepositorioCaixa(10);
+            RepositorioCaixa repositorioCaixa = new RepositorioCaixa(tamanhoArrays);
             TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa, notificador);
 
-            RepositorioAmigo repositorioAmigo = new RepositorioAmigo(new Amigo[10]);
+            RepositorioAmigo repositorioAmigo = new RepositorioAmigo(tamanhoArrays);
             TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo, notificador);
 
-            RepositorioCategoriaRevista repositorioCategoriaRevista = new RepositorioCategoriaRevista(new CategoriaRevista[10]);
+            RepositorioCategoriaRevista repositorioCategoriaRevista = new RepositorioCategoriaRevista(tamanhoArrays);
             TelaCategoriaRevista telaCategoriaRevista = new TelaCategoriaRevista(repositorioCategoriaRevista, notificador);
 
-            RepositorioRevista repositorioRevista = new RepositorioRevista(new Revista[10]);
+            RepositorioRevista repositorioRevista = new RepositorioRevista(tamanhoArrays);
             TelaRevista telaRevista = new TelaRevista(repositorioRevista, telaCaixa, telaCategoriaRevista, notificador);
 
-            RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo(new Emprestimo[10]);
+            RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo(tamanhoArrays);
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo(RepositorioEmprestimo, telaAmigo, telaRevista, notificador);
 
-            RepositorioReserva repositorioReserva = new RepositorioReserva(new Reserva[10]);
+            RepositorioReserva repositorioReserva = new RepositorioReserva(tamanhoArrays);
             TelaReserva telaReserva = new TelaReserva(repositorioReserva, telaAmigo, telaRevista, telaEmprestimo, notificador);
 
-            RepositorioMulta repositorioMulta = new RepositorioMulta(new Multa[10]);
+            RepositorioMulta repositorioMulta = new RepositorioMulta(tamanhoArrays);
             TelaMulta telaMulta = new TelaMulta(repositorioMulta, telaAmigo);
             telaAmigo.telaMulta = telaMulta;
             telaAmigo.repositorioMulta = repositorioMulta;
@@ -65,14 +65,14 @@ namespace ClubeLeitura.ConsoleApp
             repositorioCaixa.Popular(c2);
 
             repositorioCategoriaRevista.Popular("Categoria 1", 2);
-            repositorioCategoriaRevista.Popular("Categoria 2", 3);
+            repositorioCategoriaRevista.Popular("Categoria 2", 4);
 
             Caixa caixa1 = repositorioCaixa.ObterRegistro(1);
             Caixa caixa2 = repositorioCaixa.ObterRegistro(2);
-            CategoriaRevista cat1 = repositorioCategoriaRevista.ObterCategoria(1);
-            CategoriaRevista cat2 = repositorioCategoriaRevista.ObterCategoria(2);
-            telaRevista.repositorioRevista.Popular("teste 1", "123abc", "2019", c1, cat1);
-            telaRevista.repositorioRevista.Popular("teste 2", "456cba", "2021", c2, cat2);
+            CategoriaRevista cat1 = (CategoriaRevista)repositorioCategoriaRevista.ObterRegistro(1);
+            CategoriaRevista cat2 = (CategoriaRevista)repositorioCategoriaRevista.ObterRegistro(2);
+            repositorioRevista.Popular("teste 1", "123abc", "2019", c1, cat1);
+            repositorioRevista.Popular("teste 2", "456cba", "2021", c2, cat2);
             #endregion
 
 

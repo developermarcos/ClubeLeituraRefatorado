@@ -58,7 +58,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             }
 
             int numeroCategoria = telaCategoria.ObterNumeroCategoria();
-            CategoriaRevista categoria = telaCategoria.repositorioCategoriaRevista.ObterCategoria(numeroCategoria);
+            CategoriaRevista categoria = (CategoriaRevista)telaCategoria.repositorioCategoriaRevista.ObterRegistro(numeroCategoria);
 
             bool existeCaixasCadastradas = telaCaixa.VisualizarCaixas("Pesquisando");
 
@@ -101,7 +101,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             }
 
             int numeroCategoria = telaCategoria.ObterNumeroCategoria();
-            CategoriaRevista categoria = telaCategoria.repositorioCategoriaRevista.ObterCategoria(numeroCategoria);
+            CategoriaRevista categoria = (CategoriaRevista)telaCategoria.repositorioCategoriaRevista.ObterRegistro(numeroCategoria);
 
 
             bool existeCaixasCadastradas = telaCaixa.VisualizarCaixas("Pesquisando");
@@ -150,7 +150,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.Write("Digite o número da revista: ");
                 numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-                numeroRevistaEncontrado = repositorioRevista.VerificarNumeroRevistaExiste(numeroRevista);
+                numeroRevistaEncontrado = repositorioRevista.ExisteNumeroRegistro(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
                     notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", StatusValidacao.Atencao);
@@ -172,7 +172,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 caixaExiste = telaCaixa.repositorioCaixa.ExisteNumeroRegistro(numeroCaixa);
                 caixa = null;
                 if (caixaExiste)
-                    caixa = telaCaixa.repositorioCaixa.ObterRegistro(numeroCaixa);
+                    caixa = (Caixa)telaCaixa.repositorioCaixa.ObterRegistro(numeroCaixa);
                 else
                     notificador.ApresentarMensagem("Caixa não encontrada, informe novamente", StatusValidacao.Atencao);
 
@@ -202,7 +202,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Revistas");
 
-            Revista[] revistas = repositorioRevista.SelecionarTodos();
+            Revista[] revistas = (Revista[])repositorioRevista.ObterTodosRegistros();
 
             if (revistas.Length == 0)
                 return false;

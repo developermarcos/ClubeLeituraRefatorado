@@ -29,7 +29,7 @@ namespace ClubeLeitura.ConsoleApp
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de multas");
 
-            Multa[] multas = repositorioMulta.ObterTodosRegistros();
+            Multa[] multas = (Multa[])repositorioMulta.ObterTodosRegistros();
 
             if (multas.Length == 0)
                 return false;

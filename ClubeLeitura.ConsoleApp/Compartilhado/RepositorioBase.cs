@@ -4,28 +4,28 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
     public class RepositorioBase<T> where T : EntidadeBase
     {
         public static int numero;
-        public T[] itens;
+        public T[] registros;
 
         public RepositorioBase(int quantidade)
         {
-            this.itens = new T[quantidade];
+            this.registros = new T[quantidade];
         }
         public void Inserir(T item) 
         {
             int posicaoVazia = ObterPosicaoVazia();
             item.numero = ObterNumeroRegistro();
-            this.itens[posicaoVazia] = item;
+            this.registros[posicaoVazia] = item;
         }
 
         public void Editar(int numero, T item) 
         {
             item.numero = numero;
 
-            for (int i = 0; i < this.itens.Length; i++)
+            for (int i = 0; i < this.registros.Length; i++)
             {
-                if(this.itens[i] != null && this.itens[i].numero == numero)
+                if(this.registros[i] != null && this.registros[i].numero == numero)
                 {
-                    this.itens[i] = item;
+                    this.registros[i] = item;
                     break;
                 }
             }
@@ -37,11 +37,11 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
             int j = 0;
 
-            for(int i = 0; i < this.itens.Length; i++)
+            for(int i = 0; i < this.registros.Length; i++)
             {
-                if(this.itens[i] != null)
+                if(this.registros[i] != null)
                 {
-                    item[j] = this.itens[i];
+                    item[j] = this.registros[i];
                     j++;
                 }
             }
@@ -51,11 +51,11 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public void Excluir(int numero)
         {
-            for (int i = 0; i < this.itens.Length; i++)
+            for (int i = 0; i < this.registros.Length; i++)
             {
-                if (this.itens[i] != null && this.itens[i].numero == numero)
+                if (this.registros[i] != null && this.registros[i].numero == numero)
                 {
-                    this.itens[i] = null;
+                    this.registros[i] = null;
                     break;
                 }
             }
@@ -63,16 +63,28 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public T ObterRegistro(int numero)
         {
-            return this.itens[numero];
+            T item = null;
+
+            int j = 0;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].numero != numero)
+                {
+                    return this.registros[i];
+                }
+            }
+
+            return item;
         }
 
         public bool ExisteNumeroRegistro(int numero)
         {
             bool existeRegistro = false;
 
-            for (int i = 0; i < this.itens.Length; i++)
+            for (int i = 0; i < this.registros.Length; i++)
             {
-                if (this.itens[i] != null && this.itens[i].numero == numero)
+                if (this.registros[i] != null && this.registros[i].numero == numero)
                     existeRegistro = true;
             }
 
@@ -81,9 +93,9 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public int ObterPosicaoVazia()
         {
-            for (int i = 0; i < this.itens.Length; i++)
+            for (int i = 0; i < this.registros.Length; i++)
             {
-                if (this.itens[i] == null)
+                if (this.registros[i] == null)
                     return i;
             }
             return -1;
@@ -93,9 +105,9 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
         {
             int quantidadeRegistros = 0;
 
-            for (int i = 0; i < this.itens.Length; i++)
+            for (int i = 0; i < this.registros.Length; i++)
             {
-                if (this.itens[i] != null)
+                if (this.registros[i] != null)
                     quantidadeRegistros++;
             }
 

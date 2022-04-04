@@ -44,7 +44,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             CategoriaRevista categoria = ObterCategoria();
 
-            repositorioCategoriaRevista.Editar(categoria, numeroCategoria);
+            repositorioCategoriaRevista.Editar(numeroCategoria, categoria);
 
             notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
         }
@@ -73,7 +73,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Categorias");
 
-            CategoriaRevista[] categorias = repositorioCategoriaRevista.SelecionarTodos();
+            CategoriaRevista[] categorias = repositorioCategoriaRevista.ObterTodosRegistros();
 
             if (categorias.Length == 0)
                 return false;
@@ -120,7 +120,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
                 Console.Write("Digite o número da categoria: ");
                 numeroCategoria = Convert.ToInt32(Console.ReadLine());
 
-                numeroCategoriaEncontrada = repositorioCategoriaRevista.VerificarNumeroCategoriaExiste(numeroCategoria);
+                numeroCategoriaEncontrada = repositorioCategoriaRevista.ExisteNumeroRegistro(numeroCategoria);
 
                 if (numeroCategoriaEncontrada == false)
                     notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
@@ -156,7 +156,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
                 for (int i = 0; i < identificadores.Length; i++)
                 {
                     int id = Convert.ToInt32(identificadores[i]);
-                    if (telaRevista.repositorioRevista.VerificarNumeroRevistaExiste(id) == true)
+                    if (telaRevista.repositorioRevista.ExisteNumeroRegistro(id) == true)
                         revistaExiste = true;
                     else
                     {
@@ -172,7 +172,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             for (int i = 0; i < revistas.Length; i++)
             {
                 int id = Convert.ToInt32(identificadores[i]);
-                revistas[i] = telaRevista.repositorioRevista.ObterRevistaPorNumero(id);
+                revistas[i] = telaRevista.repositorioRevista.ObterRegistro(id);
             }
 
             return revistas;

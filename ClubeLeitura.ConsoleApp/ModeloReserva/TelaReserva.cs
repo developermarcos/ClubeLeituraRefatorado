@@ -72,7 +72,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             int idRevista = telaRevista.ObterNumeroRevista();
 
-            Revista revistaReserva = telaRevista.repositorioRevista.ObterRevistaPorNumero(idRevista);
+            Revista revistaReserva = telaRevista.repositorioRevista.ObterRegistro(idRevista);
 
 
             Reserva reservaCadastro = ObterReserva(amigoReserva, revistaReserva);
@@ -105,7 +105,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             
             
             Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
-            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRevistaPorNumero(idRevista);
+            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRegistro(idRevista);
             Reserva emprestimoCadastro = ObterReserva(amigoEmprestimo, revistaEmprestimo);
 
             repositorioReserva.Editar(numeroReserva, emprestimoCadastro);

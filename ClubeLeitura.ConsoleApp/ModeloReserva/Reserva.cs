@@ -7,7 +7,6 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 {
     public class Reserva : EntidadeBase
     {
-        public int numero;
         public readonly DateTime dataReserva;
         private DateTime _dataExpira;
         public readonly Amigo amigo;
