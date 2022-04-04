@@ -65,11 +65,9 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
         {
             T item = null;
 
-            int j = 0;
-
             for (int i = 0; i < this.registros.Length; i++)
             {
-                if (this.registros[i] != null && this.registros[i].numero != numero)
+                if (this.registros[i] != null && this.registros[i].numero == numero)
                 {
                     return this.registros[i];
                 }

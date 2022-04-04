@@ -1,23 +1,23 @@
 ﻿
 using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.Compartilhado.Interfaces;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class TelaCaixa
+    public class TelaCaixa : TelaBase, IEditavel, ICadastravel, IListavel, IExcluivel
     {
         public int numeroCaixa; //controlar o número da caixas cadastradas
         public Notificador notificador; //reponsável pelas mensagens pro usuário
         public RepositorioCaixa repositorioCaixa;
-        private Caixa[] caixas;
-
+        
         public TelaCaixa(RepositorioCaixa repositorioCaixa, Notificador notificador)
         {
             this.repositorioCaixa=repositorioCaixa;
             this.notificador=notificador;
         }
 
-        public string MostrarOpcoes()
+        public override string MostrarOpcoes()
         {
             Console.Clear();
 
@@ -37,22 +37,22 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return opcao;
         }
 
-        public void InserirNovaCaixa()
+        public void Inserir()
         {
             MostrarTitulo("Inserindo nova Caixa");
 
             Caixa novaCaixa = ObterCaixa();
-           
+
             repositorioCaixa.Inserir(novaCaixa);
 
             notificador.ApresentarMensagem("Caixa inserida com sucesso!", StatusValidacao.Sucesso);
         }
 
-        public void EditarCaixa()
+        public void Editar()
         {
             MostrarTitulo("Editando Caixa");
 
-            bool temCaixasCadastradas = VisualizarCaixas("Pesquisando");
+            bool temCaixasCadastradas = Listar("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
@@ -69,30 +69,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             notificador.ApresentarMensagem("Caixa editada com sucesso", StatusValidacao.Sucesso);
         }
 
-        public int ObterNumeroCaixa()
-        {
-            int numeroCaixa;
-            bool numeroCaixaEncontrado;
-
-            do
-            {
-                Console.Write("Digite o número da caixa que deseja editar: ");
-                numeroCaixa = Convert.ToInt32(Console.ReadLine());
-
-                numeroCaixaEncontrado = repositorioCaixa.ExisteNumeroRegistro(numeroCaixa);
-
-                if (numeroCaixaEncontrado == false)
-                    notificador.ApresentarMensagem("Número de caixa não encontrado, digite novamente", StatusValidacao.Atencao);
-
-            } while (numeroCaixaEncontrado == false);
-            return numeroCaixa;
-        }
-
-        public void ExcluirCaixa()
+        public void Excluir()
         {
             MostrarTitulo("Excluindo Caixa");
 
-            bool temCaixasCadastradas = VisualizarCaixas("Pesquisando");
+            bool temCaixasCadastradas = Listar("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
@@ -108,7 +89,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             notificador.ApresentarMensagem("Caixa excluída com sucesso", StatusValidacao.Sucesso);
         }
 
-        public bool VisualizarCaixas(string tipo)
+        public bool Listar(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Caixas");
@@ -119,11 +100,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
                 return false;
 
             for (int i = 0; i < caixas.Length; i++)
-            {              
+            {
                 Caixa c = caixas[i];
 
                 Console.WriteLine(c.ToString());
-                
+
                 Console.WriteLine();
             }
 
@@ -167,6 +148,25 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             Console.WriteLine(titulo);
 
             Console.WriteLine();
+        }
+
+        private int ObterNumeroCaixa()
+        {
+            int numeroCaixa;
+            bool numeroCaixaEncontrado;
+
+            do
+            {
+                Console.Write("Digite o número da caixa que deseja editar: ");
+                numeroCaixa = Convert.ToInt32(Console.ReadLine());
+
+                numeroCaixaEncontrado = repositorioCaixa.ExisteNumeroRegistro(numeroCaixa);
+
+                if (numeroCaixaEncontrado == false)
+                    notificador.ApresentarMensagem("Número de caixa não encontrado, digite novamente", StatusValidacao.Atencao);
+
+            } while (numeroCaixaEncontrado == false);
+            return numeroCaixa;
         }
         #endregion
     }

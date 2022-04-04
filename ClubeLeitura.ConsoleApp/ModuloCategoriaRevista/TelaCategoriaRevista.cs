@@ -1,10 +1,11 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.Compartilhado.Interfaces;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 {
-    public class TelaCategoriaRevista
+    public class TelaCategoriaRevista : TelaBase, IEditavel, ICadastravel, IListavel, IExcluivel
     {
         public RepositorioCategoriaRevista repositorioCategoriaRevista;
         public TelaRevista telaRevista;
@@ -17,80 +18,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             this.notificador=notificador;
         }
 
-        public void InserirNovaCategoria()
-        {
-            MostrarTitulo("Inserindo nova Revista");
-
-            CategoriaRevista categoria = ObterCategoria();
-
-            repositorioCategoriaRevista.Inserir(categoria);
-
-            notificador.ApresentarMensagem("Categoria inserida com sucesso!", StatusValidacao.Sucesso);
-        }
-
-        public void EditarCategoria()
-        {
-            MostrarTitulo("Editando categoria");
-
-            bool temCategoriasCadastradas = VisualizarCategorias("Pesquisando");
-
-            if (temCategoriasCadastradas == false)
-            {
-                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", StatusValidacao.Atencao);
-                return;
-            }
-
-            int numeroCategoria = ObterNumeroCategoria();
-
-            CategoriaRevista categoria = ObterCategoria();
-
-            repositorioCategoriaRevista.Editar(numeroCategoria, categoria);
-
-            notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
-        }
-
-        public void ExcluirCategoria()
-        {
-            MostrarTitulo("Excluíndo categoria");
-
-            bool temCategoriasCadastradas = VisualizarCategorias("Pesquisando");
-
-            if (temCategoriasCadastradas == false)
-            {
-                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", StatusValidacao.Atencao);
-                return;
-            }
-
-            int numeroCategoriaExclusao = ObterNumeroCategoria();
-
-            repositorioCategoriaRevista.Excluir(numeroCategoriaExclusao);
-
-            notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
-        }
-
-        public bool VisualizarCategorias(string tipo)
-        {
-            if (tipo == "Tela")
-                MostrarTitulo("Visualização de Categorias");
-
-            CategoriaRevista[] categorias = repositorioCategoriaRevista.ObterTodosRegistros();
-
-            if (categorias.Length == 0)
-                return false;
-
-            for (int i = 0; i < categorias.Length; i++)
-            {
-                CategoriaRevista cat = categorias[i];
-
-                Console.WriteLine(cat.ToString());
-                
-                Console.WriteLine();
-            }
-
-            return true;
-        }
-
-        public string MostrarOpcoes()
+        public override string MostrarOpcoes()
         {
             Console.Clear();
 
@@ -110,24 +38,77 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             return opcao;
         }
 
-        public int ObterNumeroCategoria()
+        public void Inserir()
         {
-            int numeroCategoria;
-            bool numeroCategoriaEncontrada;
+            MostrarTitulo("Inserindo nova Revista");
 
-            do
+            CategoriaRevista categoria = ObterCategoria();
+
+            repositorioCategoriaRevista.Inserir(categoria);
+
+            notificador.ApresentarMensagem("Categoria inserida com sucesso!", StatusValidacao.Sucesso);
+        }
+
+        public void Editar()
+        {
+            MostrarTitulo("Editando categoria");
+
+            bool temCategoriasCadastradas = Listar("Pesquisando");
+
+            if (temCategoriasCadastradas == false)
             {
-                Console.Write("Digite o número da categoria: ");
-                numeroCategoria = Convert.ToInt32(Console.ReadLine());
+                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", StatusValidacao.Atencao);
+                return;
+            }
 
-                numeroCategoriaEncontrada = repositorioCategoriaRevista.ExisteNumeroRegistro(numeroCategoria);
+            int numeroCategoria = ObterNumeroCategoria();
 
-                if (numeroCategoriaEncontrada == false)
-                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
+            CategoriaRevista categoria = ObterCategoria();
 
-            } while (numeroCategoriaEncontrada == false);
+            repositorioCategoriaRevista.Editar(numeroCategoria, categoria);
 
-            return numeroCategoria;
+            notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
+        }
+
+        public void Excluir()
+        {
+            MostrarTitulo("Excluíndo categoria");
+
+            bool temCategoriasCadastradas = Listar("Pesquisando");
+
+            if (temCategoriasCadastradas == false)
+            {
+                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", StatusValidacao.Atencao);
+                return;
+            }
+
+            int numeroCategoriaExclusao = ObterNumeroCategoria();
+
+            repositorioCategoriaRevista.Excluir(numeroCategoriaExclusao);
+
+            notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
+        }
+
+        public bool Listar(string tipo)
+        {
+            if (tipo == "Tela")
+                MostrarTitulo("Visualização de Categorias");
+
+            CategoriaRevista[] categorias = repositorioCategoriaRevista.ObterTodosRegistros();
+
+            if (categorias.Length == 0)
+                return false;
+
+            for (int i = 0; i < categorias.Length; i++)
+            {
+                CategoriaRevista cat = categorias[i];
+
+                Console.WriteLine(cat.ToString());
+
+                Console.WriteLine();
+            }
+
+            return true;
         }
 
         #region métodos privados
@@ -146,7 +127,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             string[] identificadores = null;
             bool revistaExiste = false;
 
-            telaRevista.VisualizarRevistas("");
+            telaRevista.Listar("");
 
             while (revistaExiste == false)
             {
@@ -190,7 +171,26 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
             return categoria;
         }
 
-        
+        private int ObterNumeroCategoria()
+        {
+            int numeroCategoria;
+            bool numeroCategoriaEncontrada;
+
+            do
+            {
+                Console.Write("Digite o número da categoria: ");
+                numeroCategoria = Convert.ToInt32(Console.ReadLine());
+
+                numeroCategoriaEncontrada = repositorioCategoriaRevista.ExisteNumeroRegistro(numeroCategoria);
+
+                if (numeroCategoriaEncontrada == false)
+                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
+
+            } while (numeroCategoriaEncontrada == false);
+
+            return numeroCategoria;
+        }
+
         #endregion
     }
 }

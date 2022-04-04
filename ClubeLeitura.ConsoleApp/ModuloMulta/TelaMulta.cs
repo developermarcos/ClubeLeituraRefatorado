@@ -8,13 +8,14 @@
  *  
  *  -Para sair, usuário deve digitar "s"
  */
+using ClubeLeitura.ConsoleApp.Compartilhado.Interfaces;
 using ClubeLeitura.ConsoleApp.ModuloMulta;
 using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using System;
 
 namespace ClubeLeitura.ConsoleApp
 {
-    public class TelaMulta
+    public class TelaMulta : TelaBase, IEditavel, IListavel
     {
         private RepositorioMulta repositorioMulta;
         private TelaAmigo telaAmigo;
@@ -23,8 +24,11 @@ namespace ClubeLeitura.ConsoleApp
             this.repositorioMulta=repositorioMulta;
             this.telaAmigo=telaAmigo;
         }
-
-        public bool VisualizarMultas(string tipo)
+        public override string MostrarOpcoes()
+        {
+            throw new NotImplementedException();
+        }
+        public bool Listar(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de multas");
@@ -48,7 +52,13 @@ namespace ClubeLeitura.ConsoleApp
             return true;
         }
 
-        public void MostrarTitulo(string titulo)
+        public void Editar()
+        {
+
+        }
+
+        #region método privados
+        private void MostrarTitulo(string titulo)
         {
             Console.Clear();
 
@@ -56,5 +66,6 @@ namespace ClubeLeitura.ConsoleApp
 
             Console.WriteLine();
         }
+        #endregion
     }
 }

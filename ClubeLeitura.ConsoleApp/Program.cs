@@ -39,13 +39,13 @@ namespace ClubeLeitura.ConsoleApp
             TelaCategoriaRevista telaCategoriaRevista = new TelaCategoriaRevista(repositorioCategoriaRevista, notificador);
 
             RepositorioRevista repositorioRevista = new RepositorioRevista(tamanhoArrays);
-            TelaRevista telaRevista = new TelaRevista(repositorioRevista, telaCaixa, telaCategoriaRevista, notificador);
+            TelaRevista telaRevista = new TelaRevista(repositorioRevista, telaCaixa, telaCategoriaRevista, notificador, repositorioCategoriaRevista);
 
-            RepositorioEmprestimo RepositorioEmprestimo = new RepositorioEmprestimo(tamanhoArrays);
-            TelaEmprestimo telaEmprestimo = new TelaEmprestimo(RepositorioEmprestimo, telaAmigo, telaRevista, notificador);
+            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo(tamanhoArrays);
+            TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, telaAmigo, telaRevista, notificador, repositorioRevista, repositorioAmigo);
 
             RepositorioReserva repositorioReserva = new RepositorioReserva(tamanhoArrays);
-            TelaReserva telaReserva = new TelaReserva(repositorioReserva, telaAmigo, telaRevista, telaEmprestimo, notificador);
+            TelaReserva telaReserva = new TelaReserva(repositorioReserva, telaAmigo, telaRevista, telaEmprestimo, notificador, repositorioAmigo, repositorioRevista, repositorioEmprestimo);
 
             RepositorioMulta repositorioMulta = new RepositorioMulta(tamanhoArrays);
             TelaMulta telaMulta = new TelaMulta(repositorioMulta, telaAmigo);
@@ -86,19 +86,19 @@ namespace ClubeLeitura.ConsoleApp
 
                     if (opcao == "1")
                     {
-                        telaCaixa.InserirNovaCaixa();
+                        telaCaixa.Inserir();
                     }
                     else if (opcao == "2")
                     {
-                        telaCaixa.EditarCaixa();
+                        telaCaixa.Editar();
                     }
                     else if (opcao == "3")
                     {
-                        telaCaixa.ExcluirCaixa();
+                        telaCaixa.Excluir();
                     }
                     else if (opcao == "4")
                     {
-                        bool temCaixaCadastrada = telaCaixa.VisualizarCaixas("Tela");
+                        bool temCaixaCadastrada = telaCaixa.Listar("Tela");
                         if (temCaixaCadastrada == false)
                         {
                             notificador.ApresentarMensagem("Nenhuma caixa cadastrada", StatusValidacao.Atencao);
@@ -112,19 +112,19 @@ namespace ClubeLeitura.ConsoleApp
 
                     if (opcao == "1")
                     {
-                        telaRevista.InserirNovaRevista();
+                        telaRevista.Inserir();
                     }
                     else if (opcao == "2")
                     {
-                        telaRevista.EditarRevista();
+                        telaRevista.Editar();
                     }
                     else if (opcao == "3")
                     {
-                        telaRevista.ExcluirRevista();
+                        telaRevista.Excluir();
                     }
                     else if (opcao == "4")
                     {
-                        bool temRevistaCadastrada = telaRevista.VisualizarRevistas("Tela");
+                        bool temRevistaCadastrada = telaRevista.Listar("Tela");
                         if (temRevistaCadastrada == false)
                         {
                             notificador.ApresentarMensagem("Nenhuma revista cadastrada", StatusValidacao.Atencao);
@@ -138,19 +138,19 @@ namespace ClubeLeitura.ConsoleApp
 
                     if (opcao == "1")
                     {
-                        telaAmigo.InserirNovoAmigo();
+                        telaAmigo.Inserir();
                     }
                     else if (opcao == "2")
                     {
-                        telaAmigo.EditarAmigo();
+                        telaAmigo.Editar();
                     }
                     else if (opcao == "3")
                     {
-                        telaAmigo.ExcluirAmigo();
+                        telaAmigo.Excluir();
                     }
                     else if (opcao == "4")
                     {
-                        bool temAmigoCadastrado = telaAmigo.VisualizarAmigos("Tela");
+                        bool temAmigoCadastrado = telaAmigo.Listar("Tela");
                         if (temAmigoCadastrado == false)
                         {
                             notificador.ApresentarMensagem("Nenhum amigo cadastrado", StatusValidacao.Atencao);
@@ -168,19 +168,19 @@ namespace ClubeLeitura.ConsoleApp
 
                     if (opcao == "1")
                     {
-                        telaEmprestimo.InserirNovoEmprestimo();
+                        telaEmprestimo.Inserir();
                     }
                     else if (opcao == "2")
                     {
-                        telaEmprestimo.EditarEmprestimo();
+                        telaEmprestimo.Editar();
                     }
                     else if (opcao == "3")
                     {
-                        telaEmprestimo.ExcluirEmprestimo();
+                        telaEmprestimo.Excluir();
                     }
                     else if (opcao == "4")
                     {
-                        bool temEmprestimoCadastrado = telaEmprestimo.VisualizarEmprestimos("Tela");
+                        bool temEmprestimoCadastrado = telaEmprestimo.Listar("Tela");
                         if (temEmprestimoCadastrado == false)
                         {
                             notificador.ApresentarMensagem("Nenhum emprestimo cadastrado", StatusValidacao.Atencao);
@@ -198,19 +198,19 @@ namespace ClubeLeitura.ConsoleApp
 
                     if (opcao == "1")
                     {
-                        telaCategoriaRevista.InserirNovaCategoria();
+                        telaCategoriaRevista.Inserir();
                     }
                     else if (opcao == "2")
                     {
-                        telaCategoriaRevista.EditarCategoria();
+                        telaCategoriaRevista.Editar();
                     }
                     else if (opcao == "3")
                     {
-                        telaCategoriaRevista.ExcluirCategoria();
+                        telaCategoriaRevista.Excluir();
                     }
                     else if (opcao == "4")
                     {
-                        bool temCategoriaRevistaCadastrada = telaCategoriaRevista.VisualizarCategorias("Tela");
+                        bool temCategoriaRevistaCadastrada = telaCategoriaRevista.Listar("Tela");
                         if (temCategoriaRevistaCadastrada == false)
                         {
                             notificador.ApresentarMensagem("Nenhuma categoria cadastrada", StatusValidacao.Atencao);
@@ -224,26 +224,18 @@ namespace ClubeLeitura.ConsoleApp
 
                     if (opcao == "1")
                     {
-                        telaReserva.InserirNovaReserva();
+                        telaReserva.Inserir();
                     }
                     else if (opcao == "2")
                     {
-                        telaReserva.EditarReserva();
-                    }
-                    else if (opcao == "3")
-                    {
-                        telaReserva.ExcluirReserva();
-                    }
-                    else if (opcao == "4")
-                    {
-                        bool temReservaCadastrada = telaReserva.VisualizarReservas("Tela");
+                        bool temReservaCadastrada = telaReserva.Listar("Tela");
                         if (temReservaCadastrada == false)
                         {
                             notificador.ApresentarMensagem("Nenhuma reserva cadastrada", StatusValidacao.Atencao);
                         }
                         Console.ReadLine();
                     }
-                    else if (opcao == "5")
+                    else if (opcao == "3")
                     {
                         telaReserva.EmprestimoApartirReserva();
                     }

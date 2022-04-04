@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.Compartilhado.Interfaces;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
 using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
@@ -6,25 +7,39 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModeloReserva
 {
-    public class TelaReserva
+    public class TelaReserva : TelaBase, IListavel, ICadastravel
     {
         public Notificador notificador; //reponsável pelas mensagens pro usuário
-        
-        private RepositorioReserva repositorioReserva;
-        private TelaAmigo telaAmigo;
-        private TelaRevista telaRevista;
-        private TelaEmprestimo telaEmprestimo;
 
-        public TelaReserva(RepositorioReserva repositorioReserva, TelaAmigo telaAmigo, TelaRevista telaRevista, TelaEmprestimo telaEmprestimo, Notificador notificador)
+        private RepositorioReserva repositorioReserva;
+        private TelaEmprestimo telaEmprestimo;
+        private TelaAmigo telaAmigo;
+        private RepositorioAmigo repositorioAmigo;
+        private TelaRevista telaRevista;
+        private RepositorioRevista repositorioRevista;
+        private RepositorioEmprestimo repositorioEmprestimo;
+
+        public TelaReserva(
+            RepositorioReserva repositorioReserva,
+            TelaAmigo telaAmigo,
+            TelaRevista telaRevista,
+            TelaEmprestimo telaEmprestimo,
+            Notificador notificador,
+            RepositorioAmigo repositorioAmigo,
+            RepositorioRevista repositorioRevista, 
+            RepositorioEmprestimo repositorioEmprestimo)
         {
             this.repositorioReserva=repositorioReserva;
             this.telaAmigo=telaAmigo;
             this.telaRevista=telaRevista;
             this.telaEmprestimo=telaEmprestimo;
             this.notificador=notificador;
+            this.repositorioAmigo=repositorioAmigo;
+            this.repositorioRevista=repositorioRevista;
+            this.repositorioEmprestimo=repositorioEmprestimo;
         }
 
-        public string MostrarOpcoes()
+        public override string MostrarOpcoes()
         {
             Console.Clear();
 
@@ -33,10 +48,8 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             Console.WriteLine();
 
             Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Editar");
-            Console.WriteLine("Digite 3 para Excluir");
-            Console.WriteLine("Digite 4 para Visualizar");
-            Console.WriteLine("Digite 5 para Emprestimo");
+            Console.WriteLine("Digite 2 para Visualizar");
+            Console.WriteLine("Digite 3 para Emprestimo");
 
             Console.WriteLine("Digite s para sair");
 
@@ -45,11 +58,11 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             return opcao;
         }
 
-        public void InserirNovaReserva()
+        public void Inserir()
         {
             MostrarTitulo("Inserindo nova reserva");
 
-            bool existeAmigosCadastrados = telaAmigo.VisualizarAmigos("Pesquisando");
+            bool existeAmigosCadastrados = telaAmigo.Listar("Pesquisando");
 
             if (!existeAmigosCadastrados)
             {
@@ -57,12 +70,9 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 return;
             }
 
-            int idAmigo = telaAmigo.ObterNumeroAmigo();
+            Amigo amigoReserva = ObterAmigo();
 
-            Amigo amigoReserva = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
-
-            
-            bool existeRevistasCadastradas = telaRevista.VisualizarRevistas("Pesquisando");
+            bool existeRevistasCadastradas = telaRevista.Listar("Pesquisando");
 
             if (!existeRevistasCadastradas)
             {
@@ -70,10 +80,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 return;
             }
 
-            int idRevista = telaRevista.ObterNumeroRevista();
-
-            Revista revistaReserva = telaRevista.repositorioRevista.ObterRegistro(idRevista);
-
+            Revista revistaReserva = ObterRevista();
 
             Reserva reservaCadastro = ObterReserva(amigoReserva, revistaReserva);
 
@@ -82,57 +89,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             notificador.ApresentarMensagem("Empréstimo inserido com sucesso!", StatusValidacao.Sucesso);
         }
 
-        public void EditarReserva()
-        {
-            MostrarTitulo("Editando reserva");
-
-            bool temeEmprestimosCadastrados = VisualizarReservas("Pesquisando");
-
-            if (temeEmprestimosCadastrados == false)
-            {
-                notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder editar", StatusValidacao.Atencao);
-                return;
-            }
-            
-            int numeroReserva = ObterNumeroReserva();
-
-
-            telaAmigo.VisualizarAmigos("Pesquisando");
-            int idAmigo = telaAmigo.ObterNumeroAmigo();
-
-            telaRevista.VisualizarRevistas("Pesquisando");
-            int idRevista = telaRevista.ObterNumeroRevista();
-            
-            
-            Amigo amigoEmprestimo = telaAmigo.repositorioAmigo.ObterRegistro(idAmigo);
-            Revista revistaEmprestimo = telaRevista.repositorioRevista.ObterRegistro(idRevista);
-            Reserva emprestimoCadastro = ObterReserva(amigoEmprestimo, revistaEmprestimo);
-
-            repositorioReserva.Editar(numeroReserva, emprestimoCadastro);
-
-            notificador.ApresentarMensagem("Reserva editada com sucesso!", StatusValidacao.Sucesso);
-        }
-
-        public void ExcluirReserva()
-        {
-            MostrarTitulo("Excluindo reserva");
-
-            bool temReservaCadastrada = VisualizarReservas("Pesquisando");
-
-            if (temReservaCadastrada == false)
-            {
-                notificador.ApresentarMensagem("Nenhuma reserva cadastrada para poder excluir", StatusValidacao.Atencao);
-                return;
-            }
-
-            int numeroEmprestimo = ObterNumeroReserva();
-
-            repositorioReserva.Excluir(numeroEmprestimo);
-
-            notificador.ApresentarMensagem("Reserva excluída com sucesso", StatusValidacao.Sucesso);
-        }
-
-        public bool VisualizarReservas(string tipo)
+        public bool Listar(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de reservas");
@@ -148,7 +105,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             for (int i = 0; i < reservas.Length; i++)
             {
                 Reserva r = reservas[i];
-                
+
                 Console.WriteLine();
 
                 Console.WriteLine(r.ToString());
@@ -165,8 +122,8 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
         public void EmprestimoApartirReserva()
         {
             MostrarTitulo("Inserindo novo empréstimo");
-            
-            bool temeEmprestimosCadastrados = VisualizarReservas("Pesquisando");
+
+            bool temeEmprestimosCadastrados = Listar("Pesquisando");
             if (temeEmprestimosCadastrados == false)
             {
                 notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder editar", StatusValidacao.Atencao);
@@ -176,9 +133,11 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             Console.WriteLine("Informe a reserva que deseja criar um empréstimo");
             int numeroReserva = ObterNumeroReserva();
 
-            Reserva reserva = repositorioReserva.ObterRegistro(numeroReserva);
+            Reserva reserva = (Reserva)repositorioReserva.ObterRegistro(numeroReserva);
 
-            telaEmprestimo.EmprestimoApartirReserva(reserva);
+            Emprestimo novoEmprestimo = new Emprestimo(reserva.amigo, reserva.revista, DateTime.Now);
+
+            repositorioEmprestimo.Inserir(novoEmprestimo);
 
             repositorioReserva.Excluir(numeroReserva);
 
@@ -238,6 +197,49 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             } while (numeroReservaEncontrada == false);
 
             return numeroReserva;
+        }
+
+        private Amigo ObterAmigo()
+        {
+            int numeroAmigo;
+            bool numeroAmigoEncontrado;
+
+            do
+            {
+                Console.Write("Digite o número do amigo: ");
+                numeroAmigo = Convert.ToInt32(Console.ReadLine());
+
+                numeroAmigoEncontrado = repositorioAmigo.ExisteNumeroRegistro(numeroAmigo);
+
+                if (numeroAmigoEncontrado == false)
+                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValidacao.Atencao);
+
+            } while (numeroAmigoEncontrado == false);
+
+
+            Amigo amigo = repositorioAmigo.ObterRegistro(numeroAmigo);
+            return amigo;
+        }
+
+        public Revista ObterRevista()
+        {
+            int numeroRevista;
+            bool numeroRevistaEncontrado;
+
+            do
+            {
+                Console.Write("Digite o número da revista: ");
+                numeroRevista = Convert.ToInt32(Console.ReadLine());
+
+                numeroRevistaEncontrado = repositorioRevista.ExisteNumeroRegistro(numeroRevista);
+
+                if (numeroRevistaEncontrado == false)
+                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", StatusValidacao.Atencao);
+
+            } while (numeroRevistaEncontrado == false);
+
+            Revista revista = repositorioRevista.ObterRegistro(numeroRevista);
+            return revista;
         }
         #endregion
     }

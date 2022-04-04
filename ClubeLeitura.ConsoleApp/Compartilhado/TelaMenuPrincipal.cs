@@ -2,11 +2,11 @@
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public class TelaMenuPrincipal
+    public class TelaMenuPrincipal : TelaBase
     {
         private string opcaoSelecionada;
 
-        public string MostrarOpcoes()
+        public override string MostrarOpcoes()
         {
             Console.Clear();
 
@@ -27,6 +27,6 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
             return opcaoSelecionada;
         }
-    
+
     }
 }
