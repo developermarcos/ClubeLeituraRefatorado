@@ -4,19 +4,19 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class Notificador
     {
-        public void ApresentarMensagem(string mensagem, StatusValidacao status)
+        public void ApresentarMensagem(string mensagem, TipoMensagem status)
         {
             switch (status)
             {
-                case StatusValidacao.Sucesso:
+                case TipoMensagem.Sucesso:
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
 
-                case StatusValidacao.Atencao:
+                case TipoMensagem.Atencao:
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     break;
 
-                case StatusValidacao.Erro:
+                case TipoMensagem.Erro:
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
 

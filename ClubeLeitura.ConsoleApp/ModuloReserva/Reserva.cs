@@ -3,7 +3,7 @@ using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
-namespace ClubeLeitura.ConsoleApp.ModeloReserva
+namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
     public class Reserva : EntidadeBase
     {

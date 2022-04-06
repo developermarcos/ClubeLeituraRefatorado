@@ -1,6 +1,6 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 
-namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
+namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
     {

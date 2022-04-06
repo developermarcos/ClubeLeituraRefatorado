@@ -5,14 +5,14 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 {
-    public class TelaCategoriaRevista : TelaBase, IEditavel, ICadastravel, IListavel, IExcluivel
+    public class TelaCategoriaRevista : TelaBase
     {
         public RepositorioCategoriaRevista repositorioCategoriaRevista;
         public TelaRevista telaRevista;
         public Notificador notificador;
         private CategoriaRevista[] categoriaRevistas;
 
-        public TelaCategoriaRevista(RepositorioCategoriaRevista repositorioCategoriaRevista, Notificador notificador)
+        public TelaCategoriaRevista(RepositorioCategoriaRevista repositorioCategoriaRevista, Notificador notificador) : base("Tela Categoria Revista")
         {
             this.repositorioCategoriaRevista=repositorioCategoriaRevista;
             this.notificador=notificador;
@@ -46,7 +46,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             repositorioCategoriaRevista.Inserir(categoria);
 
-            notificador.ApresentarMensagem("Categoria inserida com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Categoria inserida com sucesso!", TipoMensagem.Sucesso);
         }
 
         public void Editar()
@@ -57,7 +57,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             if (temCategoriasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", TipoMensagem.Atencao);
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             repositorioCategoriaRevista.Editar(numeroCategoria, categoria);
 
-            notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Categoria editada com sucesso!", TipoMensagem.Sucesso);
         }
 
         public void Excluir()
@@ -78,7 +78,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             if (temCategoriasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma categoria cadastrada para poder editar", TipoMensagem.Atencao);
                 return;
             }
 
@@ -86,7 +86,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
             repositorioCategoriaRevista.Excluir(numeroCategoriaExclusao);
 
-            notificador.ApresentarMensagem("Categoria editada com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Categoria editada com sucesso!", TipoMensagem.Sucesso);
         }
 
         public bool Listar(string tipo)
@@ -113,15 +113,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
 
         #region métodos privados
 
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
-        }
-
         private Revista[] ObterRevistas()
         {
             string[] identificadores = null;
@@ -141,7 +132,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
                         revistaExiste = true;
                     else
                     {
-                        notificador.ApresentarMensagem("Algum numero informado não existe!", StatusValidacao.Atencao);
+                        notificador.ApresentarMensagem("Algum numero informado não existe!", TipoMensagem.Atencao);
                         revistaExiste = false;
                         break;
                     }
@@ -184,7 +175,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoriaRevista
                 numeroCategoriaEncontrada = repositorioCategoriaRevista.ExisteNumeroRegistro(numeroCategoria);
 
                 if (numeroCategoriaEncontrada == false)
-                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroCategoriaEncontrada == false);
 

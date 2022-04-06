@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class RepositorioBase<T> where T : EntidadeBase
@@ -14,6 +16,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
         {
             int posicaoVazia = ObterPosicaoVazia();
             item.numero = ObterNumeroRegistro();
+            item.ativo = true;
             this.registros[posicaoVazia] = item;
         }
 
@@ -40,6 +43,42 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             for(int i = 0; i < this.registros.Length; i++)
             {
                 if(this.registros[i] != null)
+                {
+                    item[j] = this.registros[i];
+                    j++;
+                }
+            }
+
+            return item;
+        }
+
+        public T[] ObterTodosRegistrosAtivos()
+        {
+            T[] item = new T[ObterQuantidadeRegistros()];
+
+            int j = 0;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].ativo == true)
+                {
+                    item[j] = this.registros[i];
+                    j++;
+                }
+            }
+
+            return item;
+        }
+
+        public T[] ObterTodosRegistrosInativos()
+        {
+            T[] item = new T[ObterQuantidadeRegistrosInativos()];
+
+            int j = 0;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null)
                 {
                     item[j] = this.registros[i];
                     j++;
@@ -89,6 +128,32 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return existeRegistro;
         }
 
+        public bool ExisteNumeroRegistroAtivo(int numero)
+        {
+            bool existeRegistro = false;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].numero == numero && this.registros[i].ativo == true)
+                    existeRegistro = true;
+            }
+
+            return existeRegistro;
+        }
+
+        public bool ExisteNumeroRegistroInativo(int numero)
+        {
+            bool existeRegistro = false;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].numero == numero && this.registros[i].ativo == false)
+                    existeRegistro = true;
+            }
+
+            return existeRegistro;
+        }
+
         public int ObterPosicaoVazia()
         {
             for (int i = 0; i < this.registros.Length; i++)
@@ -112,9 +177,48 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return quantidadeRegistros;
         }
 
+        public int ObterQuantidadeRegistrosAtivos()
+        {
+            int quantidadeRegistros = 0;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].ativo == true)
+                    quantidadeRegistros++;
+            }
+
+            return quantidadeRegistros;
+        }
+
+        public int ObterQuantidadeRegistrosInativos()
+        {
+            int quantidadeRegistros = 0;
+
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].ativo == false)
+                    quantidadeRegistros++;
+            }
+
+            return quantidadeRegistros;
+        }
+
         protected int ObterNumeroRegistro()
         {
             return ++numero;
+        }
+
+        public void InativarRegistro(int numero)
+        {
+            for (int i = 0; i < this.registros.Length; i++)
+            {
+                if (this.registros[i] != null && this.registros[i].numero == numero)
+                {
+                    this.registros[i].ativo = false;
+                    break;
+                }
+                    
+            }
         }
     }
 }

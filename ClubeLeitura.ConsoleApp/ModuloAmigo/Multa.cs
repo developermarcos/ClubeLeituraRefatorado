@@ -1,4 +1,4 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
+﻿using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.Compartilhado;
 using System;
 

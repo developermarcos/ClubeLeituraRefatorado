@@ -3,14 +3,14 @@
   <Class Name="ClubeLeitura.ConsoleApp.Compartilhado.EntidadeBase">
     <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAAAAAA=</HashCode>
       <FileName>Compartilhado\EntidadeBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.Compartilhado.RepositorioBase&lt;T&gt;">
     <Position X="6.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAABAAAgAAAEAggAAQAQAAAAAAAQAAEAAAAQAAA=</HashCode>
+      <HashCode>QBBAAAABAAEhAAAEAggAAQAQAAAAgEAQAAEAAAAQAAA=</HashCode>
       <FileName>Compartilhado\RepositorioBase.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -121,32 +121,16 @@
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.ModuloRevista.TelaRevista" Collapsed="true">
     <Position X="18.25" Y="5" Width="1.5" />
-    <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
-      <Path>
-        <Point X="23.25" Y="3.853" />
-        <Point X="23.25" Y="4.417" />
-        <Point X="19" Y="4.417" />
-        <Point X="19" Y="5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AhAAAAEAAAAAAAAAAEAEACAAAAAAAAACEAAAgAADQAA=</HashCode>
+      <HashCode>ABAAAIEAAEAAAAAEAGAEASgAAAAACAACAAAAgAATQAA=</HashCode>
       <FileName>ModuloRevista\TelaRevista.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.169" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.TelaMulta" Collapsed="true">
     <Position X="20" Y="5" Width="1.5" />
-    <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
-      <Path>
-        <Point X="23.25" Y="3.853" />
-        <Point X="23.25" Y="4.437" />
-        <Point X="20.75" Y="4.437" />
-        <Point X="20.75" Y="5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AACAAQAAAAAAABAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AACAAAAAAEAAABAAAEAAAAAAAAAAAAAAAAAAAAAQQAA=</HashCode>
       <FileName>ModuloMulta\TelaMulta.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.2" />
@@ -155,62 +139,38 @@
     <Position X="21.75" Y="5" Width="1.5" />
     <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
       <Path>
-        <Point X="23.25" Y="3.853" />
+        <Point X="23.25" Y="4.045" />
         <Point X="23.25" Y="4.437" />
         <Point X="22.5" Y="4.437" />
         <Point X="22.5" Y="5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AACAAAAAAARAABAgAEAAIEAAAAAABCAAAAAAAAACUBA=</HashCode>
+      <HashCode>gBCAAAAAAEAAABAkAEAAAUAAAAAAAiAAAAAAAAATUAA=</HashCode>
       <FileName>ModuloEmprestimos\TelaEmprestimo.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.173" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.ModuloCategoriaRevista.TelaCategoriaRevista" Collapsed="true">
     <Position X="23.5" Y="5" Width="1.5" />
-    <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
-      <Path>
-        <Point X="23.25" Y="3.853" />
-        <Point X="23.25" Y="4.406" />
-        <Point X="24.25" Y="4.406" />
-        <Point X="24.25" Y="5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAEAAAAAAAGAAAAgAAAAACAEAAASAAAACcAA=</HashCode>
+      <HashCode>AAEAAAAAAEAAAAAEAGAAAQgAAAAACAAAAAQAAAASUAA=</HashCode>
       <FileName>ModuloCategoriaRevista\TelaCategoriaRevista.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.242" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.ModuloCaixa.TelaCaixa" Collapsed="true">
     <Position X="25.25" Y="5" Width="1.5" />
-    <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
-      <Path>
-        <Point X="23.25" Y="3.853" />
-        <Point X="23.25" Y="4.448" />
-        <Point X="26" Y="4.448" />
-        <Point X="26" Y="5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAEAAAAAAAEQAACgAgAEAAAAAAAACgAACQAA=</HashCode>
+      <HashCode>AAAAAIAAAEAAAAAEAEAAASAAAAAAAAAAAAAAgAASQAA=</HashCode>
       <FileName>ModuloCaixa\TelaCaixa.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.2" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.ModuloPessoa.TelaAmigo" Collapsed="true">
     <Position X="27" Y="5" Width="1.5" />
-    <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
-      <Path>
-        <Point X="23.25" Y="3.853" />
-        <Point X="23.25" Y="4.417" />
-        <Point X="27.75" Y="4.417" />
-        <Point X="27.75" Y="5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>wAAAAgAAADAAABAAAEAAAAAAAAAAAgARAQAAOAACQAA=</HashCode>
+      <HashCode>gAAAAgAAAGAAABAEAEAAAQAAAAAAAgAAAQAACAASQAA=</HashCode>
       <FileName>ModuloAmigo\TelaAmigo.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.242" />
@@ -219,66 +179,37 @@
     <Position X="28.75" Y="5" Width="1.5" />
     <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
       <Path>
-        <Point X="23.25" Y="3.853" />
+        <Point X="23.25" Y="4.045" />
         <Point X="23.25" Y="4.437" />
         <Point X="29.5" Y="4.437" />
         <Point X="29.5" Y="5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AQCgAAAAACAAAAAAAMAAAgAAAAEABAAAgAAAAEACUAA=</HashCode>
+      <HashCode>gRCAAAACAEAAAAAAAFAAAQAAAAEABiAAgAAAAEADUAA=</HashCode>
       <FileName>ModeloReserva\TelaReserva.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Bottom" Position="0.221" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.Compartilhado.TelaMenuPrincipal" Collapsed="true">
     <Position X="16.5" Y="5" Width="1.5" />
-    <InheritanceLine Type="ClubeLeitura.ConsoleApp.TelaBase" ManuallyRouted="true">
-      <Path>
-        <Point X="23.25" Y="3.853" />
-        <Point X="23.25" Y="4.414" />
-        <Point X="17.25" Y="4.414" />
-        <Point X="17.25" Y="5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAA=</HashCode>
+      <HashCode>AUCAAIEAAAAAAAAAACAAAAAAAAAAAiAgAAAAAFADUAA=</HashCode>
       <FileName>Compartilhado\TelaMenuPrincipal.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.TelaBase">
     <Position X="22.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAQAA=</HashCode>
       <FileName>Compartilhado\TelaBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="ClubeLeitura.ConsoleApp.Compartilhado.Interfaces.ICadastravel" Collapsed="true">
-    <Position X="31.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Compartilhado\Interfaces\ICadastravel.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="ClubeLeitura.ConsoleApp.Compartilhado.Interfaces.IEditavel" Collapsed="true">
+  <Interface Name="ClubeLeitura.ConsoleApp.Compartilhado.Interfaces.ICadastroBasico" Collapsed="true">
     <Position X="31.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Compartilhado\Interfaces\IEditavel.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="ClubeLeitura.ConsoleApp.Compartilhado.Interfaces.IExcluivel" Collapsed="true">
-    <Position X="31.25" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Compartilhado\Interfaces\IExcluivel.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="ClubeLeitura.ConsoleApp.Compartilhado.Interfaces.IListavel" Collapsed="true">
-    <Position X="31.25" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Compartilhado\Interfaces\IListavel.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAACAAAAAAAAAAABABAAAA=</HashCode>
+      <FileName>Compartilhado\Interfaces\ICadastroBasico.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

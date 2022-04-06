@@ -3,7 +3,7 @@ using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
-namespace ClubeLeitura.ConsoleApp.ModuloEmprestimos
+namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class Emprestimo : EntidadeBase
     {

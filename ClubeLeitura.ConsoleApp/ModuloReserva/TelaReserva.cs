@@ -1,13 +1,13 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.Compartilhado.Interfaces;
-using ClubeLeitura.ConsoleApp.ModuloEmprestimos;
+using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
-namespace ClubeLeitura.ConsoleApp.ModeloReserva
+namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class TelaReserva : TelaBase, IListavel, ICadastravel
+    public class TelaReserva : TelaBase
     {
         public Notificador notificador; //reponsável pelas mensagens pro usuário
 
@@ -26,8 +26,8 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             TelaEmprestimo telaEmprestimo,
             Notificador notificador,
             RepositorioAmigo repositorioAmigo,
-            RepositorioRevista repositorioRevista, 
-            RepositorioEmprestimo repositorioEmprestimo)
+            RepositorioRevista repositorioRevista,
+            RepositorioEmprestimo repositorioEmprestimo) : base("Tela Reserva")
         {
             this.repositorioReserva=repositorioReserva;
             this.telaAmigo=telaAmigo;
@@ -36,6 +36,17 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             this.notificador=notificador;
             this.repositorioAmigo=repositorioAmigo;
             this.repositorioRevista=repositorioRevista;
+            this.repositorioEmprestimo=repositorioEmprestimo;
+        }
+
+        public TelaReserva(Notificador notificador, RepositorioReserva repositorioReserva, RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, TelaAmigo telaAmigo, TelaRevista telaRevista, RepositorioEmprestimo repositorioEmprestimo) : base("Tela Reserva")
+        {
+            this.notificador=notificador;
+            this.repositorioReserva=repositorioReserva;
+            this.repositorioAmigo=repositorioAmigo;
+            this.repositorioRevista=repositorioRevista;
+            this.telaAmigo=telaAmigo;
+            this.telaRevista=telaRevista;
             this.repositorioEmprestimo=repositorioEmprestimo;
         }
 
@@ -48,8 +59,10 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             Console.WriteLine();
 
             Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Visualizar");
+            Console.WriteLine("Digite 2 para Visualizar Ativos");
             Console.WriteLine("Digite 3 para Emprestimo");
+            Console.WriteLine("Digite 4 para Inativar");
+            Console.WriteLine("Digite 5 para Visualizar Inativos");
 
             Console.WriteLine("Digite s para sair");
 
@@ -62,11 +75,11 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
         {
             MostrarTitulo("Inserindo nova reserva");
 
-            bool existeAmigosCadastrados = telaAmigo.Listar("Pesquisando");
+            bool existeAmigosCadastrados = telaAmigo.VisualizarRegistros("Pesquisando");
 
             if (!existeAmigosCadastrados)
             {
-                notificador.ApresentarMensagem("Não existe amigos cadastrados!", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Não existe amigos cadastrados!", TipoMensagem.Atencao);
                 return;
             }
 
@@ -76,7 +89,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             if (!existeRevistasCadastradas)
             {
-                notificador.ApresentarMensagem("Não existe revistas cadastradas!", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Não existe revistas cadastradas!", TipoMensagem.Atencao);
                 return;
             }
 
@@ -86,7 +99,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             repositorioReserva.Inserir(reservaCadastro);
 
-            notificador.ApresentarMensagem("Empréstimo inserido com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Empréstimo inserido com sucesso!", TipoMensagem.Sucesso);
         }
 
         public bool Listar(string tipo)
@@ -94,10 +107,10 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de reservas");
 
-            if (repositorioReserva.ObterQuantidadeRegistros() == 0)
+            if (repositorioReserva.ObterQuantidadeRegistrosAtivos() == 0)
                 return false;
 
-            Reserva[] reservas = repositorioReserva.ObterTodosRegistros();
+            Reserva[] reservas = repositorioReserva.ObterTodosRegistrosAtivos();
 
             if (reservas.Length == 0)
                 return false;
@@ -126,7 +139,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
             bool temeEmprestimosCadastrados = Listar("Pesquisando");
             if (temeEmprestimosCadastrados == false)
             {
-                notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder editar", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder editar", TipoMensagem.Atencao);
                 return;
             }
 
@@ -139,21 +152,61 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
 
             repositorioEmprestimo.Inserir(novoEmprestimo);
 
-            repositorioReserva.Excluir(numeroReserva);
+            repositorioReserva.InativarRegistro(numeroReserva);
 
-            notificador.ApresentarMensagem("Empréstimo realizado com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Empréstimo realizado com sucesso", TipoMensagem.Sucesso);
+        }
+
+        public void Inativar()
+        {
+            MostrarTitulo("Inativando reserva");
+
+            bool temeEmprestimosCadastrados = Listar("Pesquisando");
+            if (temeEmprestimosCadastrados == false)
+            {
+                notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder inativar", TipoMensagem.Atencao);
+                return;
+            }
+
+            Console.WriteLine("Informe a reserva que deseja inativar");
+            int numeroReserva = ObterNumeroReserva();
+
+            repositorioReserva.InativarRegistro(numeroReserva);
+            notificador.ApresentarMensagem("Reserva inativada com sucesso!", TipoMensagem.Sucesso);
+        }
+
+        public bool ListarInativos(string tipo)
+        {
+            if (tipo == "Tela")
+                MostrarTitulo("Visualização de reservas inativas");
+
+            if (repositorioReserva.ObterQuantidadeRegistrosInativos() == 0)
+                return false;
+
+            Reserva[] reservas = repositorioReserva.ObterTodosRegistrosInativos();
+
+            if (reservas.Length == 0)
+                return false;
+
+            for (int i = 0; i < reservas.Length; i++)
+            {
+                Reserva r = reservas[i];
+
+                Console.WriteLine();
+
+                Console.WriteLine(r.ToString());
+                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", r.amigo.nome, r.amigo.responsavel, r.amigo.telefone);
+                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}", r.revista.numeroEdicao, r.revista.tipoColecao);
+
+
+                Console.WriteLine();
+            }
+
+            return true;
         }
 
         #region métodos privados
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
-        }
-
+        
         private Reserva ObterReserva(Amigo amigoEmprestimo, Revista revistaEmprestimo)
         {
             Amigo amigo;
@@ -173,7 +226,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                     break;
                 }
                 else
-                    notificador.ApresentarMensagem("Data não foi informada no padrão solicitado, tente novamente.", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Data não foi informada no padrão solicitado, tente novamente.", TipoMensagem.Atencao);
             }
             Reserva emprestimo = new Reserva(amigoEmprestimo, revistaEmprestimo, reservaData);
             return emprestimo;
@@ -189,10 +242,10 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 Console.Write("Digite o número da reserva: ");
                 numeroReserva = Convert.ToInt32(Console.ReadLine());
 
-                numeroReservaEncontrada = repositorioReserva.ExisteNumeroRegistro(numeroReserva);
+                numeroReservaEncontrada = repositorioReserva.ExisteNumeroRegistroAtivo(numeroReserva);
 
                 if (numeroReservaEncontrada == false)
-                    notificador.ApresentarMensagem("Número da reserva não encontrada, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número da reserva não encontrada, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroReservaEncontrada == false);
 
@@ -212,7 +265,7 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 numeroAmigoEncontrado = repositorioAmigo.ExisteNumeroRegistro(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
-                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroAmigoEncontrado == false);
 
@@ -234,13 +287,14 @@ namespace ClubeLeitura.ConsoleApp.ModeloReserva
                 numeroRevistaEncontrado = repositorioRevista.ExisteNumeroRegistro(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
-                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroRevistaEncontrado == false);
 
             Revista revista = repositorioRevista.ObterRegistro(numeroRevista);
             return revista;
         }
+
         #endregion
     }
 }

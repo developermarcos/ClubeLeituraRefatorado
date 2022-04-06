@@ -1,10 +1,13 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloMulta;
+
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
     public class Amigo : Pessoa
     {
         public readonly string responsavel;
+        readonly Multa multa;
 
         public Amigo(string nome, string responsavel, string telefone, string endereco)
         {

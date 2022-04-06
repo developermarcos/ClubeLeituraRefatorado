@@ -6,25 +6,38 @@ using ClubeLeitura.ConsoleApp.ModuloCategoriaRevista;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    public class TelaRevista : TelaBase, IEditavel, ICadastravel, IExcluivel
+    public class TelaRevista : TelaBase
     {
         public int numeroCaixa; //controlar o número da caixas cadastradas
         public Notificador notificador; //reponsável pelas mensagens pro usuário
         public RepositorioRevista repositorioRevista;
-        
+
 
         public TelaCaixa telaCaixa;
         private RepositorioCategoriaRevista repositorioCategoriaRevista;
 
         private TelaCategoriaRevista telaCategoria;
+        private object telaCategoria1;
+        private RepositorioCategoriaRevista repositorioCategoria;
+        private RepositorioCaixa repositorioCaixa;
 
-        public TelaRevista(RepositorioRevista repositorioRevista, TelaCaixa telaCaixa, TelaCategoriaRevista telaCategoriaRevista, Notificador notificador, RepositorioCategoriaRevista repositorioCategoriaRevista)
+        public TelaRevista(RepositorioRevista repositorioRevista, TelaCaixa telaCaixa, TelaCategoriaRevista telaCategoriaRevista, Notificador notificador, RepositorioCategoriaRevista repositorioCategoriaRevista) : base("Tela Revista")
         {
             this.repositorioRevista=repositorioRevista;
             this.telaCaixa=telaCaixa;
             this.notificador=notificador;
             this.telaCategoria = telaCategoriaRevista;
             this.repositorioCategoriaRevista = repositorioCategoriaRevista;
+        }
+
+        public TelaRevista(object telaCategoria1, RepositorioCategoriaRevista repositorioCategoria, TelaCaixa telaCaixa, RepositorioCaixa repositorioCaixa, RepositorioRevista repositorioRevista, Notificador notificador) : base("Tela Revista")
+        {
+            this.telaCategoria1=telaCategoria1;
+            this.repositorioCategoria=repositorioCategoria;
+            this.telaCaixa=telaCaixa;
+            this.repositorioCaixa=repositorioCaixa;
+            this.repositorioRevista=repositorioRevista;
+            this.notificador=notificador;
         }
 
         public override string MostrarOpcoes()
@@ -55,15 +68,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (!existeCategoriaCadastrada)
             {
-                notificador.ApresentarMensagem("Não existe categorias cadastradas!", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Não existe categorias cadastradas!", TipoMensagem.Atencao);
                 return;
             }
 
-            bool existeCaixasCadastradas = telaCaixa.Listar("Pesquisando");
+            bool existeCaixasCadastradas = telaCaixa.VisualizarRegistros("Pesquisando");
 
             if (!existeCaixasCadastradas)
             {
-                notificador.ApresentarMensagem("Não existe caixas cadastradas!", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Não existe caixas cadastradas!", TipoMensagem.Atencao);
                 return;
             }
 
@@ -75,7 +88,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             repositorioRevista.Inserir(novaRevista);
 
-            notificador.ApresentarMensagem("Revista inserida com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Revista inserida com sucesso!", TipoMensagem.Sucesso);
         }
 
         public void Editar()
@@ -86,7 +99,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (temRevistasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder editar", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder editar", TipoMensagem.Atencao);
                 return;
             }
 
@@ -96,15 +109,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (!existeCategoriaCadastrada)
             {
-                notificador.ApresentarMensagem("Não existe categorias cadastradas!", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Não existe categorias cadastradas!", TipoMensagem.Atencao);
                 return;
             }
 
-            bool existeCaixasCadastradas = telaCaixa.Listar("Pesquisando");
+            bool existeCaixasCadastradas = telaCaixa.VisualizarRegistros("Pesquisando");
 
             if (!existeCaixasCadastradas)
             {
-                notificador.ApresentarMensagem("Não existe caixas cadastradas!", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Não existe caixas cadastradas!", TipoMensagem.Atencao);
                 return;
             }
 
@@ -116,7 +129,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             repositorioRevista.Editar(numeroRevista, revistaAtualizada);
 
-            notificador.ApresentarMensagem("Caixa editada com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Caixa editada com sucesso", TipoMensagem.Sucesso);
         }
 
         public void Excluir()
@@ -127,7 +140,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             if (temRevistasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder excluir", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma revista cadastrada para poder excluir", TipoMensagem.Atencao);
                 return;
             }
 
@@ -135,7 +148,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             repositorioRevista.Excluir(numeroRevista);
 
-            notificador.ApresentarMensagem("Revista excluída com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Revista excluída com sucesso", TipoMensagem.Sucesso);
         }
 
         public bool Listar(string tipo)
@@ -163,7 +176,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return true;
         }
 
-        
+
 
         #region métodos privados
 
@@ -181,7 +194,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 if (caixaExiste)
                     caixa = (Caixa)telaCaixa.repositorioCaixa.ObterRegistro(numeroCaixa);
                 else
-                    notificador.ApresentarMensagem("Caixa não encontrada, informe novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Caixa não encontrada, informe novamente", TipoMensagem.Atencao);
 
             } while (!caixaExiste);
 
@@ -204,15 +217,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return revista;
         }
 
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
-        }
-
         private int ObterNumeroRevista()
         {
             int numeroRevista;
@@ -226,7 +230,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 numeroRevistaEncontrado = repositorioRevista.ExisteNumeroRegistro(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
-                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroRevistaEncontrado == false);
 
@@ -246,7 +250,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 numeroCategoriaEncontrada = repositorioCategoriaRevista.ExisteNumeroRegistro(numeroCategoria);
 
                 if (numeroCategoriaEncontrada == false)
-                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número da categoria não encontrada, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroCategoriaEncontrada == false);
 

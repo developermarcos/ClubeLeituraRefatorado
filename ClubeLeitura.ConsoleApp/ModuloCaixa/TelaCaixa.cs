@@ -5,13 +5,12 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class TelaCaixa : TelaBase, IEditavel, ICadastravel, IListavel, IExcluivel
+    public class TelaCaixa : TelaBase, ICadastroBasico
     {
-        public int numeroCaixa; //controlar o número da caixas cadastradas
         public Notificador notificador; //reponsável pelas mensagens pro usuário
         public RepositorioCaixa repositorioCaixa;
-        
-        public TelaCaixa(RepositorioCaixa repositorioCaixa, Notificador notificador)
+
+        public TelaCaixa(RepositorioCaixa repositorioCaixa, Notificador notificador) : base("Tela Caixa")
         {
             this.repositorioCaixa=repositorioCaixa;
             this.notificador=notificador;
@@ -21,7 +20,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         {
             Console.Clear();
 
-            Console.WriteLine("Cadastro de Caixas");
+            Console.WriteLine("Cadastro de Amigos");
 
             Console.WriteLine();
 
@@ -37,7 +36,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return opcao;
         }
 
-        public void Inserir()
+        public void InserirRegistro()
         {
             MostrarTitulo("Inserindo nova Caixa");
 
@@ -45,18 +44,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             repositorioCaixa.Inserir(novaCaixa);
 
-            notificador.ApresentarMensagem("Caixa inserida com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Caixa inserida com sucesso!", TipoMensagem.Sucesso);
         }
 
-        public void Editar()
+        public void EditarRegistro()
         {
             MostrarTitulo("Editando Caixa");
 
-            bool temCaixasCadastradas = Listar("Pesquisando");
+            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhuma caixa cadastrada para poder editar", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhuma caixa cadastrada para poder editar", TipoMensagem.Atencao);
                 return;
             }
 
@@ -66,19 +65,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             repositorioCaixa.Editar(numeroCaixa, caixaAtualizada);
 
-            notificador.ApresentarMensagem("Caixa editada com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Caixa editada com sucesso", TipoMensagem.Sucesso);
         }
 
-        public void Excluir()
+        public void ExcluirRegistro()
         {
             MostrarTitulo("Excluindo Caixa");
 
-            bool temCaixasCadastradas = Listar("Pesquisando");
+            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
                 notificador.ApresentarMensagem(
-                    "Nenhuma caixa cadastrada para poder excluir", StatusValidacao.Atencao);
+                    "Nenhuma caixa cadastrada para poder excluir", TipoMensagem.Atencao);
                 return;
             }
 
@@ -86,10 +85,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             repositorioCaixa.Excluir(numeroCaixa);
 
-            notificador.ApresentarMensagem("Caixa excluída com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Caixa excluída com sucesso", TipoMensagem.Sucesso);
         }
 
-        public bool Listar(string tipo)
+        public bool VisualizarRegistros(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Caixas");
@@ -128,7 +127,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
                 if (etiquetaJaUtilizada)
                 {
-                    notificador.ApresentarMensagem("Etiqueta já utilizada, por gentileza informe outra", StatusValidacao.Erro);
+                    notificador.ApresentarMensagem("Etiqueta já utilizada, por gentileza informe outra", TipoMensagem.Erro);
 
                     Console.Write("Digite a etiqueta: ");
                     etiqueta = Console.ReadLine();
@@ -139,15 +138,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             Caixa caixa = new Caixa(cor, etiqueta);
 
             return caixa;
-        }
-
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
         }
 
         private int ObterNumeroCaixa()
@@ -163,7 +153,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
                 numeroCaixaEncontrado = repositorioCaixa.ExisteNumeroRegistro(numeroCaixa);
 
                 if (numeroCaixaEncontrado == false)
-                    notificador.ApresentarMensagem("Número de caixa não encontrado, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número de caixa não encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroCaixaEncontrado == false);
             return numeroCaixa;

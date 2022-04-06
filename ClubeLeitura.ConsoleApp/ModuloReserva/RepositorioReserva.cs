@@ -1,6 +1,6 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 
-namespace ClubeLeitura.ConsoleApp.ModeloReserva
+namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
     public class RepositorioReserva : RepositorioBase<Reserva>
     {

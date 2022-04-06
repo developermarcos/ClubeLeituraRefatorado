@@ -5,19 +5,15 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
-    public class TelaAmigo : TelaBase, IEditavel, ICadastravel, IListavel, IExcluivel
+    public class TelaAmigo : TelaBase, ICadastroBasico
     {
         public Notificador notificador; //reponsável pelas mensagens pro usuário
         public RepositorioAmigo repositorioAmigo;
-        public TelaMulta telaMulta;
-        public RepositorioMulta repositorioMulta;
-
-        public TelaAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador)
+       
+        public TelaAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador) : base("Tela Amigos")
         {
             this.repositorioAmigo=repositorioAmigo;
             this.notificador=notificador;
-            this.telaMulta = null;
-            this.repositorioMulta = null;
         }
 
         public override string MostrarOpcoes()
@@ -32,7 +28,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             Console.WriteLine("Digite 2 para Editar");
             Console.WriteLine("Digite 3 para Excluir");
             Console.WriteLine("Digite 4 para Visualizar");
-            Console.WriteLine("Digite 5 para Multas");
+            Console.WriteLine("Digite 5 para Visualizar Amigos com Multa");
+            Console.WriteLine("Digite 6 para Pagar Multas");
 
             Console.WriteLine("Digite s para sair");
 
@@ -41,7 +38,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return opcao;
         }
 
-        public void Inserir()
+        public void InserirRegistro()
         {
             MostrarTitulo("Inserindo novo Amigo");
 
@@ -49,18 +46,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Inserir(novoAmigo);
 
-            notificador.ApresentarMensagem("Amigo inserido com sucesso!", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Amigo inserido com sucesso!", TipoMensagem.Sucesso);
         }
 
-        public void Editar()
+        public void EditarRegistro()
         {
             MostrarTitulo("Editando Amigo");
 
-            bool temCaixasCadastradas = Listar("Pesquisando");
+            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
-                notificador.ApresentarMensagem("Nenhum amigo cadastrado para poder editar", StatusValidacao.Atencao);
+                notificador.ApresentarMensagem("Nenhum amigo cadastrado para poder editar", TipoMensagem.Atencao);
                 return;
             }
 
@@ -70,19 +67,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Editar(numeroCaixa, amigoAtualizado);
 
-            notificador.ApresentarMensagem("Amigo editado com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Amigo editado com sucesso", TipoMensagem.Sucesso);
         }
 
-        public void Excluir()
+        public void ExcluirRegistro()
         {
             MostrarTitulo("Excluindo Amigo");
 
-            bool temCaixasCadastradas = Listar("Pesquisando");
+            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
                 notificador.ApresentarMensagem(
-                    "Nenhum amigo cadastrado para poder excluir", StatusValidacao.Atencao);
+                    "Nenhum amigo cadastrado para poder excluir", TipoMensagem.Atencao);
                 return;
             }
 
@@ -90,15 +87,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             repositorioAmigo.Excluir(numeroAmigo);
 
-            notificador.ApresentarMensagem("Amigo excluído com sucesso", StatusValidacao.Sucesso);
+            notificador.ApresentarMensagem("Amigo excluído com sucesso", TipoMensagem.Sucesso);
         }
 
-        public bool Listar(string tipo)
+        public bool VisualizarRegistros(string tipoVisualizado)
         {
-            if (tipo == "Tela")
+            if (tipoVisualizado == "Tela")
                 MostrarTitulo("Visualização de Amigos");
 
-            Amigo[] amigos = repositorioAmigo.ObterTodosRegistros();
+            Amigo[] amigos = (Amigo[])repositorioAmigo.ObterTodosRegistros();
 
             if (amigos.Length == 0)
                 return false;
@@ -117,28 +114,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return true;
         }
 
+        public bool VisualizarAmigosComMulta(string tipoVisualizado)
+        {
+            return true;
+        }
+        public void PagarMulta()
+        {
+
+        }
+
         public void BaixarMulta()
         {
-            MostrarTitulo("Baixar multa");
-            if (telaMulta == null)
-            {
-                notificador.ApresentarMensagem("Nenhuma multa cadastrada para poder editar", StatusValidacao.Atencao);
-                return;
-            }
-
-            bool temMultasCadastras = telaMulta.Listar("Pesquisando");
-
-            if (temMultasCadastras == false)
-            {
-                notificador.ApresentarMensagem("Nenhuma multa cadastrada para poder editar", StatusValidacao.Atencao);
-                return;
-            }
-
-            int numeroBaixa = obterNumeroMulta();
-
-            repositorioMulta.BaixarMulta(numeroBaixa);
-
-            notificador.ApresentarMensagem("Multa baixada com sucesso!", StatusValidacao.Sucesso);
+            //Rfazer
         }
 
         #region métodos internos
@@ -156,7 +143,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 nomeJaUtilizado = repositorioAmigo.nomeJaCadastrado(nome);
 
                 if (nomeJaUtilizado)
-                    notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", StatusValidacao.Erro);
+                    notificador.ApresentarMensagem("Nome já cadastrado, por gentileza informe outro", TipoMensagem.Erro);
 
             } while (nomeJaUtilizado);
 
@@ -174,38 +161,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return amigo;
         }
 
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
-        }
-
-        private int obterNumeroMulta()
-        {
-            int numero = default;
-            bool multaEncontrada;
-            do
-            {
-                Console.Write("Digite o numero da multa para baixar: ");
-                numero = Convert.ToInt32(Console.ReadLine());
-
-                multaEncontrada = repositorioMulta.ExisteNumeroRegistro(numero);
-
-                if (!multaEncontrada)
-                    notificador.ApresentarMensagem("Numero da multa não encontrado, informe novamente.", StatusValidacao.Erro);
-                else
-                {
-                    return numero;
-                }
-
-            } while (!multaEncontrada);
-
-            return numero;
-        }
-
+        
         private int ObterNumeroAmigo()
         {
             int numeroAmigo;
@@ -219,13 +175,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 numeroAmigoEncontrado = repositorioAmigo.ExisteNumeroRegistro(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
-                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", StatusValidacao.Atencao);
+                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", TipoMensagem.Atencao);
 
             } while (numeroAmigoEncontrado == false);
 
             return numeroAmigo;
         }
-
         #endregion
     }
 }
