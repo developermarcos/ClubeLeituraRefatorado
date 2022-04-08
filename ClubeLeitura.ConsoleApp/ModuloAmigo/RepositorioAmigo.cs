@@ -3,32 +3,60 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 {
     public class RepositorioAmigo : RepositorioBase<Amigo>
     {
-        public RepositorioAmigo(int tamanhoArray) : base(tamanhoArray)
+        public RepositorioAmigo()
         {
         }
 
-        public void Popular(Amigo amigo)
-        {
-            Inserir(amigo);
-        }
-
+        
         #region metodos próprios
         public bool nomeJaCadastrado(string nomeInformado)
         {
-            bool nomejaUtilizado = false;
-
-            for (int i = 0; i < registros.Length; i++)
+            foreach(Amigo registro in registros)
             {
-                if (registros[i] != null && registros[i].nome == nomeInformado)
+                if (registro.nome == nomeInformado)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public Amigo[] SelecionarAmigosComMulta()
+        {
+            Amigo[] amigosComMulta = new Amigo[ObterQtdAmigosComMulta()];
+
+            int j = 0;
+
+            for (int i = 0; i < registros.Count; i++)
+            {
+                Amigo a = (Amigo)registros[i];
+                if (registros[i] != null && a.TemMultaEmAberto())
                 {
-                    nomejaUtilizado = true;
-                    break;
+                    amigosComMulta[j] = a;
+                    j++;
                 }
             }
 
-            return nomejaUtilizado;
+            return amigosComMulta;
         }
 
+        
+        #endregion
+
+        #region métodos privados
+        private int ObterQtdAmigosComMulta()
+        {
+            int numeroAmigos = 0;
+
+            for (int i = 0; i < registros.Count; i++)
+            {
+                Amigo a = (Amigo)registros[i];
+
+                if (registros[i] != null && a.TemMultaEmAberto())
+                    numeroAmigos++;
+            }
+
+            return numeroAmigos;
+        }
         #endregion
     }
 }

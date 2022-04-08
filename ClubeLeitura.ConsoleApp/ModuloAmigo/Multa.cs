@@ -12,9 +12,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloMulta
         private readonly decimal valorBaseMulta = 1.50m;
         public bool fechada;
 
-        public Multa(Emprestimo emprestimoDevolucao)
+        public Multa(decimal valor)
         {
-            this.emprestimo=emprestimoDevolucao;
             this.valor = CalculaValorMulta();
         }
         public override string ToString()

@@ -50,24 +50,24 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
         {
             this.notificador = notificador;
 
-            repositorioCaixa = new RepositorioCaixa(QUANTIDADE_REGISTROS);
+            repositorioCaixa = new RepositorioCaixa();
             telaCaixa = new TelaCaixa(repositorioCaixa, notificador);
-            repositorioCategoriaRevista = new RepositorioCategoriaRevista(QUANTIDADE_REGISTROS);
+            repositorioCategoriaRevista = new RepositorioCategoriaRevista();
             telaCategoriaRevista = new TelaCategoriaRevista(repositorioCategoriaRevista, notificador);
-            repositorioRevista = new RepositorioRevista(QUANTIDADE_REGISTROS);
+            repositorioRevista = new RepositorioRevista();
 
             telaRevista = new TelaRevista(
+                telaCaixa,
                 telaCategoriaRevista,
                 repositorioCategoriaRevista,
-                telaCaixa,
                 repositorioCaixa,
                 repositorioRevista,
                 notificador
             );
 
-            repositorioAmigo = new RepositorioAmigo(QUANTIDADE_REGISTROS);
+            repositorioAmigo = new RepositorioAmigo();
             telaAmigo = new TelaAmigo(repositorioAmigo, notificador);
-            repositorioEmprestimo = new RepositorioEmprestimo(QUANTIDADE_REGISTROS);
+            repositorioEmprestimo = new RepositorioEmprestimo();
 
             telaEmprestimo = new TelaEmprestimo(
                 notificador,
@@ -78,7 +78,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
                 telaAmigo
             );
 
-            repositorioReserva = new RepositorioReserva(QUANTIDADE_REGISTROS);
+            repositorioReserva = new RepositorioReserva();
 
             telaReserva = new TelaReserva(
                 notificador,
@@ -101,9 +101,9 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
             Console.WriteLine("Digite 1 para Cadastrar Caixas");
             Console.WriteLine("Digite 2 para Cadastrar Amigos");
-            Console.WriteLine("Digite 3 para Cadastrar Amiguinhos");
+            Console.WriteLine("Digite 3 para Cadastrar Revistas");
             Console.WriteLine("Digite 4 para Gerenciar Categorias");
-            Console.WriteLine("Digite 5 para Gerenciar Categorias");
+            Console.WriteLine("Digite 5 para Gerenciar Emprestimos");
             Console.WriteLine("Digite 6 para Gerenciar Reservas");
 
             Console.WriteLine("Digite s para sair");

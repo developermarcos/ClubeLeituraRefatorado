@@ -1,224 +1,61 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class RepositorioBase<T> where T : EntidadeBase
     {
         public static int numero;
-        public T[] registros;
+        public List<T> registros;
 
-        public RepositorioBase(int quantidade)
+        public RepositorioBase()
         {
-            this.registros = new T[quantidade];
+            registros = new List<T>();
         }
         public void Inserir(T item) 
         {
-            int posicaoVazia = ObterPosicaoVazia();
             item.numero = ObterNumeroRegistro();
             item.ativo = true;
-            this.registros[posicaoVazia] = item;
+            registros.Add(item);
         }
 
-        public void Editar(int numero, T item) 
+        public void Editar(int numeroEdicao, T item) 
         {
-            item.numero = numero;
+            T registro = registros.Find(x => x.numero == numeroEdicao);
+            
+            registros.Remove(registro);
 
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if(this.registros[i] != null && this.registros[i].numero == numero)
-                {
-                    this.registros[i] = item;
-                    break;
-                }
-            }
+            item.numero = numeroEdicao;
+
+            registros.Add(item);
+        }
+
+        public bool Excluir(int numeroExclusao)
+        {
+            registros.RemoveAll(x => x.numero == numeroExclusao);
+            return true;
         }
 
         public T[] ObterTodosRegistros()
         {
-            T[] item = new T[ObterQuantidadeRegistros()];
-
-            int j = 0;
-
-            for(int i = 0; i < this.registros.Length; i++)
-            {
-                if(this.registros[i] != null)
-                {
-                    item[j] = this.registros[i];
-                    j++;
-                }
-            }
-
-            return item;
+            return registros.ToArray();
         }
 
-        public T[] ObterTodosRegistrosAtivos()
+        public T ObterRegistro(int numeroRegistro)
         {
-            T[] item = new T[ObterQuantidadeRegistros()];
-
-            int j = 0;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].ativo == true)
-                {
-                    item[j] = this.registros[i];
-                    j++;
-                }
-            }
-
-            return item;
+            return registros.Find(x => x.numero == numeroRegistro);
         }
 
-        public T[] ObterTodosRegistrosInativos()
+        public bool RegistroExiste(int numeroRegistro)
         {
-            T[] item = new T[ObterQuantidadeRegistrosInativos()];
-
-            int j = 0;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null)
-                {
-                    item[j] = this.registros[i];
-                    j++;
-                }
-            }
-
-            return item;
-        }
-
-        public void Excluir(int numero)
-        {
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].numero == numero)
-                {
-                    this.registros[i] = null;
-                    break;
-                }
-            }
-        }
-
-        public T ObterRegistro(int numero)
-        {
-            T item = null;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].numero == numero)
-                {
-                    return this.registros[i];
-                }
-            }
-
-            return item;
-        }
-
-        public bool ExisteNumeroRegistro(int numero)
-        {
-            bool existeRegistro = false;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].numero == numero)
-                    existeRegistro = true;
-            }
-
-            return existeRegistro;
-        }
-
-        public bool ExisteNumeroRegistroAtivo(int numero)
-        {
-            bool existeRegistro = false;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].numero == numero && this.registros[i].ativo == true)
-                    existeRegistro = true;
-            }
-
-            return existeRegistro;
-        }
-
-        public bool ExisteNumeroRegistroInativo(int numero)
-        {
-            bool existeRegistro = false;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].numero == numero && this.registros[i].ativo == false)
-                    existeRegistro = true;
-            }
-
-            return existeRegistro;
-        }
-
-        public int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] == null)
-                    return i;
-            }
-            return -1;
-        }
-
-        public int ObterQuantidadeRegistros()
-        {
-            int quantidadeRegistros = 0;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null)
-                    quantidadeRegistros++;
-            }
-
-            return quantidadeRegistros;
-        }
-
-        public int ObterQuantidadeRegistrosAtivos()
-        {
-            int quantidadeRegistros = 0;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].ativo == true)
-                    quantidadeRegistros++;
-            }
-
-            return quantidadeRegistros;
-        }
-
-        public int ObterQuantidadeRegistrosInativos()
-        {
-            int quantidadeRegistros = 0;
-
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].ativo == false)
-                    quantidadeRegistros++;
-            }
-
-            return quantidadeRegistros;
+            return registros.Exists(x => x.numero == numeroRegistro);
         }
 
         protected int ObterNumeroRegistro()
         {
             return ++numero;
-        }
-
-        public void InativarRegistro(int numero)
-        {
-            for (int i = 0; i < this.registros.Length; i++)
-            {
-                if (this.registros[i] != null && this.registros[i].numero == numero)
-                {
-                    this.registros[i].ativo = false;
-                    break;
-                }
-                    
-            }
         }
     }
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "cor": "azul",
+    "etiqueta": "Etiq. 1",
+    "numero": 1,
+    "ativo": false
+  },
+  {
+    "cor": "Preto",
+    "etiqueta": "Etiq. 2",
+    "numero": 2,
+    "ativo": false
+  }
+]

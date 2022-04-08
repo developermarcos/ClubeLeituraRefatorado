@@ -114,21 +114,53 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
             return true;
         }
 
-        public bool VisualizarAmigosComMulta(string tipoVisualizado)
+        public bool VisualizarAmigosComMulta(string tipo)
         {
+            if (tipo == "Tela")
+                MostrarTitulo("Visualização de Amigos com Multa");
+
+            Amigo[] amigos = repositorioAmigo.SelecionarAmigosComMulta();
+
+            if (amigos.Length == 0)
+                return false;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                Amigo a = amigos[i];
+
+                Console.WriteLine("Número: " + a.ToString());
+                
+                Console.WriteLine();
+            }
+
             return true;
         }
+
         public void PagarMulta()
         {
+            MostrarTitulo("Pagamento de Multas");
 
-        }
+            bool temAmigosComMulta = VisualizarAmigosComMulta("Pesquisando");
 
-        public void BaixarMulta()
-        {
-            //Rfazer
+            if (!temAmigosComMulta)
+            {
+                notificador.ApresentarMensagem("Não há nenhum amigo com multas em aberto", TipoMensagem.Atencao);
+                return;
+            }
+
+            int numeroAmigoComMulta = ObterNumeroAmigo();
+
+            Amigo amigoComMulta = repositorioAmigo.ObterRegistro(numeroAmigoComMulta);
+
+            amigoComMulta.PagarMulta();
+
+            repositorioAmigo.Editar(numeroAmigoComMulta, amigoComMulta);
+
+            notificador.ApresentarMensagem("Multa paga com sucesso!", TipoMensagem.Sucesso);
         }
 
         #region métodos internos
+        
         private Amigo ObterAmigo()
         {
             string nome;
@@ -160,8 +192,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             return amigo;
         }
-
-        
+                
         private int ObterNumeroAmigo()
         {
             int numeroAmigo;
@@ -172,7 +203,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
                 Console.Write("Digite o número do amigo: ");
                 numeroAmigo = Convert.ToInt32(Console.ReadLine());
 
-                numeroAmigoEncontrado = repositorioAmigo.ExisteNumeroRegistro(numeroAmigo);
+                numeroAmigoEncontrado = repositorioAmigo.RegistroExiste(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
                     notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", TipoMensagem.Atencao);
@@ -181,6 +212,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloPessoa
 
             return numeroAmigo;
         }
+
         #endregion
     }
 }

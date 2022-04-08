@@ -18,12 +18,10 @@ namespace ClubeLeitura.ConsoleApp
 
             MostrarTitulo(this.titulo);
 
-            Console.WriteLine("Digite 1 para Cadastrar Caixas");
-            Console.WriteLine("Digite 2 para Cadastrar Revistinhas");
-            Console.WriteLine("Digite 3 para Cadastrar Amiguinhos");
-            Console.WriteLine("Digite 4 para Gerenciar Empréstimos");
-            Console.WriteLine("Digite 5 para Gerenciar Categorias");
-            Console.WriteLine("Digite 6 para Gerenciar Reservas");
+            Console.WriteLine("Digite 1 para Cadastrar");
+            Console.WriteLine("Digite 2 para Editar");
+            Console.WriteLine("Digite 3 para Excluir");
+            Console.WriteLine("Digite 4 para Visualizar");
 
             Console.WriteLine("Digite s para sair");
 

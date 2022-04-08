@@ -4,12 +4,13 @@ using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloPessoa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
     public class TelaReserva : TelaBase
     {
-        public Notificador notificador; //reponsável pelas mensagens pro usuário
+        public Notificador notificador; 
 
         private RepositorioReserva repositorioReserva;
         private TelaEmprestimo telaEmprestimo;
@@ -58,11 +59,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Visualizar Ativos");
-            Console.WriteLine("Digite 3 para Emprestimo");
-            Console.WriteLine("Digite 4 para Inativar");
-            Console.WriteLine("Digite 5 para Visualizar Inativos");
+            Console.WriteLine("Digite 1 para Registrar Reserva");
+            Console.WriteLine("Digite 2 para Visualizar");
+            Console.WriteLine("Digite 3 para Visualizar Reservas em Aberto");
+            Console.WriteLine("Digite 4 para Cadastrar um Empréstimo à partir de Reserva");
 
             Console.WriteLine("Digite s para sair");
 
@@ -71,7 +71,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             return opcao;
         }
 
-        public void Inserir()
+        public void Registrar()
         {
             MostrarTitulo("Inserindo nova reserva");
 
@@ -85,7 +85,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Amigo amigoReserva = ObterAmigo();
 
-            bool existeRevistasCadastradas = telaRevista.Listar("Pesquisando");
+            bool existeRevistasCadastradas = telaRevista.VisualizarRegistros("Pesquisando");
 
             if (!existeRevistasCadastradas)
             {
@@ -102,15 +102,40 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             notificador.ApresentarMensagem("Empréstimo inserido com sucesso!", TipoMensagem.Sucesso);
         }
 
-        public bool Listar(string tipo)
+        public bool Visualizar(string tipo)
+        {
+            if (tipo == "Tela")
+                MostrarTitulo("Visualização de reservas");
+            Reserva[] reservas = repositorioReserva.ObterTodosRegistros();
+            if (reservas.Length == 0)
+                return false;
+
+            for (int i = 0; i < reservas.Length; i++)
+            {
+                Reserva r = reservas[i];
+
+                Console.WriteLine();
+
+                Console.WriteLine(r.ToString());
+                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", r.amigo.nome, r.amigo.responsavel, r.amigo.telefone);
+                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}", r.revista.numeroEdicao, r.revista.tipoColecao);
+
+
+                Console.WriteLine();
+            }
+
+            return true;
+        }
+
+        public bool VisualizarReservasEmAberto(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de reservas");
 
-            if (repositorioReserva.ObterQuantidadeRegistrosAtivos() == 0)
+            if (repositorioReserva.ObterTodosRegistros().Length == 0)
                 return false;
 
-            Reserva[] reservas = repositorioReserva.ObterTodosRegistrosAtivos();
+            Reserva[] reservas = repositorioReserva.ObterTodosRegistros();
 
             if (reservas.Length == 0)
                 return false;
@@ -136,7 +161,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
         {
             MostrarTitulo("Inserindo novo empréstimo");
 
-            bool temeEmprestimosCadastrados = Listar("Pesquisando");
+            bool temeEmprestimosCadastrados = Visualizar("Pesquisando");
             if (temeEmprestimosCadastrados == false)
             {
                 notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder editar", TipoMensagem.Atencao);
@@ -152,16 +177,16 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             repositorioEmprestimo.Inserir(novoEmprestimo);
 
-            repositorioReserva.InativarRegistro(numeroReserva);
+            //repositorioReserva.InativarRegistro(numeroReserva);
 
             notificador.ApresentarMensagem("Empréstimo realizado com sucesso", TipoMensagem.Sucesso);
         }
 
-        public void Inativar()
+        private void Inativar()
         {
             MostrarTitulo("Inativando reserva");
 
-            bool temeEmprestimosCadastrados = Listar("Pesquisando");
+            bool temeEmprestimosCadastrados = Visualizar("Pesquisando");
             if (temeEmprestimosCadastrados == false)
             {
                 notificador.ApresentarMensagem("Nenhuma reserva cadastrado para poder inativar", TipoMensagem.Atencao);
@@ -171,39 +196,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             Console.WriteLine("Informe a reserva que deseja inativar");
             int numeroReserva = ObterNumeroReserva();
 
-            repositorioReserva.InativarRegistro(numeroReserva);
+            //repositorioReserva.InativarRegistro(numeroReserva);
             notificador.ApresentarMensagem("Reserva inativada com sucesso!", TipoMensagem.Sucesso);
         }
 
-        public bool ListarInativos(string tipo)
-        {
-            if (tipo == "Tela")
-                MostrarTitulo("Visualização de reservas inativas");
-
-            if (repositorioReserva.ObterQuantidadeRegistrosInativos() == 0)
-                return false;
-
-            Reserva[] reservas = repositorioReserva.ObterTodosRegistrosInativos();
-
-            if (reservas.Length == 0)
-                return false;
-
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                Reserva r = reservas[i];
-
-                Console.WriteLine();
-
-                Console.WriteLine(r.ToString());
-                Console.WriteLine("Amigo - Nome: {0} | Responsável: {1} | Telefone: {2}", r.amigo.nome, r.amigo.responsavel, r.amigo.telefone);
-                Console.WriteLine("Revista - Numero edição: {0} | Tipo coleção: {1}", r.revista.numeroEdicao, r.revista.tipoColecao);
-
-
-                Console.WriteLine();
-            }
-
-            return true;
-        }
 
         #region métodos privados
         
@@ -242,7 +238,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 Console.Write("Digite o número da reserva: ");
                 numeroReserva = Convert.ToInt32(Console.ReadLine());
 
-                numeroReservaEncontrada = repositorioReserva.ExisteNumeroRegistroAtivo(numeroReserva);
+                numeroReservaEncontrada = repositorioReserva.RegistroExiste(numeroReserva);
 
                 if (numeroReservaEncontrada == false)
                     notificador.ApresentarMensagem("Número da reserva não encontrada, digite novamente", TipoMensagem.Atencao);
@@ -262,7 +258,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 Console.Write("Digite o número do amigo: ");
                 numeroAmigo = Convert.ToInt32(Console.ReadLine());
 
-                numeroAmigoEncontrado = repositorioAmigo.ExisteNumeroRegistro(numeroAmigo);
+                numeroAmigoEncontrado = repositorioAmigo.RegistroExiste(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
                     notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente", TipoMensagem.Atencao);
@@ -284,7 +280,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 Console.Write("Digite o número da revista: ");
                 numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-                numeroRevistaEncontrado = repositorioRevista.ExisteNumeroRegistro(numeroRevista);
+                numeroRevistaEncontrado = repositorioRevista.RegistroExiste(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
                     notificador.ApresentarMensagem("Número da revista não encontrado, digite novamente", TipoMensagem.Atencao);
